@@ -155,6 +155,24 @@ const forceDeleteUser = asyncHandler(async (req, res) => {
   responseHandler(res, data, message);
 });
 
+const changeUserPassword = asyncHandler(async (req, res) => {
+  const session = req.session;
+
+  if (!req.body.newPassword || !req.body.confirmPassword)
+    throw createError(STATUSCODE.BAD_REQUEST, "Both passwords are required");
+
+  if (req.body.newPassword !== req.body.confirmPassword)
+    throw createError(STATUSCODE.BAD_REQUEST, "Passwords do not match");
+
+  const data = await service.changePassword(
+    req.params.id,
+    req.body.newPassword,
+    session,
+  );
+
+  responseHandler(res, data, "Password changed successfully");
+});
+
 export {
   getAllUsers,
   getAllUsersDeleted,
@@ -166,4 +184,5 @@ export {
   forceDeleteUser,
   loginUser,
   logoutUser,
+  changeUserPassword,
 };

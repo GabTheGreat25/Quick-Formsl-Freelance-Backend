@@ -4,6 +4,8 @@ import {
   CustomerDiscriminator,
 } from "./discriminators/index.js";
 import { ROLE, RESOURCE } from "../../../constants/index.js";
+import { ENV } from "../../../config/index.js";
+import bcrypt from "bcrypt";
 
 async function getAll() {
   return await model.find({ deleted: false });
@@ -53,6 +55,14 @@ async function forceDelete(_id, session) {
   return await model.findByIdAndDelete(_id, { session });
 }
 
+async function changePassword(_id, newPassword, session) {
+  return await model.findByIdAndUpdate(
+    _id,
+    { password: await bcrypt.hash(newPassword, ENV.SALT_NUMBER) },
+    { new: true, runValidators: true, select: RESOURCE.PASSWORD, session },
+  );
+}
+
 export default {
   getAll,
   getAllDeleted,
@@ -63,4 +73,5 @@ export default {
   deleteById,
   restoreById,
   forceDelete,
+  changePassword,
 };
