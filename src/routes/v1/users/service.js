@@ -27,9 +27,9 @@ async function getEmail(email) {
 
 async function add(body, session) {
   return await (
-    body.roles === ROLE.ADMIN
+    body.role === ROLE.ADMIN
       ? AdminDiscriminator
-      : body.roles === ROLE.CUSTOMER
+      : body.role === ROLE.CUSTOMER
         ? CustomerDiscriminator
         : model
   ).create([body], { session });
@@ -37,8 +37,10 @@ async function add(body, session) {
 
 async function update(_id, body, session) {
   return await model.findByIdAndUpdate(_id, body, {
+    overwriteDiscriminatorKey: true,
     new: true,
     runValidators: true,
+    deleted: false,
     session,
   });
 }
