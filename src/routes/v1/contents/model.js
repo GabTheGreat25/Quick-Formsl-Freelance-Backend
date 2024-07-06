@@ -8,6 +8,11 @@ const schemaOptions = {
 
 const schema = new Schema(
   {
+    user: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: RESOURCE.USERS,
+    },
     deleted: {
       type: Boolean,
       default: false,
