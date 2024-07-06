@@ -13,4 +13,5 @@ export const RESOURCE = {
   ROLE: "role",
   PASSWORD: "+password",
   USERS: "users",
+  CONTENTS: "contents",
 };

@@ -1,10 +1,15 @@
 import userRoutes from "./users/route.js";
+import contentRoutes from "./contents/route.js";
 import { RESOURCE } from "../../constants/index.js";
 
 const routes = [
   {
     url: RESOURCE.USERS,
     route: userRoutes,
+  },
+  {
+    url: RESOURCE.CONTENTS,
+    route: contentRoutes,
   },
 ];
 

@@ -75,7 +75,6 @@ const logoutUser = asyncHandler(async (req, res) => {
 const createNewUser = [
   upload.array("image"),
   asyncHandler(async (req, res) => {
-    const session = req.session;
     const uploadedImages = await multipleImages(req.files, []);
     const hashed = await bcrypt.hash(req.body.password, ENV.SALT_NUMBER);
 
@@ -88,7 +87,7 @@ const createNewUser = [
         password: hashed,
         image: uploadedImages,
       },
-      session,
+      req.session,
     );
 
     responseHandler(res, [data], "User created successfully");
@@ -98,7 +97,6 @@ const createNewUser = [
 const updateUser = [
   upload.array("image"),
   asyncHandler(async (req, res) => {
-    const session = req.session;
     const oldData = await service.getById(req.params.id);
 
     const uploadNewImages = await multipleImages(
@@ -112,7 +110,7 @@ const updateUser = [
         ...req.body,
         image: uploadNewImages,
       },
-      session,
+      req.session,
     );
 
     responseHandler(res, [data], "User updated successfully");
@@ -120,8 +118,7 @@ const updateUser = [
 ];
 
 const deleteUser = asyncHandler(async (req, res) => {
-  const session = req.session;
-  const data = await service.deleteById(req.params.id, session);
+  const data = await service.deleteById(req.params.id, req.session);
 
   responseHandler(
     res,
@@ -131,8 +128,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 });
 
 const restoreUser = asyncHandler(async (req, res) => {
-  const session = req.session;
-  const data = await service.restoreById(req.params.id, session);
+  const data = await service.restoreById(req.params.id, req.session);
 
   responseHandler(
     res,
@@ -142,8 +138,7 @@ const restoreUser = asyncHandler(async (req, res) => {
 });
 
 const forceDeleteUser = asyncHandler(async (req, res) => {
-  const session = req.session;
-  const data = await service.forceDelete(req.params.id, session);
+  const data = await service.forceDelete(req.params.id, req.session);
 
   const message = !data ? "No User found" : "User force deleted successfully";
 
@@ -156,8 +151,6 @@ const forceDeleteUser = asyncHandler(async (req, res) => {
 });
 
 const changeUserPassword = asyncHandler(async (req, res) => {
-  const session = req.session;
-
   if (!req.body.newPassword || !req.body.confirmPassword)
     throw createError(STATUSCODE.BAD_REQUEST, "Both passwords are required");
 
@@ -167,7 +160,7 @@ const changeUserPassword = asyncHandler(async (req, res) => {
   const data = await service.changePassword(
     req.params.id,
     req.body.newPassword,
-    session,
+    req.session,
   );
 
   responseHandler(res, data, "Password changed successfully");
