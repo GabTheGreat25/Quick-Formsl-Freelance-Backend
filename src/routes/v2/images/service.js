@@ -1,5 +1,4 @@
 import model from "./model.js";
-import imageModel from "../images/model.js";
 
 async function getAll() {
   return await model.find({ deleted: false });
@@ -27,23 +26,19 @@ async function update(_id, body, session) {
 }
 
 async function deleteById(_id, session) {
-  return Promise.all([
-    imageModel.updateMany({ content: _id }, { deleted: true }).session(session),
-  ]).then(() => model.findByIdAndUpdate(_id, { deleted: true }, { session }));
+  return await model.findByIdAndUpdate(_id, { deleted: true }, { session });
 }
 
 async function restoreById(_id, session) {
-  return Promise.all([
-    imageModel
-      .updateMany({ content: _id }, { deleted: false })
-      .session(session),
-  ]).then(() => model.findByIdAndUpdate(_id, { deleted: false }, { session }));
+  return await model.findByIdAndUpdate(_id, { deleted: false }, { session });
 }
 
 async function forceDelete(_id, session) {
-  return Promise.all([
-    imageModel.deleteMany({ content: _id }).session(session),
-  ]).then(() => model.findByIdAndDelete(_id, { session }));
+  return await model.findByIdAndDelete(_id, { session });
+}
+
+async function find(query) {
+  return await model.find(query);
 }
 
 export default {
@@ -55,4 +50,5 @@ export default {
   deleteById,
   restoreById,
   forceDelete,
+  find,
 };

@@ -2,26 +2,15 @@ import mongoose from "mongoose";
 import { RESOURCE } from "../../../constants/index.js";
 
 const schemaOptions = {
-  discriminatorKey: RESOURCE.ROLE,
   timestamps: true,
 };
 
 const schema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      unique: true,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-      select: false,
-      minlength: 6,
+    content: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: RESOURCE.CONTENTS,
     },
     image: [
       {
@@ -38,5 +27,5 @@ const schema = new mongoose.Schema(
   schemaOptions,
 );
 
-export default mongoose.models[RESOURCE.USERS] ||
-  mongoose.model(RESOURCE.USERS, schema);
+export default mongoose.models[RESOURCE.IMAGES] ||
+  mongoose.model(RESOURCE.IMAGES, schema);

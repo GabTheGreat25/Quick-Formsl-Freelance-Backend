@@ -18,7 +18,7 @@ const routes = [
   },
 ];
 
-export const V1 = routes.map((route) => ({
-  url: `${RESOURCE.V1}${route.url}`,
+export const V2 = routes.map((route) => ({
+  url: `${RESOURCE.V2}${route.url}`,
   route: route.route,
 }));
