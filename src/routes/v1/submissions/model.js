@@ -7,18 +7,15 @@ const schemaOptions = {
 
 const schema = new mongoose.Schema(
   {
-    user: {
+    content: {
       type: mongoose.Schema.Types.ObjectId,
-      required: false,
-      ref: RESOURCE.USERS,
+      ref: RESOURCE.CONTENTS,
+      required: true,
     },
-    image: [
-      {
-        public_id: String,
-        url: String,
-        originalname: String,
-      },
-    ],
+    values: {
+      type: Map,
+      of: String,
+    },
     deleted: {
       type: Boolean,
       default: false,
@@ -27,5 +24,5 @@ const schema = new mongoose.Schema(
   schemaOptions,
 );
 
-export default mongoose.models[RESOURCE.IMAGES] ||
-  mongoose.model(RESOURCE.IMAGES, schema);
+export default mongoose.models[RESOURCE.SUBMISSIONS] ||
+  mongoose.model(RESOURCE.SUBMISSIONS, schema);

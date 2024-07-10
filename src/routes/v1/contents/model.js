@@ -13,11 +13,6 @@ const schema = new mongoose.Schema(
       required: false,
       ref: RESOURCE.USERS,
     },
-    image: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: false,
-      ref: RESOURCE.IMAGES,
-    },
     deleted: {
       type: Boolean,
       default: false,

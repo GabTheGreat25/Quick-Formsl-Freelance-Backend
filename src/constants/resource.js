@@ -10,6 +10,7 @@ export const RESOURCE = {
   NOT_FOUND: "Not Found",
   IMAGE: "projectImages",
   IMAGES: "images",
+  SUBMISSIONS: "submissions",
   FINISH: "finish",
   ID: "_id",
   ROLE: "role",

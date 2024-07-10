@@ -1,15 +1,34 @@
+import mongoose from "mongoose";
 import model from "./model.js";
+import { lookup } from "../../../utils/index.js";
+import { RESOURCE } from "../../../constants/index.js";
 
 async function getAll() {
-  return await model.find({ deleted: false });
+  return await model
+    .aggregate()
+    .match({ deleted: false })
+    .append(lookup(RESOURCE.TESTS, RESOURCE.TEST, RESOURCE.TEST, []));
 }
 
 async function getAllDeleted() {
-  return await model.find({ deleted: true });
+  return await model
+    .aggregate()
+    .match({ deleted: true })
+    .append(lookup(RESOURCE.TESTS, RESOURCE.TEST, RESOURCE.TEST, []));
 }
 
 async function getById(_id) {
-  return await model.findOne({ _id, deleted: false });
+  return await model
+    .aggregate()
+    .match({
+      _id: mongoose.Types.ObjectId.createFromHexString(_id),
+      deleted: false,
+    })
+    .append(lookup(RESOURCE.TESTS, RESOURCE.TEST, RESOURCE.TEST, []));
+}
+
+async function getImageById(_id) {
+  return await model.findOne({ _id, deleted: false }).select("image");
 }
 
 async function add(body, session) {
@@ -20,7 +39,6 @@ async function update(_id, body, session) {
   return await model.findByIdAndUpdate(_id, body, {
     new: true,
     runValidators: true,
-    deleted: false,
     session,
   });
 }
@@ -41,6 +59,7 @@ export default {
   getAll,
   getAllDeleted,
   getById,
+  getImageById,
   add,
   update,
   deleteById,

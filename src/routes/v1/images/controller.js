@@ -1,5 +1,4 @@
 import asyncHandler from "express-async-handler";
-import createError from "http-errors";
 import service from "./service.js";
 import { STATUSCODE } from "../../../constants/index.js";
 import {
@@ -46,9 +45,6 @@ const createNewImage = [
   upload.array("image"),
   asyncHandler(async (req, res) => {
     const uploadedImages = await multipleImages(req.files, []);
-
-    if (uploadedImages.length === STATUSCODE.ZERO)
-      throw createError(STATUSCODE.BAD_REQUEST, "Image is required");
 
     const data = await service.add(
       {
