@@ -1,47 +1,47 @@
 import { Router } from "express";
-import * as contentController from "./controller.js";
+import * as formController from "./controller.js";
 import { METHOD, PATH, ROLE } from "../../../constants/index.js";
 import { verifyJWT, authorizeRoles } from "../../../middlewares/index.js";
 
 const router = Router();
 
-const contentRoutes = [
+const formRoutes = [
   {
     method: METHOD.GET,
     // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     // middleware: [verifyJWT],
-    handler: contentController.getAllContents,
+    handler: formController.getAllForms,
   },
   {
     method: METHOD.GET,
     path: PATH.ID,
     // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     // middleware: [verifyJWT],
-    handler: contentController.getSingleContent,
+    handler: formController.getSingleForm,
   },
   {
     method: METHOD.POST,
     // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     // middleware: [verifyJWT],
-    handler: contentController.createNewContent,
+    handler: formController.createNewForm,
   },
   {
     method: METHOD.PATCH,
     path: PATH.EDIT,
     // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     // middleware: [verifyJWT],
-    handler: contentController.updateContent,
+    handler: formController.updateForm,
   },
   {
     method: METHOD.DELETE,
     path: PATH.DELETE,
     // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     // middleware: [verifyJWT],
-    handler: contentController.deleteContent,
+    handler: formController.deleteForm,
   },
 ];
 
-contentRoutes.forEach((route) => {
+formRoutes.forEach((route) => {
   const { method, path = "", roles = [], middleware = [], handler } = route;
   router[method](path, middleware.concat(authorizeRoles(...roles)), handler);
 });

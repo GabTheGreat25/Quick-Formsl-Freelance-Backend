@@ -6,15 +6,7 @@ import { RESOURCE } from "../../../constants/index.js";
 async function getAll() {
   return await model
     .aggregate()
-    .match({ deleted: false })
-    .append(lookup(RESOURCE.TESTS, RESOURCE.TEST, RESOURCE.TEST, []));
-}
-
-async function getAllDeleted() {
-  return await model
-    .aggregate()
-    .match({ deleted: true })
-    .append(lookup(RESOURCE.TESTS, RESOURCE.TEST, RESOURCE.TEST, []));
+    .append(lookup(RESOURCE.FORMS, RESOURCE.FORM, RESOURCE.FORM, []));
 }
 
 async function getById(_id) {
@@ -22,13 +14,8 @@ async function getById(_id) {
     .aggregate()
     .match({
       _id: mongoose.Types.ObjectId.createFromHexString(_id),
-      deleted: false,
     })
-    .append(lookup(RESOURCE.TESTS, RESOURCE.TEST, RESOURCE.TEST, []));
-}
-
-async function getImageById(_id) {
-  return await model.findOne({ _id, deleted: false }).select("image");
+    .append(lookup(RESOURCE.FORMS, RESOURCE.FORM, RESOURCE.FORM, []));
 }
 
 async function add(body, session) {
@@ -44,25 +31,13 @@ async function update(_id, body, session) {
 }
 
 async function deleteById(_id, session) {
-  return await model.findByIdAndUpdate(_id, { deleted: true }, { session });
-}
-
-async function restoreById(_id, session) {
-  return await model.findByIdAndUpdate(_id, { deleted: false }, { session });
-}
-
-async function forceDelete(_id, session) {
   return await model.findByIdAndDelete(_id, { session });
 }
 
 export default {
   getAll,
-  getAllDeleted,
   getById,
-  getImageById,
   add,
   update,
   deleteById,
-  restoreById,
-  forceDelete,
 };

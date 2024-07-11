@@ -1,46 +1,47 @@
 import { Router } from "express";
-import * as submissionController from "./controller.js";
+import * as settingController from "./controller.js";
 import { METHOD, PATH, ROLE } from "../../../constants/index.js";
 import { verifyJWT, authorizeRoles } from "../../../middlewares/index.js";
 
 const router = Router();
 
-const submissionRoutes = [
+const settingRoutes = [
   {
     method: METHOD.GET,
     roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     middleware: [verifyJWT],
-    handler: submissionController.getAllSubmissions,
+    handler: settingController.getAllSettings,
   },
   {
     method: METHOD.GET,
     path: PATH.ID,
     roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     middleware: [verifyJWT],
-    handler: submissionController.getSingleSubmission,
+    handler: settingController.getSingleSetting,
   },
   {
     method: METHOD.POST,
-    path: PATH.ID,
-    handler: submissionController.createNewSubmission,
+    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    middleware: [verifyJWT],
+    handler: settingController.createNewSetting,
   },
   {
     method: METHOD.PATCH,
     path: PATH.EDIT,
     roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     middleware: [verifyJWT],
-    handler: submissionController.updateSubmission,
+    handler: settingController.updateSetting,
   },
   {
     method: METHOD.DELETE,
     path: PATH.DELETE,
     roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     middleware: [verifyJWT],
-    handler: submissionController.deleteSubmission,
+    handler: settingController.deleteSetting,
   },
 ];
 
-submissionRoutes.forEach((route) => {
+settingRoutes.forEach((route) => {
   const { method, path = "", roles = [], middleware = [], handler } = route;
   router[method](path, middleware.concat(authorizeRoles(...roles)), handler);
 });

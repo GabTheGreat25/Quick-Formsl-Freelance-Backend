@@ -1,5 +1,7 @@
 import asyncHandler from "express-async-handler";
+import createError from "http-errors";
 import service from "./service.js";
+import serviceForm from "../forms/service.js";
 import { STATUSCODE } from "../../../constants/index.js";
 import { responseHandler } from "../../../utils/index.js";
 
@@ -15,18 +17,6 @@ const getAllSubmissions = asyncHandler(async (req, res) => {
   );
 });
 
-const getAllSubmissionsDeleted = asyncHandler(async (req, res) => {
-  const data = await service.getAllDeleted();
-
-  responseHandler(
-    res,
-    data,
-    data?.length === STATUSCODE.ZERO
-      ? "No Deleted Submissions found"
-      : "All Deleted Submissions retrieved successfully",
-  );
-});
-
 const getSingleSubmission = asyncHandler(async (req, res) => {
   const data = await service.getById(req.params.id);
 
@@ -38,9 +28,29 @@ const getSingleSubmission = asyncHandler(async (req, res) => {
 });
 
 const createNewSubmission = asyncHandler(async (req, res) => {
+  const form = await serviceForm.getById(req.params.id);
+
+  const validFieldNames = form.content.fields.map((field) => field.fieldName);
+  const values = {};
+
+  for (const fieldName of validFieldNames) {
+    if (!req.body.hasOwnProperty(fieldName))
+      throw createError(
+        STATUSCODE.BAD_REQUEST,
+        `Field '${fieldName}' is required`,
+      );
+
+    const value = req.body[fieldName];
+
+    values[fieldName] = Array.isArray(value)
+      ? value.filter((item) => typeof item === "string")
+      : value;
+  }
+
   const data = await service.add(
     {
-      ...req.body,
+      content: req.params.id,
+      values,
     },
     req.session,
   );
@@ -64,44 +74,17 @@ const updateSubmission = asyncHandler(async (req, res) => {
 const deleteSubmission = asyncHandler(async (req, res) => {
   const data = await service.deleteById(req.params.id, req.session);
 
-  responseHandler(
-    res,
-    data?.deleted ? [] : [data],
-    data?.deleted
-      ? "Submission is already deleted"
-      : "Submission deleted successfully",
-  );
-});
-
-const restoreSubmission = asyncHandler(async (req, res) => {
-  const data = await service.restoreById(req.params.id, req.session);
-
-  responseHandler(
-    res,
-    !data?.deleted ? [] : [data],
-    !data?.deleted
-      ? "Submission is not deleted"
-      : "Submission restored successfully",
-  );
-});
-
-const forceDeleteSubmission = asyncHandler(async (req, res) => {
-  const data = await service.forceDelete(req.params.id, req.session);
-
   const message = !data
     ? "No Submission found"
-    : "Submission force deleted successfully";
+    : "Submission deleted successfully";
 
   responseHandler(res, [data], message);
 });
 
 export {
   getAllSubmissions,
-  getAllSubmissionsDeleted,
   getSingleSubmission,
   createNewSubmission,
   updateSubmission,
   deleteSubmission,
-  restoreSubmission,
-  forceDeleteSubmission,
 };

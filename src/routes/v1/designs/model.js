@@ -7,18 +7,14 @@ const schemaOptions = {
 
 const schema = new mongoose.Schema(
   {
-    content: {
+    image: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: RESOURCE.CONTENTS,
-      required: true,
-    },
-    values: {
-      type: Map,
-      of: mongoose.Schema.Types.Mixed,
+      required: false,
+      ref: RESOURCE.IMAGES,
     },
   },
   schemaOptions,
 );
 
-export default mongoose.models[RESOURCE.SUBMISSIONS] ||
-  mongoose.model(RESOURCE.SUBMISSIONS, schema);
+export default mongoose.models[RESOURCE.DESIGNS] ||
+  mongoose.model(RESOURCE.DESIGNS, schema);

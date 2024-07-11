@@ -1,7 +1,11 @@
 import asyncHandler from "express-async-handler";
+import createError from "http-errors";
 import service from "./service.js";
+import serviceInputType from "../inputTypes/service.js";
+import serviceForm from "../forms/service.js";
 import { STATUSCODE } from "../../../constants/index.js";
 import { responseHandler } from "../../../utils/index.js";
+import { extractToken, verifyToken } from "../../../middlewares/index.js";
 
 const getAllContents = asyncHandler(async (req, res) => {
   const data = await service.getAll();
@@ -12,18 +16,6 @@ const getAllContents = asyncHandler(async (req, res) => {
     data?.length === STATUSCODE.ZERO
       ? "No Contents found"
       : "All Contents retrieved successfully",
-  );
-});
-
-const getAllContentsDeleted = asyncHandler(async (req, res) => {
-  const data = await service.getAllDeleted();
-
-  responseHandler(
-    res,
-    data,
-    data?.length === STATUSCODE.ZERO
-      ? "No Deleted Contents found"
-      : "All Deleted Contents retrieved successfully",
   );
 });
 
@@ -38,17 +30,52 @@ const getSingleContent = asyncHandler(async (req, res) => {
 });
 
 const createNewContent = asyncHandler(async (req, res) => {
-  const data = await service.add(
+  const inputTypes = await serviceInputType.find();
+  const validInputTypes = inputTypes.map((inputType) => inputType.type);
+
+  for (const field of req.body.fields) {
+    if (!validInputTypes.includes(field.inputType))
+      throw createError(
+        STATUSCODE.BAD_REQUEST,
+        `Invalid input type: ${field.inputType}`,
+      );
+  }
+
+  const contentData = await service.add(
     {
       ...req.body,
     },
     req.session,
   );
 
-  responseHandler(res, [data], "Content created successfully");
+  const token = extractToken(req.headers.authorization);
+  const verifiedToken = verifyToken(token);
+
+  const formData = await serviceForm.add(
+    verifiedToken.id,
+    contentData[0]._id,
+    req.session,
+  );
+
+  responseHandler(
+    res,
+    [{ content: contentData, form: formData }],
+    "Content created successfully",
+  );
 });
 
 const updateContent = asyncHandler(async (req, res) => {
+  const inputTypes = await serviceInputType.find();
+  const validInputTypes = inputTypes.map((inputType) => inputType.type);
+
+  for (const field of req.body.fields) {
+    if (!validInputTypes.includes(field.inputType))
+      throw createError(
+        STATUSCODE.BAD_REQUEST,
+        `Invalid input type: ${field.inputType}`,
+      );
+  }
+
   const data = await service.update(
     req.params.id,
     {
@@ -63,41 +90,15 @@ const updateContent = asyncHandler(async (req, res) => {
 const deleteContent = asyncHandler(async (req, res) => {
   const data = await service.deleteById(req.params.id, req.session);
 
-  responseHandler(
-    res,
-    data?.deleted ? [] : [data],
-    data?.deleted
-      ? "Content is already deleted"
-      : "Content deleted successfully",
-  );
-});
+  const message = !data ? "No Content found" : "Content deleted successfully";
 
-const restoreContent = asyncHandler(async (req, res) => {
-  const data = await service.restoreById(req.params.id, req.session);
-
-  responseHandler(
-    res,
-    !data?.deleted ? [] : data,
-    !data?.deleted ? "Content is not deleted" : "Content restored successfully",
-  );
-});
-
-const forceDeleteContent = asyncHandler(async (req, res) => {
-  const data = await service.forceDelete(req.params.id, req.session);
-
-  const message = !data
-    ? "No Content found"
-    : "Content force deleted successfully";
   responseHandler(res, data, message);
 });
 
 export {
   getAllContents,
-  getAllContentsDeleted,
   getSingleContent,
   createNewContent,
   updateContent,
   deleteContent,
-  restoreContent,
-  forceDeleteContent,
 };

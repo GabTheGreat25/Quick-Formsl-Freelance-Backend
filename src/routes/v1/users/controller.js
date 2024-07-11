@@ -58,7 +58,11 @@ const loginUser = asyncHandler(async (req, res) => {
   if (!(await bcrypt.compare(req.body.password, data.password)))
     throw createError(STATUSCODE.UNAUTHORIZED, "Password does not match");
 
-  const accessToken = generateAccess({ role: data[RESOURCE.ROLE] });
+  const accessToken = generateAccess({
+    id: data._id,
+    role: data[RESOURCE.ROLE],
+  });
+
   setToken(accessToken.access);
 
   responseHandler(res, data, "User Login successfully", accessToken);

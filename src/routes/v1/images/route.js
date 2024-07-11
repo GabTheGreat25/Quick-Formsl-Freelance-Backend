@@ -14,13 +14,6 @@ const imageRoutes = [
   },
   {
     method: METHOD.GET,
-    path: PATH.DELETED,
-    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    middleware: [verifyJWT],
-    handler: imageController.getAllImagesDeleted,
-  },
-  {
-    method: METHOD.GET,
     path: PATH.ID,
     roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     middleware: [verifyJWT],
@@ -45,20 +38,6 @@ const imageRoutes = [
     roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     middleware: [verifyJWT],
     handler: imageController.deleteImage,
-  },
-  {
-    method: METHOD.PUT,
-    path: PATH.RESTORE,
-    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    middleware: [verifyJWT],
-    handler: imageController.restoreImage,
-  },
-  {
-    method: METHOD.DELETE,
-    path: PATH.FORCE_DELETE,
-    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    middleware: [verifyJWT],
-    handler: imageController.forceDeleteImage,
   },
 ];
 

@@ -7,11 +7,6 @@ const schemaOptions = {
 
 const schema = new mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: false,
-      ref: RESOURCE.USERS,
-    },
     image: [
       {
         public_id: String,
@@ -19,10 +14,6 @@ const schema = new mongoose.Schema(
         originalname: String,
       },
     ],
-    deleted: {
-      type: Boolean,
-      default: false,
-    },
   },
   schemaOptions,
 );

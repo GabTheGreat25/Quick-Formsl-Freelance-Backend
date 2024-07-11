@@ -1,46 +1,47 @@
 import { Router } from "express";
-import * as submissionController from "./controller.js";
+import * as inputTypeController from "./controller.js";
 import { METHOD, PATH, ROLE } from "../../../constants/index.js";
 import { verifyJWT, authorizeRoles } from "../../../middlewares/index.js";
 
 const router = Router();
 
-const submissionRoutes = [
+const inputTypeRoutes = [
   {
     method: METHOD.GET,
     roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     middleware: [verifyJWT],
-    handler: submissionController.getAllSubmissions,
+    handler: inputTypeController.getAllInputTypes,
   },
   {
     method: METHOD.GET,
     path: PATH.ID,
     roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     middleware: [verifyJWT],
-    handler: submissionController.getSingleSubmission,
+    handler: inputTypeController.getSingleInputType,
   },
   {
     method: METHOD.POST,
-    path: PATH.ID,
-    handler: submissionController.createNewSubmission,
+    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    middleware: [verifyJWT],
+    handler: inputTypeController.createNewInputType,
   },
   {
     method: METHOD.PATCH,
     path: PATH.EDIT,
     roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     middleware: [verifyJWT],
-    handler: submissionController.updateSubmission,
+    handler: inputTypeController.updateInputType,
   },
   {
     method: METHOD.DELETE,
     path: PATH.DELETE,
     roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     middleware: [verifyJWT],
-    handler: submissionController.deleteSubmission,
+    handler: inputTypeController.deleteInputType,
   },
 ];
 
-submissionRoutes.forEach((route) => {
+inputTypeRoutes.forEach((route) => {
   const { method, path = "", roles = [], middleware = [], handler } = route;
   router[method](path, middleware.concat(authorizeRoles(...roles)), handler);
 });

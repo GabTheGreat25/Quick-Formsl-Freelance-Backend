@@ -19,18 +19,6 @@ const getAllImages = asyncHandler(async (req, res) => {
   );
 });
 
-const getAllImagesDeleted = asyncHandler(async (req, res) => {
-  const data = await service.getAllDeleted();
-
-  responseHandler(
-    res,
-    data,
-    data?.length === STATUSCODE.ZERO
-      ? "No Deleted Images found"
-      : "All Deleted Images retrieved successfully",
-  );
-});
-
 const getSingleImage = asyncHandler(async (req, res) => {
   const data = await service.getById(req.params.id);
 
@@ -84,26 +72,6 @@ const updateImage = [
 const deleteImage = asyncHandler(async (req, res) => {
   const data = await service.deleteById(req.params.id, req.session);
 
-  responseHandler(
-    res,
-    data?.deleted ? [] : [data],
-    data?.deleted ? "Image is already deleted" : "Image deleted successfully",
-  );
-});
-
-const restoreImage = asyncHandler(async (req, res) => {
-  const data = await service.restoreById(req.params.id, req.session);
-
-  responseHandler(
-    res,
-    !data?.deleted ? [] : [data],
-    !data?.deleted ? "Image is not deleted" : "Image restored successfully",
-  );
-});
-
-const forceDeleteImage = asyncHandler(async (req, res) => {
-  const data = await service.forceDelete(req.params.id, req.session);
-
   const message = !data ? "No Image found" : "Image force deleted successfully";
 
   await multipleImages(
@@ -116,11 +84,8 @@ const forceDeleteImage = asyncHandler(async (req, res) => {
 
 export {
   getAllImages,
-  getAllImagesDeleted,
   getSingleImage,
   createNewImage,
   updateImage,
   deleteImage,
-  restoreImage,
-  forceDeleteImage,
 };
