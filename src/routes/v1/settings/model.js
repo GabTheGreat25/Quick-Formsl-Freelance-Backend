@@ -17,7 +17,7 @@ const schema = new mongoose.Schema(
     },
     isRecord: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     isSuccess: {
       type: Boolean,

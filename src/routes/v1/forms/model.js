@@ -9,26 +9,26 @@ const schema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      required: false,
       ref: RESOURCE.USERS,
     },
     content: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        required: false,
         ref: RESOURCE.CONTENTS,
       },
     ],
-    design: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: false,
-      ref: RESOURCE.DESIGNS,
-    },
-    publish: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: false,
-      ref: RESOURCE.PUBLISHES,
-    },
+    design: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: RESOURCE.DESIGNS,
+      },
+    ],
+    setting: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: RESOURCE.SETTINGS,
+      },
+    ],
   },
   schemaOptions,
 );

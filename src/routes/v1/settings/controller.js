@@ -1,7 +1,9 @@
 import asyncHandler from "express-async-handler";
 import service from "./service.js";
+import serviceForm from "../forms/service.js";
 import { STATUSCODE } from "../../../constants/index.js";
 import { responseHandler } from "../../../utils/index.js";
+import { extractToken, verifyToken } from "../../../middlewares/index.js";
 
 const getAllSettings = asyncHandler(async (req, res) => {
   const data = await service.getAll();
@@ -26,14 +28,27 @@ const getSingleSetting = asyncHandler(async (req, res) => {
 });
 
 const createNewSetting = asyncHandler(async (req, res) => {
-  const data = await service.add(
+  const settingData = await service.add(
     {
       ...req.body,
     },
     req.session,
   );
 
-  responseHandler(res, [data], "Setting created successfully");
+  const token = extractToken(req.headers.authorization);
+  const verifiedToken = verifyToken(token);
+
+  const formData = await serviceForm.addSetting(
+    verifiedToken.id,
+    settingData[0]._id,
+    req.session,
+  );
+
+  responseHandler(
+    res,
+    [{ setting: settingData, form: formData }],
+    "Setting created successfully",
+  );
 });
 
 const updateSetting = asyncHandler(async (req, res) => {

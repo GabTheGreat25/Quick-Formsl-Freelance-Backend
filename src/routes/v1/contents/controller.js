@@ -33,13 +33,15 @@ const createNewContent = asyncHandler(async (req, res) => {
   const inputTypes = await serviceInputType.find();
   const validInputTypes = inputTypes.map((inputType) => inputType.type);
 
-  for (const field of req.body.fields) {
-    if (!validInputTypes.includes(field.inputType))
-      throw createError(
-        STATUSCODE.BAD_REQUEST,
-        `Invalid input type: ${field.inputType}`,
-      );
-  }
+  if (req.body.fields)
+    for (const field of req.body.fields) {
+      if (!validInputTypes.includes(field.inputType)) {
+        throw createError(
+          STATUSCODE.BAD_REQUEST,
+          `Invalid input type: ${field.inputType}`,
+        );
+      }
+    }
 
   const contentData = await service.add(
     {
@@ -51,7 +53,7 @@ const createNewContent = asyncHandler(async (req, res) => {
   const token = extractToken(req.headers.authorization);
   const verifiedToken = verifyToken(token);
 
-  const formData = await serviceForm.add(
+  const formData = await serviceForm.addContent(
     verifiedToken.id,
     contentData[0]._id,
     req.session,

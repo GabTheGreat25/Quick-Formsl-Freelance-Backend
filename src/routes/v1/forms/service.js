@@ -1,14 +1,22 @@
 import mongoose from "mongoose";
+import createError from "http-errors";
 import model from "./model.js";
 import { lookup } from "../../../utils/index.js";
-import { RESOURCE } from "../../../constants/index.js";
+import { RESOURCE, STATUSCODE } from "../../../constants/index.js";
 
 async function getAll() {
-  return await model
-    .aggregate()
-    .append(lookup(RESOURCE.CONTENTS, RESOURCE.CONTENT, RESOURCE.CONTENT, []))
-    .append(lookup(RESOURCE.DESIGNS, RESOURCE.DESIGN, RESOURCE.DESIGN, []))
-    .append(lookup(RESOURCE.PUBLISHES, RESOURCE.PUBLISH, RESOURCE.PUBLISH, []));
+  return await model.aggregate([
+    lookup(RESOURCE.CONTENTS, RESOURCE.CONTENT, RESOURCE.CONTENT, [
+      lookup(
+        RESOURCE.SUBMISSIONS,
+        RESOURCE.SUBMISSION,
+        RESOURCE.SUBMISSION,
+        [],
+      ),
+    ]),
+    lookup(RESOURCE.DESIGNS, RESOURCE.DESIGN, RESOURCE.DESIGN, []),
+    lookup(RESOURCE.SETTINGS, RESOURCE.SETTING, RESOURCE.SETTING, []),
+  ]);
 }
 
 async function getById(_id) {
@@ -17,23 +25,108 @@ async function getById(_id) {
     .match({
       _id: mongoose.Types.ObjectId.createFromHexString(_id),
     })
-    .append(lookup(RESOURCE.CONTENTS, RESOURCE.CONTENT, RESOURCE.CONTENT, []))
+    .append(
+      lookup(RESOURCE.CONTENTS, RESOURCE.CONTENT, RESOURCE.CONTENT, [
+        lookup(
+          RESOURCE.SUBMISSIONS,
+          RESOURCE.SUBMISSION,
+          RESOURCE.SUBMISSION,
+          [],
+        ),
+      ]),
+    )
     .append(lookup(RESOURCE.DESIGNS, RESOURCE.DESIGN, RESOURCE.DESIGN, []))
-    .append(lookup(RESOURCE.PUBLISHES, RESOURCE.PUBLISH, RESOURCE.PUBLISH, []));
+    .append(lookup(RESOURCE.SETTINGS, RESOURCE.SETTING, RESOURCE.SETTING, []));
 }
 
-async function add(userId, contentId, session) {
-  const existingFormEntry = await model
+async function addContent(userId, contentId, session) {
+  return await model
     .findOne({ user: userId })
-    .session(session);
+    .session(session)
+    .then(async (form) =>
+      form
+        ? await model.findByIdAndUpdate(
+            form._id,
+            {
+              $addToSet: {
+                content: contentId,
+              },
+            },
+            { new: true, session },
+          )
+        : await model
+            .create(
+              [
+                {
+                  user: userId || "",
+                  content: [contentId] || [],
+                  design: [],
+                  settings: [],
+                },
+              ],
+              { session },
+            )
+            .then((result) => result[0]),
+    );
+}
 
-  return existingFormEntry
-    ? await model.findByIdAndUpdate(
-        existingFormEntry._id,
-        { $addToSet: { content: contentId } },
-        { new: true, session },
-      )
-    : await model.create([{ user: userId, content: [contentId] }], { session });
+async function addDesign(userId, designId, session) {
+  return await model
+    .findOne({ user: userId })
+    .session(session)
+    .then(async (form) =>
+      form
+        ? await model.findByIdAndUpdate(
+            form._id,
+            {
+              $addToSet: {
+                design: designId,
+              },
+            },
+            { new: true, session },
+          )
+        : await model
+            .create(
+              [
+                {
+                  user: userId || "",
+                  content: [],
+                  design: [designId] || [],
+                  settings: [],
+                },
+              ],
+              { session },
+            )
+            .then((result) => result[0]),
+    );
+}
+
+async function addSetting(userId, settingId, session) {
+  return model
+    .findOne({ user: userId })
+    .session(session)
+    .then(async (existingUserSetting) =>
+      existingUserSetting
+        ? existingUserSetting.setting.length === 0
+          ? ((existingUserSetting.setting = [settingId]),
+            await existingUserSetting.save({ session }),
+            existingUserSetting)
+          : Promise.reject(
+              createError(
+                STATUSCODE.CONFLICT,
+                "User already has a form with settings",
+              ),
+            )
+        : model.create(
+            {
+              user: userId || "",
+              content: [],
+              design: [],
+              settings: [settingId] || [],
+            },
+            { session },
+          ),
+    );
 }
 
 async function update(_id, body, session) {
@@ -51,7 +144,9 @@ async function deleteById(_id, session) {
 export default {
   getAll,
   getById,
-  add,
+  addContent,
+  addDesign,
+  addSetting,
   update,
   deleteById,
 };

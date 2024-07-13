@@ -7,11 +7,18 @@ const schemaOptions = {
 
 const schema = new mongoose.Schema(
   {
-    image: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       required: false,
-      ref: RESOURCE.IMAGES,
+      ref: RESOURCE.USERS,
     },
+    image: [
+      {
+        public_id: String,
+        url: String,
+        originalname: String,
+      },
+    ],
   },
   schemaOptions,
 );

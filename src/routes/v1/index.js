@@ -2,7 +2,8 @@ import userRoutes from "./users/route.js";
 import formRoutes from "./forms/route.js";
 import contentRoutes from "./contents/route.js";
 import inputTypeRoutes from "./inputTypes/route.js";
-import imagesRoutes from "./images/route.js";
+import designRoutes from "./designs/route.js";
+import settingRoutes from "./settings/route.js";
 import submissionRoutes from "./submissions/route.js";
 import publishRoutes from "./publish/route.js";	
 import { RESOURCE } from "../../constants/index.js";
@@ -25,8 +26,12 @@ const routes = [
     route: inputTypeRoutes,
   },
   {
-    url: RESOURCE.IMAGES,
-    route: imagesRoutes,
+    url: RESOURCE.DESIGNS,
+    route: designRoutes,
+  },
+  {
+    url: RESOURCE.SETTINGS,
+    route: settingRoutes,
   },
   {
     url: RESOURCE.SUBMISSIONS,

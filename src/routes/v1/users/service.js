@@ -1,6 +1,5 @@
 import model from "./model.js";
 import contentModel from "../contents/model.js";
-import imageModel from "../images/model.js";
 import {
   AdminDiscriminator,
   CustomerDiscriminator,
@@ -50,21 +49,18 @@ async function update(_id, body, session) {
 async function deleteById(_id, session) {
   return Promise.all([
     contentModel.updateMany({ user: _id }, { deleted: true }).session(session),
-    imageModel.updateMany({ user: _id }, { deleted: true }).session(session),
   ]).then(() => model.findByIdAndUpdate(_id, { deleted: true }, { session }));
 }
 
 async function restoreById(_id, session) {
   return Promise.all([
     contentModel.updateMany({ user: _id }, { deleted: false }).session(session),
-    imageModel.updateMany({ user: _id }, { deleted: false }).session(session),
   ]).then(() => model.findByIdAndUpdate(_id, { deleted: false }, { session }));
 }
 
 async function forceDelete(_id, session) {
   return Promise.all([
     contentModel.deleteMany({ user: _id }).session(session),
-    imageModel.deleteMany({ user: _id }).session(session),
   ]).then(() => model.findByIdAndDelete(_id, { session }));
 }
 
