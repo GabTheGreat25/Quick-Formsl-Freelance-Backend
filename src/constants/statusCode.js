@@ -49,4 +49,7 @@ export const STATUSCODE = {
   ZERO: 0,
   ONE: 1,
   NEGATIVE_ONE: -1,
+  SIX: 6,
+  TEN: 10,
+
 };
