@@ -34,6 +34,20 @@ const schema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    verificationCode: {
+      code: {
+        type: String,
+        default: null,
+      },
+      createdAt: {
+        type: Date,
+        default: null,
+      },
+    },
+    active: {
+      type: Boolean,
+      default: false,
+    },
   },
   schemaOptions,
 );
