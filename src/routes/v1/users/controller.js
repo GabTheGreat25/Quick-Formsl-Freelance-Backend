@@ -15,6 +15,7 @@ import {
   blacklistToken,
   generateAccess,
 } from "../../../middlewares/index.js";
+import { sendEmail, generateRandomCode } from "../../../utils/index.js";
 
 const getAllUsers = asyncHandler(async (req, res) => {
   const data = await service.getAll();
@@ -172,6 +173,37 @@ const changeUserPassword = asyncHandler(async (req, res) => {
   responseHandler(res, [data], "Password changed successfully");
 });
 
+const sendUserEmailOTP = asyncHandler(async (req, res) => {
+  const session = req.session;
+  const otp = generateRandomCode();
+  await sendEmail(req.body.email, otp);
+
+  const data = await service.sendEmailOTP(req.body.email, otp, session);
+
+  responseHandler(res, data, "Password reset email sent successfully");
+});
+
+const resetUserEmailPassword = asyncHandler(async (req, res) => {
+  const session = req.session;
+  const { verificationCode, newPassword, confirmPassword } = req.body;
+
+  if (newPassword !== confirmPassword)
+    throw createError(STATUSCODE.BAD_REQUEST, "Passwords don't match");
+
+  const password = await bcrypt.hash(newPassword, ENV.SALT_NUMBER);  
+
+  const data = await service.resetEmailPassword(
+    verificationCode,
+    password,
+  );
+
+  responseHandler(res, data, "User Password Successfully Reset");
+});
+
+const updatePassword = asyncHandler(async (req, res) => {
+  const data = await service.updatePassword(req.params.id, req.body.password);
+});
+
 export {
   getAllUsers,
   getAllUsersDeleted,
@@ -184,4 +216,7 @@ export {
   loginUser,
   logoutUser,
   changeUserPassword,
+  sendUserEmailOTP,
+  updatePassword,
+  resetUserEmailPassword,
 };
