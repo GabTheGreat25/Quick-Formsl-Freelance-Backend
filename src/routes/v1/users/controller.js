@@ -190,12 +190,9 @@ const resetUserEmailPassword = asyncHandler(async (req, res) => {
   if (newPassword !== confirmPassword)
     throw createError(STATUSCODE.BAD_REQUEST, "Passwords don't match");
 
-  const password = await bcrypt.hash(newPassword, ENV.SALT_NUMBER);  
+  const password = await bcrypt.hash(newPassword, ENV.SALT_NUMBER);
 
-  const data = await service.resetEmailPassword(
-    verificationCode,
-    password,
-  );
+  const data = await service.resetEmailPassword(verificationCode, password);
 
   responseHandler(res, data, "User Password Successfully Reset");
 });

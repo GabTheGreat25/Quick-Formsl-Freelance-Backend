@@ -1,6 +1,6 @@
 import { createTransport } from "nodemailer";
 import { ENV } from "../config/index.js";
-import { RESOURCE } from "../constants/index.js"; 
+import { RESOURCE } from "../constants/index.js";
 
 const transporter = createTransport({
   service: RESOURCE.GMAIL,

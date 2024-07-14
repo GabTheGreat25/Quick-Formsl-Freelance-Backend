@@ -25,7 +25,6 @@ async function deleteById(_id, session) {
   return await model.findByIdAndDelete(_id, { deleted: true }, { session });
 }
 
-
 export default {
   getAll,
   getById,

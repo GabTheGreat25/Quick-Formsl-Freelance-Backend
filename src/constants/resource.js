@@ -31,6 +31,6 @@ export const RESOURCE = {
   FORM: "form",
   SUBMISSIONS: "submissions",
   SUBMISSION: "submission",
-  GMAIL: "gmail",	
+  GMAIL: "gmail",
   LINKS: "links",
 };

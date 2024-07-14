@@ -5,7 +5,7 @@ import inputTypeRoutes from "./inputTypes/route.js";
 import designRoutes from "./designs/route.js";
 import settingRoutes from "./settings/route.js";
 import submissionRoutes from "./submissions/route.js";
-import publishRoutes from "./publish/route.js";	
+import publishRoutes from "./publish/route.js";
 import { RESOURCE } from "../../constants/index.js";
 
 const routes = [
@@ -40,7 +40,7 @@ const routes = [
   {
     url: RESOURCE.LINKS,
     route: publishRoutes,
-  }
+  },
 ];
 
 export const V1 = routes.map((route) => ({

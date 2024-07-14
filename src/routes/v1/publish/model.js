@@ -20,10 +20,10 @@ const schema = new Schema(
       type: Boolean,
       default: false,
     },
-    isPublish:{
+    isPublish: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   schemaOptions,
 );

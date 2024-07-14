@@ -13,7 +13,6 @@ const content = fs.readFileSync(mail, "utf8");
 const template = handlebars.compile(content);
 
 export const sendEmail = (email, randomCode) => {
-
   const replacement = {
     randomCode: randomCode,
   };
