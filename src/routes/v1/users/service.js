@@ -1,4 +1,6 @@
 import model from "./model.js";
+import contentModel from "../contents/model.js";
+import imageModel from "../images/model.js";
 import {
   AdminDiscriminator,
   CustomerDiscriminator,
@@ -46,15 +48,24 @@ async function update(_id, body, session) {
 }
 
 async function deleteById(_id, session) {
-  return await model.findByIdAndUpdate(_id, { deleted: true }, { session });
+  return Promise.all([
+    contentModel.updateMany({ user: _id }, { deleted: true }).session(session),
+    imageModel.updateMany({ user: _id }, { deleted: true }).session(session),
+  ]).then(() => model.findByIdAndUpdate(_id, { deleted: true }, { session }));
 }
 
 async function restoreById(_id, session) {
-  return await model.findByIdAndUpdate(_id, { deleted: false }, { session });
+  return Promise.all([
+    contentModel.updateMany({ user: _id }, { deleted: false }).session(session),
+    imageModel.updateMany({ user: _id }, { deleted: false }).session(session),
+  ]).then(() => model.findByIdAndUpdate(_id, { deleted: false }, { session }));
 }
 
 async function forceDelete(_id, session) {
-  return await model.findByIdAndDelete(_id, { session });
+  return Promise.all([
+    contentModel.deleteMany({ user: _id }).session(session),
+    imageModel.deleteMany({ user: _id }).session(session),
+  ]).then(() => model.findByIdAndDelete(_id, { session }));
 }
 
 async function changePassword(_id, newPassword, session) {
@@ -63,6 +74,20 @@ async function changePassword(_id, newPassword, session) {
     { password: await bcrypt.hash(newPassword, ENV.SALT_NUMBER) },
     { new: true, runValidators: true, select: RESOURCE.PASSWORD, session },
   );
+}
+
+async function sendEmailOTP(email, otp) {
+  const data = await model.findOne({ email });
+  return await model.findByIdAndUpdate(data?._id,{ verificationCode: { code: otp, createdAt: new Date() } },{ new: true, runValidators: true },);
+}
+
+async function resetEmailPassword(
+  verificationCode,
+  password,
+) {
+  const data = await model.findOne({ "verificationCode.code": verificationCode });
+  return await model.findByIdAndUpdate(data?._id, { password: password, verificationCode: null }, { new: true, runValidators: true });
+
 }
 
 export default {
@@ -76,4 +101,6 @@ export default {
   restoreById,
   forceDelete,
   changePassword,
+  sendEmailOTP,
+  resetEmailPassword,
 };

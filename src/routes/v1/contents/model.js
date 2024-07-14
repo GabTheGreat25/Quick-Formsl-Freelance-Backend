@@ -1,19 +1,27 @@
-import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
 import { RESOURCE } from "../../../constants/index.js";
 
 const schemaOptions = {
   timestamps: true,
-  strict: false,
 };
 
-const schema = new Schema(
+const schema = new mongoose.Schema(
   {
-    deleted: {
-      type: Boolean,
-      default: false,
-    },
+    fields: [
+      {
+        inputType: {
+          type: String,
+          required: true,
+        },
+        fieldName: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   schemaOptions,
 );
 
-export default model(RESOURCE.CONTENTS, schema);
+export default mongoose.models[RESOURCE.CONTENTS] ||
+  mongoose.model(RESOURCE.CONTENTS, schema);

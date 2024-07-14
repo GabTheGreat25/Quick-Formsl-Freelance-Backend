@@ -15,6 +15,7 @@ import {
   blacklistToken,
   generateAccess,
 } from "../../../middlewares/index.js";
+import { sendEmail, generateRandomCode } from "../../../utils/index.js";
 
 const getAllUsers = asyncHandler(async (req, res) => {
   const data = await service.getAll();
@@ -58,7 +59,11 @@ const loginUser = asyncHandler(async (req, res) => {
   if (!(await bcrypt.compare(req.body.password, data.password)))
     throw createError(STATUSCODE.UNAUTHORIZED, "Password does not match");
 
-  const accessToken = generateAccess({ role: data[RESOURCE.ROLE] });
+  const accessToken = generateAccess({
+    id: data._id,
+    role: data[RESOURCE.ROLE],
+  });
+
   setToken(accessToken.access);
 
   responseHandler(res, data, "User Login successfully", accessToken);
@@ -98,6 +103,7 @@ const updateUser = [
   upload.array("image"),
   asyncHandler(async (req, res) => {
     const oldData = await service.getById(req.params.id);
+    const hashed = await bcrypt.hash(req.body.password, ENV.SALT_NUMBER);
 
     const uploadNewImages = await multipleImages(
       req.files,
@@ -108,6 +114,7 @@ const updateUser = [
       req.params.id,
       {
         ...req.body,
+        password: hashed,
         image: uploadNewImages,
       },
       req.session,
@@ -132,7 +139,7 @@ const restoreUser = asyncHandler(async (req, res) => {
 
   responseHandler(
     res,
-    !data?.deleted ? [] : data,
+    !data?.deleted ? [] : [data],
     !data?.deleted ? "User is not deleted" : "User restored successfully",
   );
 });
@@ -147,7 +154,7 @@ const forceDeleteUser = asyncHandler(async (req, res) => {
     data?.image ? data.image.map((image) => image.public_id) : [],
   );
 
-  responseHandler(res, data, message);
+  responseHandler(res, [data], message);
 });
 
 const changeUserPassword = asyncHandler(async (req, res) => {
@@ -163,7 +170,38 @@ const changeUserPassword = asyncHandler(async (req, res) => {
     req.session,
   );
 
-  responseHandler(res, data, "Password changed successfully");
+  responseHandler(res, [data], "Password changed successfully");
+});
+
+const sendUserEmailOTP = asyncHandler(async (req, res) => {
+  const session = req.session;
+  const otp = generateRandomCode();
+  await sendEmail(req.body.email, otp);
+
+  const data = await service.sendEmailOTP(req.body.email, otp, session);
+
+  responseHandler(res, data, "Password reset email sent successfully");
+});
+
+const resetUserEmailPassword = asyncHandler(async (req, res) => {
+  const session = req.session;
+  const { verificationCode, newPassword, confirmPassword } = req.body;
+
+  if (newPassword !== confirmPassword)
+    throw createError(STATUSCODE.BAD_REQUEST, "Passwords don't match");
+
+  const password = await bcrypt.hash(newPassword, ENV.SALT_NUMBER);  
+
+  const data = await service.resetEmailPassword(
+    verificationCode,
+    password,
+  );
+
+  responseHandler(res, data, "User Password Successfully Reset");
+});
+
+const updatePassword = asyncHandler(async (req, res) => {
+  const data = await service.updatePassword(req.params.id, req.body.password);
 });
 
 export {
@@ -178,4 +216,7 @@ export {
   loginUser,
   logoutUser,
   changeUserPassword,
+  sendUserEmailOTP,
+  updatePassword,
+  resetUserEmailPassword,
 };
