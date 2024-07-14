@@ -76,6 +76,20 @@ async function changePassword(_id, newPassword, session) {
   );
 }
 
+async function sendEmailOTP(email, otp) {
+  const data = await model.findOne({ email });
+  return await model.findByIdAndUpdate(data?._id,{ verificationCode: { code: otp, createdAt: new Date() } },{ new: true, runValidators: true },);
+}
+
+async function resetEmailPassword(
+  verificationCode,
+  password,
+) {
+  const data = await model.findOne({ "verificationCode.code": verificationCode });
+  return await model.findByIdAndUpdate(data?._id, { password: password, verificationCode: null }, { new: true, runValidators: true });
+
+}
+
 export default {
   getAll,
   getAllDeleted,
@@ -87,4 +101,6 @@ export default {
   restoreById,
   forceDelete,
   changePassword,
+  sendEmailOTP,
+  resetEmailPassword,
 };
