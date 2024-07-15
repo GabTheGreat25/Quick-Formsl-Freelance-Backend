@@ -8,15 +8,15 @@ const router = Router();
 const submissionRoutes = [
   {
     method: METHOD.GET,
-    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
     handler: submissionController.getAllSubmissions,
   },
   {
     method: METHOD.GET,
     path: PATH.ID,
-    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
     handler: submissionController.getSingleSubmission,
   },
   {
@@ -27,15 +27,15 @@ const submissionRoutes = [
   {
     method: METHOD.PATCH,
     path: PATH.EDIT,
-    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
     handler: submissionController.updateSubmission,
   },
   {
     method: METHOD.DELETE,
     path: PATH.DELETE,
-    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
     handler: submissionController.deleteSubmission,
   },
 ];

@@ -47,6 +47,13 @@ const designRoutes = [
     handler: designController.updateDesign,
   },
   {
+    method: METHOD.PATCH,
+    path: PATH.CHANGE_DEFAULT,
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
+    handler: designController.changeFormDesign,
+  },
+  {
     method: METHOD.DELETE,
     path: PATH.DELETE,
     // roles: [ROLE.ADMIN, ROLE.CUSTOMER],

@@ -19,6 +19,12 @@ const schema = new mongoose.Schema(
         },
       },
     ],
+    submission: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: RESOURCE.SUBMISSIONS,
+      },
+    ],
   },
   schemaOptions,
 );

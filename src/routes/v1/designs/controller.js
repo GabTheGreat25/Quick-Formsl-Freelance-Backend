@@ -123,6 +123,16 @@ const updateDesign = [
   }),
 ];
 
+const changeFormDesign = asyncHandler(async (req, res) => {
+  const data = await serviceForm.updateDesign(
+    req.params.id,
+    req.body.designId,
+    req.session,
+  );
+
+  responseHandler(res, [data], "Design updated successfully");
+});
+
 const deleteDesign = asyncHandler(async (req, res) => {
   const designData = await service.deleteById(req.params.id, req.session);
 
@@ -169,6 +179,7 @@ export {
   createNewDefaultDesign,
   addExistingDesignToForm,
   updateDesign,
+  changeFormDesign,
   deleteDesign,
   removeDefaultDesign,
 };

@@ -1,21 +1,11 @@
-import mongoose from "mongoose";
 import model from "./model.js";
-import { lookup } from "../../../utils/index.js";
-import { RESOURCE } from "../../../constants/index.js";
 
 async function getAll() {
-  return await model
-    .aggregate()
-    .append(lookup(RESOURCE.FORMS, RESOURCE.FORM, RESOURCE.FORM, []));
+  return await model.find();
 }
 
 async function getById(_id) {
-  return await model
-    .aggregate()
-    .match({
-      _id: mongoose.Types.ObjectId.createFromHexString(_id),
-    })
-    .append(lookup(RESOURCE.FORMS, RESOURCE.FORM, RESOURCE.FORM, []));
+  return await model.findById({ _id });
 }
 
 async function add(body, session) {

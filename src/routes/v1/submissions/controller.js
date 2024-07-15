@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import createError from "http-errors";
 import service from "./service.js";
-import serviceForm from "../forms/service.js";
+import serviceContent from "../contents/service.js";
 import { STATUSCODE } from "../../../constants/index.js";
 import { responseHandler } from "../../../utils/index.js";
 
@@ -28,9 +28,9 @@ const getSingleSubmission = asyncHandler(async (req, res) => {
 });
 
 const createNewSubmission = asyncHandler(async (req, res) => {
-  const form = await serviceForm.getById(req.params.id);
+  const content = await serviceContent.getById(req.params.id);
 
-  const validFieldNames = form.content.fields.map((field) => field.fieldName);
+  const validFieldNames = content[0].fields.map((field) => field.fieldName);
   const values = {};
 
   for (const fieldName of validFieldNames) {
@@ -47,15 +47,24 @@ const createNewSubmission = asyncHandler(async (req, res) => {
       : value;
   }
 
-  const data = await service.add(
+  const submissionData = await service.add(
     {
-      content: req.params.id,
       values,
     },
     req.session,
   );
 
-  responseHandler(res, [data], "Submission created successfully");
+  const contentData = await serviceContent.addSubmissionById(
+    content[0]._id,
+    submissionData[0]._id,
+    req.session,
+  );
+
+  responseHandler(
+    res,
+    [{ submission: submissionData, content: contentData }],
+    "Submission created successfully",
+  );
 });
 
 const updateSubmission = asyncHandler(async (req, res) => {

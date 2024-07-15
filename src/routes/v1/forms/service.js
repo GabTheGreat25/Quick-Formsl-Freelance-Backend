@@ -76,15 +76,7 @@ async function addDesign(userId, designId, session) {
     .session(session)
     .then(async (form) =>
       form
-        ? await model.findByIdAndUpdate(
-            form._id,
-            {
-              $addToSet: {
-                design: designId,
-              },
-            },
-            { new: true, session },
-          )
+        ? await ((form.design = [designId]), form.save({ session, new: true }))
         : await model
             .create(
               [
@@ -137,6 +129,14 @@ async function update(_id, body, session) {
   });
 }
 
+async function updateDesign(_id, designId, session) {
+  return await model.findByIdAndUpdate(
+    _id,
+    { $set: { design: [designId] } },
+    { new: true, session },
+  );
+}
+
 async function deleteById(_id, session) {
   return await model.findByIdAndDelete(_id, { session });
 }
@@ -164,6 +164,7 @@ export default {
   addDesign,
   addSetting,
   update,
+  updateDesign,
   deleteById,
   removeContent,
   removeDesign,
