@@ -174,31 +174,34 @@ const changeUserPassword = asyncHandler(async (req, res) => {
 });
 
 const sendUserEmailOTP = asyncHandler(async (req, res) => {
-  const session = req.session;
-  const otp = generateRandomCode();
-  await sendEmail(req.body.email, otp);
+  await sendEmail(req.body.email, generateRandomCode());
 
-  const data = await service.sendEmailOTP(req.body.email, otp, session);
+  const data = await service.sendEmailOTP(
+    req.body.email,
+    generateRandomCode(),
+    req.session,
+  );
 
-  responseHandler(res, data, "Password reset email sent successfully");
+  responseHandler(res, [data], "Email OTP sent successfully");
 });
 
-const resetUserEmailPassword = asyncHandler(async (req, res) => {
-  const session = req.session;
-  const { verificationCode, newPassword, confirmPassword } = req.body;
+const resetUserPassword = asyncHandler(async (req, res) => {
+  if (!req.body.newPassword || !req.body.confirmPassword)
+    throw createError(STATUSCODE.BAD_REQUEST, "Both passwords are required");
 
-  if (newPassword !== confirmPassword)
-    throw createError(STATUSCODE.BAD_REQUEST, "Passwords don't match");
+  if (req.body.newPassword !== req.body.confirmPassword)
+    throw createError(STATUSCODE.BAD_REQUEST, "Passwords do not match");
 
-  const password = await bcrypt.hash(newPassword, ENV.SALT_NUMBER);
+  const data = await service.resetPassword(
+    req.body.verificationCode,
+    req.body.newPassword,
+    req.session,
+  );
 
-  const data = await service.resetEmailPassword(verificationCode, password);
+  if (!data)
+    throw createError(STATUSCODE.BAD_REQUEST, "Invalid verification code");
 
-  responseHandler(res, data, "User Password Successfully Reset");
-});
-
-const updatePassword = asyncHandler(async (req, res) => {
-  const data = await service.updatePassword(req.params.id, req.body.password);
+  responseHandler(res, [data], "Password Successfully Reset");
 });
 
 export {
@@ -214,6 +217,5 @@ export {
   logoutUser,
   changeUserPassword,
   sendUserEmailOTP,
-  updatePassword,
-  resetUserEmailPassword,
+  resetUserPassword,
 };

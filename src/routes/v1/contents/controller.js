@@ -90,11 +90,24 @@ const updateContent = asyncHandler(async (req, res) => {
 });
 
 const deleteContent = asyncHandler(async (req, res) => {
-  const data = await service.deleteById(req.params.id, req.session);
+  const contentData = await service.deleteById(req.params.id, req.session);
 
-  const message = !data ? "No Content found" : "Content deleted successfully";
+  const message = !contentData
+    ? "No Content found"
+    : "Content deleted successfully";
 
-  responseHandler(res, data, message);
+  const token = extractToken(req.headers.authorization);
+  const verifiedToken = verifyToken(token);
+
+  const formData = contentData
+    ? await serviceForm.removeContent(
+        verifiedToken.id,
+        req.params.id,
+        req.session,
+      )
+    : null;
+
+  responseHandler(res, [{ content: contentData, form: formData }], message);
 });
 
 export {

@@ -1,4 +1,5 @@
 import asyncHandler from "express-async-handler";
+import createError from "http-errors";
 import service from "./service.js";
 import serviceForm from "../forms/service.js";
 import { STATUSCODE } from "../../../constants/index.js";
@@ -61,6 +62,44 @@ const createNewDesign = [
   }),
 ];
 
+const addExistingDesignToForm = asyncHandler(async (req, res) => {
+  const designData = await service.getDefaultById(req.params.id);
+
+  if (!designData)
+    throw createError(STATUSCODE.BAD_REQUEST, "This image is not default");
+
+  const token = extractToken(req.headers.authorization);
+  const verifiedToken = verifyToken(token);
+
+  const formData = await serviceForm.addDesign(
+    verifiedToken.id,
+    designData._id,
+    req.session,
+  );
+
+  responseHandler(
+    res,
+    [{ design: designData, form: formData }],
+    "Existing design ID added to form successfully",
+  );
+});
+
+const createNewDefaultDesign = [
+  upload.array("image"),
+  asyncHandler(async (req, res) => {
+    const uploadedImages = await multipleImages(req.files, []);
+
+    const data = await service.add(
+      {
+        image: uploadedImages,
+      },
+      req.session,
+    );
+
+    responseHandler(res, [data], "Design created successfully");
+  }),
+];
+
 const updateDesign = [
   upload.array("image"),
   asyncHandler(async (req, res) => {
@@ -85,24 +124,51 @@ const updateDesign = [
 ];
 
 const deleteDesign = asyncHandler(async (req, res) => {
-  const data = await service.deleteById(req.params.id, req.session);
+  const designData = await service.deleteById(req.params.id, req.session);
 
-  const message = !data
+  const message = !designData
     ? "No Design found"
     : "Design force deleted successfully";
 
   await multipleImages(
     [],
-    data?.image ? data.image.map((image) => image.public_id) : [],
+    designData?.image ? designData.image.map((image) => image.public_id) : [],
   );
 
-  responseHandler(res, [data], message);
+  const token = extractToken(req.headers.authorization);
+  const verifiedToken = verifyToken(token);
+
+  const formData = designData
+    ? await serviceForm.removeDesign(
+        verifiedToken.id,
+        req.params.id,
+        req.session,
+      )
+    : null;
+
+  responseHandler(res, [{ design: designData, form: formData }], message);
+});
+
+const removeDefaultDesign = asyncHandler(async (req, res) => {
+  const token = extractToken(req.headers.authorization);
+  const verifiedToken = verifyToken(token);
+
+  const data = await serviceForm.removeDesign(
+    verifiedToken.id,
+    req.params.id,
+    req.session,
+  );
+
+  responseHandler(res, [data], "Default design removed from form successfully");
 });
 
 export {
   getAllDesigns,
   getSingleDesign,
   createNewDesign,
+  createNewDefaultDesign,
+  addExistingDesignToForm,
   updateDesign,
   deleteDesign,
+  removeDefaultDesign,
 };

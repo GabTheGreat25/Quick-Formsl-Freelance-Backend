@@ -141,6 +141,22 @@ async function deleteById(_id, session) {
   return await model.findByIdAndDelete(_id, { session });
 }
 
+async function removeContent(userId, contentId, session) {
+  return await model.findOneAndUpdate(
+    { user: userId },
+    { $pull: { content: contentId } },
+    { new: true, session },
+  );
+}
+
+async function removeDesign(userId, designId, session) {
+  return await model.findOneAndUpdate(
+    { user: userId },
+    { $pull: { design: designId } },
+    { new: true, session },
+  );
+}
+
 export default {
   getAll,
   getById,
@@ -149,4 +165,6 @@ export default {
   addSetting,
   update,
   deleteById,
+  removeContent,
+  removeDesign,
 };

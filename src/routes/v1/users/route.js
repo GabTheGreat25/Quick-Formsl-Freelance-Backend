@@ -83,7 +83,7 @@ const userRoutes = [
   {
     method: METHOD.PATCH,
     path: PATH.RESTORE_PASSWORD,
-    handler: userController.resetUserEmailPassword,
+    handler: userController.resetUserPassword,
   },
 ];
 

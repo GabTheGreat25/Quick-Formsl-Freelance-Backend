@@ -1,5 +1,8 @@
 import model from "./model.js";
 import contentModel from "../contents/model.js";
+import designModel from "../designs/model.js";
+import settingModel from "../settings/model.js";
+import formModel from "../forms/model.js";
 import {
   AdminDiscriminator,
   CustomerDiscriminator,
@@ -49,18 +52,27 @@ async function update(_id, body, session) {
 async function deleteById(_id, session) {
   return Promise.all([
     contentModel.updateMany({ user: _id }, { deleted: true }).session(session),
+    designModel.updateMany({ user: _id }, { deleted: true }).session(session),
+    settingModel.updateMany({ user: _id }, { deleted: true }).session(session),
+    formModel.updateMany({ user: _id }, { deleted: true }).session(session),
   ]).then(() => model.findByIdAndUpdate(_id, { deleted: true }, { session }));
 }
 
 async function restoreById(_id, session) {
   return Promise.all([
     contentModel.updateMany({ user: _id }, { deleted: false }).session(session),
+    designModel.updateMany({ user: _id }, { deleted: false }).session(session),
+    settingModel.updateMany({ user: _id }, { deleted: false }).session(session),
+    formModel.updateMany({ user: _id }, { deleted: false }).session(session),
   ]).then(() => model.findByIdAndUpdate(_id, { deleted: false }, { session }));
 }
 
 async function forceDelete(_id, session) {
   return Promise.all([
     contentModel.deleteMany({ user: _id }).session(session),
+    designModel.deleteMany({ user: _id }).session(session),
+    settingModel.deleteMany({ user: _id }).session(session),
+    formModel.deleteMany({ user: _id }).session(session),
   ]).then(() => model.findByIdAndDelete(_id, { session }));
 }
 
@@ -72,23 +84,22 @@ async function changePassword(_id, newPassword, session) {
   );
 }
 
-async function sendEmailOTP(email, otp) {
-  const data = await model.findOne({ email });
-  return await model.findByIdAndUpdate(
-    data?._id,
+async function sendEmailOTP(email, otp, session) {
+  return await model.findOneAndUpdate(
+    { email },
     { verificationCode: { code: otp, createdAt: new Date() } },
-    { new: true, runValidators: true },
+    { new: true, runValidators: true, session },
   );
 }
 
-async function resetEmailPassword(verificationCode, password) {
-  const data = await model.findOne({
-    "verificationCode.code": verificationCode,
-  });
-  return await model.findByIdAndUpdate(
-    data?._id,
-    { password: password, verificationCode: null },
-    { new: true, runValidators: true },
+async function resetPassword(verificationCode, newPassword, session) {
+  return await model.findOneAndUpdate(
+    { "verificationCode.code": verificationCode },
+    {
+      password: await bcrypt.hash(newPassword, ENV.SALT_NUMBER),
+      verificationCode: null,
+    },
+    { new: true, runValidators: true, session },
   );
 }
 
@@ -104,5 +115,5 @@ export default {
   forceDelete,
   changePassword,
   sendEmailOTP,
-  resetEmailPassword,
+  resetPassword,
 };

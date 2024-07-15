@@ -20,10 +20,24 @@ const designRoutes = [
     handler: designController.getSingleDesign,
   },
   {
+    method: METHOD.GET,
+    path: PATH.FIND_DEFAULT,
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
+    handler: designController.addExistingDesignToForm,
+  },
+  {
     method: METHOD.POST,
     // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     // middleware: [verifyJWT],
     handler: designController.createNewDesign,
+  },
+  {
+    method: METHOD.POST,
+    path: PATH.DEFAULT_DESIGN,
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
+    handler: designController.createNewDefaultDesign,
   },
   {
     method: METHOD.PATCH,
@@ -38,6 +52,13 @@ const designRoutes = [
     // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     // middleware: [verifyJWT],
     handler: designController.deleteDesign,
+  },
+  {
+    method: METHOD.PATCH,
+    path: PATH.REMOVE_DEFAULT,
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
+    handler: designController.removeDefaultDesign,
   },
 ];
 

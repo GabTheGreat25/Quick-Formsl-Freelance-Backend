@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { RESOURCE } from "../../../constants/index.js";
+import { RESOURCE, STATUSCODE } from "../../../constants/index.js";
 
 const schemaOptions = {
   discriminatorKey: RESOURCE.ROLE,
@@ -21,7 +21,7 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
       select: false,
-      minlength: 6,
+      minlength: STATUSCODE.SIX,
     },
     image: [
       {
@@ -43,10 +43,6 @@ const schema = new mongoose.Schema(
         type: Date,
         default: null,
       },
-    },
-    active: {
-      type: Boolean,
-      default: false,
     },
   },
   schemaOptions,
