@@ -93,29 +93,26 @@ async function addSetting(userId, contentId, settingId, session) {
     .findOne({ user: userId })
     .session(session)
     .then(async (data) =>
-      data?.form.some(
-        (item) => item.content.toString() === contentId && !item.setting,
-      )
-        ? await model
-            .findOneAndUpdate(
+      data.form.find((item) => item.content.toString() === contentId)
+        ? data.form.find((item) => item.content.toString() === contentId)
+            .setting
+          ? Promise.reject(
+              createError(
+                STATUSCODE.BAD_REQUEST,
+                "Setting already exists for this content",
+              ),
+            )
+          : ((data.form.find(
+              (item) => item.content.toString() === contentId,
+            ).setting = settingId),
+            await model.findOneAndUpdate(
               {
                 _id: data._id,
                 "form.content": contentId,
-                "form.setting": { $exists: false },
               },
               { $set: { "form.$.setting": settingId } },
               { new: true, session },
-            )
-            .then((updatedData) =>
-              updatedData
-                ? updatedData
-                : Promise.reject(
-                    createError(
-                      STATUSCODE.BAD_REQUEST,
-                      "Setting already exists for this content",
-                    ),
-                  ),
-            )
+            ))
         : Promise.reject(
             createError(
               STATUSCODE.BAD_REQUEST,
