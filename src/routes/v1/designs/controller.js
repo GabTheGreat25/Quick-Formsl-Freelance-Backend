@@ -60,77 +60,6 @@ const createNewDesign = asyncHandler(async (req, res) => {
   );
 });
 
-const addExistingDesignToForm = asyncHandler(async (req, res) => {
-  const designData = await service.getDefaultById(req.params.id);
-
-  if (!designData)
-    throw createError(STATUSCODE.BAD_REQUEST, "This image is not default");
-
-  const token = extractToken(req.headers.authorization);
-  const verifiedToken = verifyToken(token);
-
-  const formData = await serviceForm.addDesign(
-    verifiedToken.id,
-    designData._id,
-    req.session,
-  );
-
-  responseHandler(
-    res,
-    [{ design: designData, form: formData }],
-    "Existing design ID added to form successfully",
-  );
-});
-
-const createNewDefaultDesign = [
-  upload.array("image"),
-  asyncHandler(async (req, res) => {
-    const uploadedImages = await multipleImages(req.files, []);
-
-    const data = await service.add(
-      {
-        image: uploadedImages,
-      },
-      req.session,
-    );
-
-    responseHandler(res, [data], "Design created successfully");
-  }),
-];
-
-const updateDesign = [
-  upload.array("image"),
-  asyncHandler(async (req, res) => {
-    const oldData = await service.getById(req.params.id);
-
-    const uploadNewImages = await multipleImages(
-      req.files,
-      oldData?.image.map((image) => image.public_id),
-    );
-
-    const data = await service.update(
-      req.params.id,
-      {
-        ...req.body,
-        image: uploadNewImages,
-      },
-      req.session,
-    );
-
-    responseHandler(res, [data], "Design updated successfully");
-  }),
-];
-
-const changeFormDesign = asyncHandler(async (req, res) => {
-  const data = await serviceForm.updateDesign(
-    req.params.id,
-    req.body.designId,
-    req.session,
-  );
-
-  responseHandler(res, [data], "Design updated successfully");
-});
-
 const deleteDesign = asyncHandler(async (req, res) => {
   const designData = await service.deleteById(req.params.id, req.session);
 
@@ -155,27 +84,4 @@ const deleteDesign = asyncHandler(async (req, res) => {
   responseHandler(res, [{ design: designData, form: formData }], message);
 });
 
-const removeDefaultDesign = asyncHandler(async (req, res) => {
-  const token = extractToken(req.headers.authorization);
-  const verifiedToken = verifyToken(token);
-
-  const data = await serviceForm.removeDesign(
-    verifiedToken.id,
-    req.params.id,
-    req.session,
-  );
-
-  responseHandler(res, [data], "Default design removed from form successfully");
-});
-
-export {
-  getAllDesigns,
-  getSingleDesign,
-  createNewDesign,
-  createNewDefaultDesign,
-  addExistingDesignToForm,
-  updateDesign,
-  changeFormDesign,
-  deleteDesign,
-  removeDefaultDesign,
-};
+export { getAllDesigns, getSingleDesign, createNewDesign, deleteDesign };

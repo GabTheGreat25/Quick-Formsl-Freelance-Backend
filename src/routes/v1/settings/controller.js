@@ -40,6 +40,7 @@ const createNewSetting = asyncHandler(async (req, res) => {
 
   const formData = await serviceForm.addSetting(
     verifiedToken.id,
+    req.body.contentId,
     settingData[0]._id,
     req.session,
   );

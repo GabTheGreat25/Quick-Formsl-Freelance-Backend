@@ -25,29 +25,6 @@ const getSingleForm = asyncHandler(async (req, res) => {
   );
 });
 
-const createNewForm = asyncHandler(async (req, res) => {
-  const data = await service.add(
-    {
-      ...req.body,
-    },
-    req.session,
-  );
-
-  responseHandler(res, [data], "Form created successfully");
-});
-
-const updateForm = asyncHandler(async (req, res) => {
-  const data = await service.update(
-    req.params.id,
-    {
-      ...req.body,
-    },
-    req.session,
-  );
-
-  responseHandler(res, [data], "Form updated successfully");
-});
-
 const deleteForm = asyncHandler(async (req, res) => {
   const data = await service.deleteById(req.params.id, req.session);
 
@@ -56,4 +33,4 @@ const deleteForm = asyncHandler(async (req, res) => {
   responseHandler(res, data, message);
 });
 
-export { getAllForms, getSingleForm, createNewForm, updateForm, deleteForm };
+export { getAllForms, getSingleForm, deleteForm };

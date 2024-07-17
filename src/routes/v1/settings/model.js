@@ -7,7 +7,7 @@ const schemaOptions = {
 
 const schema = new mongoose.Schema(
   {
-    content: {
+    contentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: RESOURCE.CONTENTS,
     },

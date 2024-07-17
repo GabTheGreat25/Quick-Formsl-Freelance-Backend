@@ -107,13 +107,13 @@ const deleteImage = asyncHandler(async (req, res) => {
     data?.image ? data.image.map((image) => image.public_id) : [],
   );
 
-  await serviceDesign.removeImage(data._id, req.session);
+  await serviceDesign.removeImage(data._id);
 
   responseHandler(res, [data], message);
 });
 
 const removeDefaultImage = asyncHandler(async (req, res) => {
-  const data = serviceDesign.removeImage(req.params.id, req.session);
+  await serviceDesign.removeImage(req.params.id);
 
   responseHandler(
     res,

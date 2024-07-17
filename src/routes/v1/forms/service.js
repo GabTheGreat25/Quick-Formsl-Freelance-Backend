@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import createError from "http-errors";
 import model from "./model.js";
-import designModel from "../designs/model.js";
 import { lookup } from "../../../utils/index.js";
 import { RESOURCE, STATUSCODE } from "../../../constants/index.js";
 
@@ -89,49 +88,41 @@ async function addDesign(userId, contentId, designId, session) {
     );
 }
 
-async function addSetting(userId, settingId, session) {
-  return model
+async function addSetting(userId, contentId, settingId, session) {
+  return await model
     .findOne({ user: userId })
     .session(session)
-    .then(async (existingUserSetting) =>
-      existingUserSetting
-        ? existingUserSetting.setting.length === 0
-          ? ((existingUserSetting.setting = [settingId]),
-            await existingUserSetting.save({ session }),
-            existingUserSetting)
-          : Promise.reject(
-              createError(
-                STATUSCODE.CONFLICT,
-                "User already has a form with settings",
-              ),
+    .then(async (data) =>
+      data?.form.some(
+        (item) => item.content.toString() === contentId && !item.setting,
+      )
+        ? await model
+            .findOneAndUpdate(
+              {
+                _id: data._id,
+                "form.content": contentId,
+                "form.setting": { $exists: false },
+              },
+              { $set: { "form.$.setting": settingId } },
+              { new: true, session },
             )
-        : model.create(
-            {
-              user: userId || "",
-              content: [],
-              design: [],
-              settings: [settingId] || [],
-            },
-            { session },
+            .then((updatedData) =>
+              updatedData
+                ? updatedData
+                : Promise.reject(
+                    createError(
+                      STATUSCODE.BAD_REQUEST,
+                      "Setting already exists for this content",
+                    ),
+                  ),
+            )
+        : Promise.reject(
+            createError(
+              STATUSCODE.BAD_REQUEST,
+              "Add a form content first to add setting",
+            ),
           ),
     );
-}
-
-async function update(_id, body, session) {
-  return await model.findByIdAndUpdate(_id, body, {
-    new: true,
-    runValidators: true,
-    session,
-  });
-}
-
-async function updateDesign(_id, designId, session) {
-  return await model.findByIdAndUpdate(
-    _id,
-    { $set: { design: [designId] } },
-
-    { new: true, session },
-  );
 }
 
 async function deleteById(_id, session) {
@@ -160,8 +151,6 @@ export default {
   addContent,
   addDesign,
   addSetting,
-  update,
-  updateDesign,
   deleteById,
   removeContent,
   removeDesign,

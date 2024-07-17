@@ -36,26 +36,17 @@ async function add(body, session) {
       );
 }
 
-async function update(_id, body, session) {
-  return await model.findByIdAndUpdate(_id, body, {
-    new: true,
-    runValidators: true,
-    session,
-  });
-}
-
 async function deleteById(_id, session) {
   return await model.findByIdAndDelete(_id, { session });
 }
 
-async function removeImage(imageId, session) {
+async function removeImage(imageId) {
   return await model.updateMany(
     { "content.imageId": imageId },
     { $set: { "content.$[elem].imageId": null } },
     {
       arrayFilters: [{ "elem.imageId": imageId }],
       new: true,
-      session,
     },
   );
 }
@@ -65,7 +56,6 @@ export default {
   getById,
   getDefaultById,
   add,
-  update,
   deleteById,
   removeImage,
 };

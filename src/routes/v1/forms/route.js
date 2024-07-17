@@ -20,19 +20,6 @@ const formRoutes = [
     handler: formController.getSingleForm,
   },
   {
-    method: METHOD.POST,
-    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    // middleware: [verifyJWT],
-    handler: formController.createNewForm,
-  },
-  {
-    method: METHOD.PATCH,
-    path: PATH.EDIT,
-    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    // middleware: [verifyJWT],
-    handler: formController.updateForm,
-  },
-  {
     method: METHOD.DELETE,
     path: PATH.DELETE,
     // roles: [ROLE.ADMIN, ROLE.CUSTOMER],

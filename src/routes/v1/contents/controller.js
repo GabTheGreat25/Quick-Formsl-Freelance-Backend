@@ -98,13 +98,11 @@ const deleteContent = asyncHandler(async (req, res) => {
   const token = extractToken(req.headers.authorization);
   const verifiedToken = verifyToken(token);
 
-  const formData = contentData
-    ? await serviceForm.removeContent(
-        verifiedToken.id,
-        req.params.id,
-        req.session,
-      )
-    : null;
+  const formData = await serviceForm.removeContent(
+    verifiedToken.id,
+    req.params.id,
+    req.session,
+  );
 
   responseHandler(res, [{ content: contentData, form: formData }], message);
 });
