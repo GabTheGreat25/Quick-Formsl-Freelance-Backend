@@ -7,6 +7,10 @@ const schemaOptions = {
 
 const schema = new mongoose.Schema(
   {
+    content: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: RESOURCE.CONTENTS,
+    },
     isEmailParticipant: {
       type: Boolean,
       default: false,

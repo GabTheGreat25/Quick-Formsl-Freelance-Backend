@@ -84,22 +84,23 @@ async function changePassword(_id, newPassword, session) {
   );
 }
 
-async function sendEmailOTP(email, otp, session) {
-  return await model.findOneAndUpdate(
-    { email },
+async function sendEmailOTP(email, otp) {
+  const data = await model.findOne({ email });
+  return await model.findByIdAndUpdate(
+    data?._id,
     { verificationCode: { code: otp, createdAt: new Date() } },
-    { new: true, runValidators: true, session },
+    { new: true, runValidators: true },
   );
 }
+async function resetEmailPassword(verificationCode, password) {
+  const data = await model.findOne({
+    "verificationCode.code": verificationCode,
+  });
 
-async function resetPassword(verificationCode, newPassword, session) {
-  return await model.findOneAndUpdate(
-    { "verificationCode.code": verificationCode },
-    {
-      password: await bcrypt.hash(newPassword, ENV.SALT_NUMBER),
-      verificationCode: null,
-    },
-    { new: true, runValidators: true, session },
+  return await model.findByIdAndUpdate(
+    data?._id,
+    { password: password, verificationCode: null },
+    { new: true, runValidators: true },
   );
 }
 
@@ -115,5 +116,5 @@ export default {
   forceDelete,
   changePassword,
   sendEmailOTP,
-  resetPassword,
+  resetEmailPassword,
 };

@@ -32,35 +32,33 @@ const getSingleDesign = asyncHandler(async (req, res) => {
   );
 });
 
-const createNewDesign = [
-  upload.array("image"),
-  asyncHandler(async (req, res) => {
-    const uploadedImages = await multipleImages(req.files, []);
+const createNewDesign = asyncHandler(async (req, res) => {
+  const token = extractToken(req.headers.authorization);
+  const verifiedToken = verifyToken(token);
 
-    const token = extractToken(req.headers.authorization);
-    const verifiedToken = verifyToken(token);
-
-    const designData = await service.add(
-      {
-        user: verifiedToken.id,
-        image: uploadedImages,
+  const designData = await service.add(
+    {
+      content: {
+        contentId: req.body.contentId,
+        imageId: req.body.imageId,
       },
-      req.session,
-    );
+    },
+    req.session,
+  );
 
-    const formData = await serviceForm.addDesign(
-      verifiedToken.id,
-      designData[0]._id,
-      req.session,
-    );
+  const formData = await serviceForm.addDesign(
+    verifiedToken.id,
+    req.body.contentId,
+    designData[0]._id,
+    req.session,
+  );
 
-    responseHandler(
-      res,
-      [{ design: designData, form: formData }],
-      "Design created successfully",
-    );
-  }),
-];
+  responseHandler(
+    res,
+    [{ design: designData, form: formData }],
+    "Design created successfully",
+  );
+});
 
 const addExistingDesignToForm = asyncHandler(async (req, res) => {
   const designData = await service.getDefaultById(req.params.id);
@@ -148,13 +146,11 @@ const deleteDesign = asyncHandler(async (req, res) => {
   const token = extractToken(req.headers.authorization);
   const verifiedToken = verifyToken(token);
 
-  const formData = designData
-    ? await serviceForm.removeDesign(
-        verifiedToken.id,
-        req.params.id,
-        req.session,
-      )
-    : null;
+  const formData = await serviceForm.removeDesign(
+    verifiedToken.id,
+    req.params.id,
+    req.session,
+  );
 
   responseHandler(res, [{ design: designData, form: formData }], message);
 });

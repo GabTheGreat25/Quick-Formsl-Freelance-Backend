@@ -35,12 +35,11 @@ const createNewContent = asyncHandler(async (req, res) => {
 
   if (req.body.fields)
     for (const field of req.body.fields) {
-      if (!validInputTypes.includes(field.inputType)) {
+      if (!validInputTypes.includes(field.inputType))
         throw createError(
           STATUSCODE.BAD_REQUEST,
           `Invalid input type: ${field.inputType}`,
         );
-      }
     }
 
   const contentData = await service.add(

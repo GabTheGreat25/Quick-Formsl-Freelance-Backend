@@ -7,16 +7,18 @@ const schemaOptions = {
 
 const schema = new mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: false,
-      ref: RESOURCE.USERS,
-    },
-    image: [
+    content: [
       {
-        public_id: String,
-        url: String,
-        originalname: String,
+        contentId: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: RESOURCE.CONTENTS,
+        },
+        imageId: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: RESOURCE.IMAGES,
+        },
       },
     ],
   },

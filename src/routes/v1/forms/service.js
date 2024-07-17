@@ -1,21 +1,16 @@
 import mongoose from "mongoose";
 import createError from "http-errors";
 import model from "./model.js";
+import designModel from "../designs/model.js";
 import { lookup } from "../../../utils/index.js";
 import { RESOURCE, STATUSCODE } from "../../../constants/index.js";
 
 async function getAll() {
   return await model.aggregate([
-    lookup(RESOURCE.CONTENTS, RESOURCE.CONTENT, RESOURCE.CONTENT, [
-      lookup(
-        RESOURCE.SUBMISSIONS,
-        RESOURCE.SUBMISSION,
-        RESOURCE.SUBMISSION,
-        [],
-      ),
+    lookup(RESOURCE.CONTENTS, "content.contentId", RESOURCE.CONTENT, [
+      lookup(RESOURCE.DESIGNS, "design", "design", []),
+      lookup(RESOURCE.SETTINGS, "setting", "setting", []),
     ]),
-    lookup(RESOURCE.DESIGNS, RESOURCE.DESIGN, RESOURCE.DESIGN, []),
-    lookup(RESOURCE.SETTINGS, RESOURCE.SETTING, RESOURCE.SETTING, []),
   ]);
 }
 
@@ -26,7 +21,9 @@ async function getById(_id) {
       _id: mongoose.Types.ObjectId.createFromHexString(_id),
     })
     .append(
-      lookup(RESOURCE.CONTENTS, RESOURCE.CONTENT, RESOURCE.CONTENT, [
+      lookup(RESOURCE.CONTENTS, "content.contentId", RESOURCE.CONTENT, [
+        lookup(RESOURCE.DESIGNS, "content.design", RESOURCE.DESIGN, []),
+        lookup(RESOURCE.SETTINGS, "content.setting", RESOURCE.SETTING, []),
         lookup(
           RESOURCE.SUBMISSIONS,
           RESOURCE.SUBMISSION,
@@ -34,9 +31,7 @@ async function getById(_id) {
           [],
         ),
       ]),
-    )
-    .append(lookup(RESOURCE.DESIGNS, RESOURCE.DESIGN, RESOURCE.DESIGN, []))
-    .append(lookup(RESOURCE.SETTINGS, RESOURCE.SETTING, RESOURCE.SETTING, []));
+    );
 }
 
 async function addContent(userId, contentId, session) {
@@ -49,7 +44,9 @@ async function addContent(userId, contentId, session) {
             form._id,
             {
               $addToSet: {
-                content: contentId,
+                form: {
+                  content: contentId,
+                },
               },
             },
             { new: true, session },
@@ -59,9 +56,11 @@ async function addContent(userId, contentId, session) {
               [
                 {
                   user: userId || "",
-                  content: [contentId] || [],
-                  design: [],
-                  settings: [],
+                  form: [
+                    {
+                      content: contentId || "",
+                    },
+                  ],
                 },
               ],
               { session },
@@ -70,26 +69,23 @@ async function addContent(userId, contentId, session) {
     );
 }
 
-async function addDesign(userId, designId, session) {
+async function addDesign(userId, contentId, designId, session) {
   return await model
     .findOne({ user: userId })
     .session(session)
-    .then(async (form) =>
-      form
-        ? await ((form.design = [designId]), form.save({ session, new: true }))
-        : await model
-            .create(
-              [
-                {
-                  user: userId || "",
-                  content: [],
-                  design: [designId] || [],
-                  settings: [],
-                },
-              ],
-              { session },
-            )
-            .then((result) => result[0]),
+    .then(async (data) =>
+      data?.form.some((item) => item.content.toString() === contentId)
+        ? await model.findOneAndUpdate(
+            { _id: data._id, "form.content": contentId },
+            { $set: { "form.$.design": designId } },
+            { new: true, session },
+          )
+        : Promise.reject(
+            createError(
+              STATUSCODE.BAD_REQUEST,
+              "Add a form content first to add design",
+            ),
+          ),
     );
 }
 
@@ -133,6 +129,7 @@ async function updateDesign(_id, designId, session) {
   return await model.findByIdAndUpdate(
     _id,
     { $set: { design: [designId] } },
+
     { new: true, session },
   );
 }
@@ -144,15 +141,15 @@ async function deleteById(_id, session) {
 async function removeContent(userId, contentId, session) {
   return await model.findOneAndUpdate(
     { user: userId },
-    { $pull: { content: contentId } },
+    { $pull: { form: { content: contentId } } },
     { new: true, session },
   );
 }
 
 async function removeDesign(userId, designId, session) {
   return await model.findOneAndUpdate(
-    { user: userId },
-    { $pull: { design: designId } },
+    { user: userId, "form.design": designId },
+    { $set: { "form.$.design": null } },
     { new: true, session },
   );
 }

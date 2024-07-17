@@ -11,22 +11,20 @@ const schema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: RESOURCE.USERS,
     },
-    content: [
+    form: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: RESOURCE.CONTENTS,
-      },
-    ],
-    design: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: RESOURCE.DESIGNS,
-      },
-    ],
-    setting: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: RESOURCE.SETTINGS,
+        content: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: RESOURCE.CONTENTS,
+        },
+        design: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: RESOURCE.DESIGNS,
+        },
+        setting: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: RESOURCE.SETTINGS,
+        },
       },
     ],
   },
