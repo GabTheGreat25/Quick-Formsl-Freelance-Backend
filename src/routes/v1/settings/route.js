@@ -32,13 +32,6 @@ const settingRoutes = [
     // middleware: [verifyJWT],
     handler: settingController.updateSetting,
   },
-  {
-    method: METHOD.DELETE,
-    path: PATH.DELETE,
-    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    // middleware: [verifyJWT],
-    handler: settingController.deleteSetting,
-  },
 ];
 
 settingRoutes.forEach((route) => {

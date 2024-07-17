@@ -11,7 +11,5 @@ export const PATH = {
   EMAIL_OTP: "/emailOTP",
   RESTORE_PASSWORD: "/resetEmailPassword",
   DEFAULT_DESIGN: "/createDefault",
-  FIND_DEFAULT: "/findDefault/:id",
-  CHANGE_DEFAULT: "/changeDefault/:id",
   REMOVE_DEFAULT: "/removeDefault/:id",
 };

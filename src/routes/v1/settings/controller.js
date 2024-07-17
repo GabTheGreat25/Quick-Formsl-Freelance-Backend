@@ -64,18 +64,4 @@ const updateSetting = asyncHandler(async (req, res) => {
   responseHandler(res, [data], "Setting updated successfully");
 });
 
-const deleteSetting = asyncHandler(async (req, res) => {
-  const data = await service.deleteById(req.params.id, req.session);
-
-  const message = !data ? "No Setting found" : "Setting deleted successfully";
-
-  responseHandler(res, data, message);
-});
-
-export {
-  getAllSettings,
-  getSingleSetting,
-  createNewSetting,
-  updateSetting,
-  deleteSetting,
-};
+export { getAllSettings, getSingleSetting, createNewSetting, updateSetting };

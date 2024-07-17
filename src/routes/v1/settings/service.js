@@ -20,14 +20,9 @@ async function update(_id, body, session) {
   });
 }
 
-async function deleteById(_id, session) {
-  return await model.findByIdAndDelete(_id, { session });
-}
-
 export default {
   getAll,
   getById,
   add,
   update,
-  deleteById,
 };
