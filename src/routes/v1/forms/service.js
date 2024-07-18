@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 import createError from "http-errors";
 import model from "./model.js";
+import designModel from "../designs/model.js";
+import settingModel from "../settings/model.js";
+import contentModel from "../contents/model.js";
+import submissionModel from "../submissions/model.js";
 import { lookup } from "../../../utils/index.js";
 import { RESOURCE, STATUSCODE } from "../../../constants/index.js";
 
@@ -118,7 +122,46 @@ async function addSetting(userId, contentId, settingId, session) {
 }
 
 async function deleteById(_id, session) {
-  return await model.findByIdAndDelete(_id, { session });
+  return await model
+    .findById(_id)
+    .session(session)
+    .then(async (form) =>
+      form
+        ? await Promise.all(
+            form.form.map(async (item) => {
+              const contentId = item.content.toString();
+              const content = await contentModel
+                .findById(contentId)
+                .session(session);
+              return await Promise.all(
+                content.submission.map((sub) =>
+                  submissionModel
+                    .deleteMany({ _id: sub.toString() })
+                    .session(session),
+                ),
+                await contentModel
+                  .findByIdAndDelete(contentId)
+                  .session(session),
+                true,
+              );
+            }),
+            await Promise.all([
+              designModel
+                .deleteMany({
+                  _id: { $in: form.form.map((item) => item.design) },
+                })
+                .session(session),
+              settingModel
+                .deleteMany({
+                  _id: { $in: form.form.map((item) => item.setting) },
+                })
+                .session(session),
+            ]),
+            await model.findByIdAndDelete(_id).session(session),
+            form,
+          ).then(() => form)
+        : null,
+    );
 }
 
 async function removeContent(userId, contentId, session) {
