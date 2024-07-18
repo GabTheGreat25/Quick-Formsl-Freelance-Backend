@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 import model from "./model.js";
+import designModel from "../designs/model.js";
+import settingModel from "../settings/model.js";
+import submissionModel from "../submissions/model.js";
 import { lookup } from "../../../utils/index.js";
 import { RESOURCE } from "../../../constants/index.js";
 
@@ -45,7 +48,23 @@ async function update(_id, body, session) {
 }
 
 async function deleteById(_id, session) {
-  return await model.findByIdAndDelete(_id, { session });
+  return await model.findById(_id).then((content) =>
+    Promise.all([
+      designModel.deleteMany({ "content.contentId": _id }).session(session),
+      settingModel.deleteMany({ contentId: _id }).session(session),
+    ]).then(() =>
+      Promise.all(
+        content.submission.map((sub) =>
+          submissionModel.deleteMany({ _id: sub.toString() }),
+        ),
+      ).then(() =>
+        model
+          .findByIdAndDelete(_id)
+          .session(session)
+          .then(() => content),
+      ),
+    ),
+  );
 }
 
 async function addSubmissionById(_id, submissionId, session) {

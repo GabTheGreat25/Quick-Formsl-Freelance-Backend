@@ -5,12 +5,7 @@ import { lookup } from "../../../utils/index.js";
 import { RESOURCE, STATUSCODE } from "../../../constants/index.js";
 
 async function getAll() {
-  return await model.aggregate([
-    lookup(RESOURCE.CONTENTS, "content.contentId", RESOURCE.CONTENT, [
-      lookup(RESOURCE.DESIGNS, "design", "design", []),
-      lookup(RESOURCE.SETTINGS, "setting", "setting", []),
-    ]),
-  ]);
+  return await model.find();
 }
 
 async function getById(_id) {

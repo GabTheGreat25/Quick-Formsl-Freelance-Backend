@@ -89,7 +89,7 @@ const updateContent = asyncHandler(async (req, res) => {
 });
 
 const deleteContent = asyncHandler(async (req, res) => {
-  const contentData = await service.deleteById(req.params.id, req.session);
+  const contentData = await service.deleteById(req.params.id);
 
   const message = !contentData
     ? "No Content found"
