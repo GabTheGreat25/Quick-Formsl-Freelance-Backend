@@ -67,33 +67,31 @@ const createNewSubmission = asyncHandler(async (req, res) => {
   );
 });
 
-const updateSubmission = asyncHandler(async (req, res) => {
-  const data = await service.update(
-    req.params.id,
-    {
-      ...req.body,
-      image: uploadNewImages,
-    },
-    req.session,
-  );
-
-  responseHandler(res, [data], "Submission updated successfully");
-});
-
 const deleteSubmission = asyncHandler(async (req, res) => {
-  const data = await service.deleteById(req.params.id, req.session);
+  const submissionData = await service.deleteById(req.params.id, req.session);
 
-  const message = !data
+  const message = !submissionData
     ? "No Submission found"
     : "Submission deleted successfully";
 
-  responseHandler(res, [data], message);
+  const content = await serviceContent.findSubmissionById(req.params.id);
+
+  const contentData = await serviceContent.deleteSubmissionById(
+    content._id,
+    submissionData._id,
+    req.session,
+  );
+
+  responseHandler(
+    res,
+    [{ submission: submissionData, content: contentData }],
+    message,
+  );
 });
 
 export {
   getAllSubmissions,
   getSingleSubmission,
   createNewSubmission,
-  updateSubmission,
   deleteSubmission,
 };

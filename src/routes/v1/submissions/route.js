@@ -25,13 +25,6 @@ const submissionRoutes = [
     handler: submissionController.createNewSubmission,
   },
   {
-    method: METHOD.PATCH,
-    path: PATH.EDIT,
-    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    // middleware: [verifyJWT],
-    handler: submissionController.updateSubmission,
-  },
-  {
     method: METHOD.DELETE,
     path: PATH.DELETE,
     // roles: [ROLE.ADMIN, ROLE.CUSTOMER],

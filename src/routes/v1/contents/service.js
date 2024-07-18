@@ -56,6 +56,18 @@ async function addSubmissionById(_id, submissionId, session) {
   );
 }
 
+async function findSubmissionById(submissionId) {
+  return await model.findOne({ submission: submissionId });
+}
+
+async function deleteSubmissionById(_id, submissionId, session) {
+  return await model.findByIdAndUpdate(
+    _id,
+    { $pull: { submission: submissionId } },
+    { new: true, session },
+  );
+}
+
 export default {
   getAll,
   getById,
@@ -63,4 +75,6 @@ export default {
   update,
   deleteById,
   addSubmissionById,
+  findSubmissionById,
+  deleteSubmissionById,
 };
