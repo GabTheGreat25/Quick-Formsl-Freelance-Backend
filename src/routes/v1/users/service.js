@@ -89,20 +89,25 @@ async function getCode(verificationCode) {
   });
 }
 
-async function sendEmailOTP(email, otp) {
+async function sendEmailOTP(email, otp, session) {
   return await model.findByIdAndUpdate(
     (await model.findOne({ email }))?._id,
     { verificationCode: { code: otp, createdAt: new Date() } },
-    { new: true, runValidators: true, deleted: false },
+    { new: true, runValidators: true, deleted: false, session },
   );
 }
 
-async function resetPassword(verificationCode, password) {
-  return await model.findByIdAndUpdate(
-    (await model.findOne({ "verificationCode.code": verificationCode }))?._id,
-    { password: password, verificationCode: null },
-    { new: true, runValidators: true, deleted: false },
-  );
+async function resetPassword(verificationCode, newPassword, session) {
+  return await model
+    .findByIdAndUpdate(
+      (await model.findOne({ "verificationCode.code": verificationCode }))?._id,
+      {
+        verificationCode: null,
+        password: await bcrypt.hash(newPassword, ENV.SALT_NUMBER),
+      },
+      { new: true, runValidators: true, deleted: false, session },
+    )
+    .select(RESOURCE.PASSWORD);
 }
 
 export default {

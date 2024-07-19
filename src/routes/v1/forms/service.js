@@ -1,35 +1,55 @@
-import mongoose from "mongoose";
 import createError from "http-errors";
 import model from "./model.js";
 import designModel from "../designs/model.js";
 import settingModel from "../settings/model.js";
 import contentModel from "../contents/model.js";
 import submissionModel from "../submissions/model.js";
-import { lookup } from "../../../utils/index.js";
 import { RESOURCE, STATUSCODE } from "../../../constants/index.js";
 
 async function getAll() {
-  return await model.find();
+  return await model
+    .find()
+    .populate({
+      path: RESOURCE.USER,
+    })
+    .populate({
+      path: "form.content",
+      populate: {
+        path: RESOURCE.SUBMISSION,
+      },
+    })
+    .populate({
+      path: "form.design",
+      populate: {
+        path: "content.imageId",
+      },
+    })
+    .populate({
+      path: "form.setting",
+    });
 }
 
 async function getById(_id) {
   return await model
-    .aggregate()
-    .match({
-      _id: mongoose.Types.ObjectId.createFromHexString(_id),
+    .findById({ _id })
+    .populate({
+      path: RESOURCE.USER,
     })
-    .append(
-      lookup(RESOURCE.CONTENTS, "content.contentId", RESOURCE.CONTENT, [
-        lookup(RESOURCE.DESIGNS, "content.design", RESOURCE.DESIGN, []),
-        lookup(RESOURCE.SETTINGS, "content.setting", RESOURCE.SETTING, []),
-        lookup(
-          RESOURCE.SUBMISSIONS,
-          RESOURCE.SUBMISSION,
-          RESOURCE.SUBMISSION,
-          [],
-        ),
-      ]),
-    );
+    .populate({
+      path: "form.content",
+      populate: {
+        path: RESOURCE.SUBMISSION,
+      },
+    })
+    .populate({
+      path: "form.design",
+      populate: {
+        path: "content.imageId",
+      },
+    })
+    .populate({
+      path: "form.setting",
+    });
 }
 
 async function addContent(userId, contentId, session) {

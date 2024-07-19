@@ -1,11 +1,11 @@
 import { RESOURCE } from "../constants/index.js";
 
-export const lookup = (from, localField, as, nestedLookup) => ({
+export const lookup = (from, localField, as, nestedLookup = []) => ({
   $lookup: {
     from,
     localField,
     foreignField: RESOURCE.ID,
     as,
-    pipeline: nestedLookup,
+    pipeline: Array.isArray(nestedLookup) ? nestedLookup : [],
   },
 });

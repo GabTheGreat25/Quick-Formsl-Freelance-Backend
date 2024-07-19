@@ -1,11 +1,16 @@
+import { RESOURCE } from "../../../constants/resource.js";
 import model from "./model.js";
 
 async function getAll() {
-  return await model.find();
+  return await model.find().populate({
+    path: RESOURCE.USER,
+  });
 }
 
 async function getById(_id) {
-  return await model.findOne({ _id });
+  return await model.findOne({ _id }).populate({
+    path: RESOURCE.USER,
+  });
 }
 
 async function add(body, session) {

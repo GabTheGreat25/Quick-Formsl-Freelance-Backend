@@ -8,22 +8,22 @@ const router = Router();
 const formRoutes = [
   {
     method: METHOD.GET,
-    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
     handler: formController.getAllForms,
   },
   {
     method: METHOD.GET,
     path: PATH.ID,
-    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
     handler: formController.getSingleForm,
   },
   {
     method: METHOD.DELETE,
     path: PATH.DELETE,
-    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
     handler: formController.deleteForm,
   },
 ];

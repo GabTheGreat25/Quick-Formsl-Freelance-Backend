@@ -1,15 +1,46 @@
 import model from "./model.js";
+import { RESOURCE } from "../../../constants/index.js";
 
 async function getAll() {
-  return await model.find();
+  return await model
+    .find()
+    .populate({
+      path: "content.imageId",
+    })
+    .populate({
+      path: "content.contentId",
+      populate: {
+        path: RESOURCE.SUBMISSION,
+      },
+    });
 }
 
 async function getById(_id) {
-  return await model.findOne({ _id });
+  return await model
+    .findById({ _id })
+    .populate({
+      path: "content.imageId",
+    })
+    .populate({
+      path: "content.contentId",
+      populate: {
+        path: RESOURCE.SUBMISSION,
+      },
+    });
 }
 
 async function getDefaultById(_id) {
-  return await model.findOne({ _id, user: null });
+  return await model
+    .findOne({ _id, user: null })
+    .populate({
+      path: "content.imageId",
+    })
+    .populate({
+      path: "content.contentId",
+      populate: {
+        path: RESOURCE.SUBMISSION,
+      },
+    });
 }
 
 async function add(body, session) {

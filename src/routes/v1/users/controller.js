@@ -191,7 +191,11 @@ const sendUserEmailOTP = asyncHandler(async (req, res) => {
 });
 
 const resetUserEmailPassword = asyncHandler(async (req, res) => {
-  if (!newPassword || !confirmPassword || newPassword !== confirmPassword)
+  if (
+    !req.body.newPassword ||
+    !req.body.confirmPassword ||
+    req.body.newPassword !== req.body.confirmPassword
+  )
     throw createError(
       STATUSCODE.BAD_REQUEST,
       "Passwords are required and must match",

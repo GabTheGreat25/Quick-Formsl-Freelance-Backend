@@ -8,28 +8,28 @@ const router = Router();
 const designRoutes = [
   {
     method: METHOD.GET,
-    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
     handler: designController.getAllDesigns,
   },
   {
     method: METHOD.GET,
     path: PATH.ID,
-    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
     handler: designController.getSingleDesign,
   },
   {
     method: METHOD.POST,
-    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
     handler: designController.createNewDesign,
   },
   {
     method: METHOD.DELETE,
     path: PATH.DELETE,
-    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
     handler: designController.deleteDesign,
   },
 ];
