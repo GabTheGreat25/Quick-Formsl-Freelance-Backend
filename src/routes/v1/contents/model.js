@@ -25,6 +25,11 @@ const schema = new mongoose.Schema(
         ref: RESOURCE.SUBMISSIONS,
       },
     ],
+    title: {
+      type: String,
+      required: true,
+      default: "Untitled Form",
+    },
   },
   schemaOptions,
 );
