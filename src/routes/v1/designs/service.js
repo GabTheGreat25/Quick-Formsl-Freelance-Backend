@@ -29,6 +29,7 @@ async function add(body, session) {
             content: {
               contentId: body.content.contentId,
               imageId: body.content.imageId,
+              position: body.content.position,
             },
           },
         ],
