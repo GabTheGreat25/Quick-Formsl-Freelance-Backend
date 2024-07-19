@@ -41,7 +41,7 @@ const createNewDesign = asyncHandler(async (req, res) => {
       content: {
         contentId: req.body.contentId,
         imageId: req.body.imageId,
-        position: req.body.position, 
+        position: req.body.position,
       },
     },
     req.session,

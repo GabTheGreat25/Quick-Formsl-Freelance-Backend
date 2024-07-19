@@ -19,11 +19,11 @@ const schema = new mongoose.Schema(
           required: true,
           ref: RESOURCE.IMAGES,
         },
-        position:{
+        position: {
           type: String,
           required: true,
           enum: ["left", "center", "right"],
-        }
+        },
       },
     ],
   },
