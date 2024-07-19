@@ -174,22 +174,50 @@ const changeUserPassword = asyncHandler(async (req, res) => {
 });
 
 const sendUserEmailOTP = asyncHandler(async (req, res) => {
-  const session = req.session;
-  const otp = generateRandomCode();
-  await sendEmail(req.body.email, otp);
-  const data = await service.sendEmailOTP(req.body.email, otp, session);
-  responseHandler(res, data, "Password reset email sent successfully");
+  const email = await service.getEmail(req.body.email);
+
+  if (new Date() - new Date(email.verificationCode.createdAt) < 5 * 60 * 1000) {
+    throw new createError(
+      "Please wait 5 minutes before requesting a new verification code",
+    );
+  }
+
+  const code = generateRandomCode();
+  await sendEmail(req.body.email, code);
+
+  const data = await service.sendEmailOTP(req.body.email, code, req.session);
+
+  responseHandler(res, [data], "Email OTP sent successfully");
 });
 
 const resetUserEmailPassword = asyncHandler(async (req, res) => {
-  const session = req.session;
-  const { verificationCode, newPassword, confirmPassword } = req.body;
-  if (newPassword !== confirmPassword)
-    throw createError(STATUSCODE.BAD_REQUEST, "Passwords don't match");
-  const password = await bcrypt.hash(newPassword, ENV.SALT_NUMBER);
-  const data = await service.resetEmailPassword(verificationCode, password);
-  console.log(data);
-  responseHandler(res, data, "User Password Successfully Reset");
+  if (!newPassword || !confirmPassword || newPassword !== confirmPassword)
+    throw createError(
+      STATUSCODE.BAD_REQUEST,
+      "Passwords are required and must match",
+    );
+
+  const code = await service.getCode(req.body.verificationCode);
+
+  if (
+    Date.now() - new Date(code.verificationCode.createdAt).getTime() >
+    5 * 60 * 1000
+  ) {
+    code.verificationCode = null;
+    await code.save();
+    throw createError("Verification code has expired");
+  }
+
+  const data = await service.resetPassword(
+    req.body.verificationCode,
+    req.body.newPassword,
+    req.session,
+  );
+
+  if (!data)
+    throw createError(STATUSCODE.BAD_REQUEST, "Invalid verification code");
+
+  responseHandler(res, [data], "Password Successfully Reset");
 });
 
 export {

@@ -72,27 +72,36 @@ async function changePassword(_id, newPassword, session) {
   return await model.findByIdAndUpdate(
     _id,
     { password: await bcrypt.hash(newPassword, ENV.SALT_NUMBER) },
-    { new: true, runValidators: true, select: RESOURCE.PASSWORD, session },
+    {
+      new: true,
+      runValidators: true,
+      select: RESOURCE.PASSWORD,
+      deleted: false,
+      session,
+    },
   );
+}
+
+async function getCode(verificationCode) {
+  return await model.findOne({
+    "verificationCode.code": verificationCode,
+    deleted: false,
+  });
 }
 
 async function sendEmailOTP(email, otp) {
-  const data = await model.findOne({ email });
   return await model.findByIdAndUpdate(
-    data?._id,
+    (await model.findOne({ email }))?._id,
     { verificationCode: { code: otp, createdAt: new Date() } },
-    { new: true, runValidators: true },
+    { new: true, runValidators: true, deleted: false },
   );
 }
-async function resetEmailPassword(verificationCode, password) {
-  const data = await model.findOne({
-    "verificationCode.code": verificationCode,
-  });
 
+async function resetPassword(verificationCode, password) {
   return await model.findByIdAndUpdate(
-    data?._id,
+    (await model.findOne({ "verificationCode.code": verificationCode }))?._id,
     { password: password, verificationCode: null },
-    { new: true, runValidators: true },
+    { new: true, runValidators: true, deleted: false },
   );
 }
 
@@ -107,6 +116,7 @@ export default {
   restoreById,
   forceDelete,
   changePassword,
+  getCode,
   sendEmailOTP,
-  resetEmailPassword,
+  resetPassword,
 };

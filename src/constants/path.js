@@ -9,7 +9,7 @@ export const PATH = {
   RESTORE: "/restore/:id",
   FORCE_DELETE: "/forceDelete/:id",
   EMAIL_OTP: "/emailOTP",
-  RESTORE_PASSWORD: "/resetEmailPassword",
+  RESTORE_PASSWORD: "/resetPassword",
   DEFAULT_DESIGN: "/createDefault",
   REMOVE_DEFAULT: "/removeDefault/:id",
 };
