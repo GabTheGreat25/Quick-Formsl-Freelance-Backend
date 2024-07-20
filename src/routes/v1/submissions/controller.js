@@ -30,29 +30,38 @@ const getSingleSubmission = asyncHandler(async (req, res) => {
 const createNewSubmission = asyncHandler(async (req, res) => {
   const content = await serviceContent.getById(req.params.id);
 
-  const validFieldNames = content.fields.map((field) => field.fieldName);
+  if (!content) throw createError(STATUSCODE.NOT_FOUND, "Create a form first");
+
+  const fieldIdMap = content.fields.reduce((map, field) => {
+    map[field._id.toString()] = field.fieldName;
+    return map;
+  }, {});
+
   const values = {};
+  const errors = [];
 
-  for (const fieldName of validFieldNames) {
-    if (!req.body.hasOwnProperty(fieldName))
-      throw createError(
-        STATUSCODE.BAD_REQUEST,
-        `Field '${fieldName}' is required`,
-      );
+  for (const [fieldIdStr, value] of Object.entries(req.body)) {
+    const fieldName = fieldIdMap[fieldIdStr];
 
-    const value = req.body[fieldName];
+    values[fieldIdStr] = Array.isArray(value)
+      ? value.filter((item) => typeof item === "string" && item.trim() !== "")
+      : value.trim();
 
-    values[fieldName] = Array.isArray(value)
-      ? value.filter((item) => typeof item === "string")
-      : value;
+    if (
+      (Array.isArray(value) && values[fieldIdStr].length === 0) ||
+      (!Array.isArray(value) && values[fieldIdStr] === "")
+    )
+      errors.push(`Field '${fieldName}' must not be empty`);
   }
 
-  const submissionData = await service.add(
-    {
-      values,
-    },
-    req.session,
-  );
+  for (const [fieldIdStr, fieldName] of Object.entries(fieldIdMap))
+    if (!(fieldIdStr in req.body))
+      errors.push(`Field '${fieldName}' is required`);
+
+  if (errors.length > 0)
+    throw createError(STATUSCODE.BAD_REQUEST, errors.join(", "));
+
+  const submissionData = await service.add({ values }, req.session);
 
   const contentData = await serviceContent.addSubmissionById(
     content._id,
