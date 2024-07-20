@@ -80,11 +80,21 @@ const logoutUser = asyncHandler(async (req, res) => {
 const createNewUser = [
   upload.array("image"),
   asyncHandler(async (req, res) => {
-    const uploadedImages = await multipleImages(req.files, []);
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+    if (!passwordRegex.test(req.body.password))
+      throw createError(
+        STATUSCODE.BAD_REQUEST,
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+      );
+
     const hashed = await bcrypt.hash(req.body.password, ENV.SALT_NUMBER);
 
-    if (uploadedImages.length === STATUSCODE.ZERO)
+    const uploadedImages = await multipleImages(req.files, []);
+    if (uploadedImages.length === STATUSCODE.ZERO) {
       throw createError(STATUSCODE.BAD_REQUEST, "Image is required");
+    }
 
     const data = await service.add(
       {
