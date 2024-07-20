@@ -30,7 +30,7 @@ const getSingleSubmission = asyncHandler(async (req, res) => {
 const createNewSubmission = asyncHandler(async (req, res) => {
   const content = await serviceContent.getById(req.params.id);
 
-  const validFieldNames = content[0].fields.map((field) => field.fieldName);
+  const validFieldNames = content.fields.map((field) => field.fieldName);
   const values = {};
 
   for (const fieldName of validFieldNames) {
@@ -55,7 +55,7 @@ const createNewSubmission = asyncHandler(async (req, res) => {
   );
 
   const contentData = await serviceContent.addSubmissionById(
-    content[0]._id,
+    content._id,
     submissionData[0]._id,
     req.session,
   );
