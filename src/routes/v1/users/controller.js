@@ -113,7 +113,6 @@ const updateUser = [
   upload.array("image"),
   asyncHandler(async (req, res) => {
     const oldData = await service.getById(req.params.id);
-    const hashed = await bcrypt.hash(req.body.password, ENV.SALT_NUMBER);
 
     const uploadNewImages = await multipleImages(
       req.files,
@@ -124,7 +123,6 @@ const updateUser = [
       req.params.id,
       {
         ...req.body,
-        password: hashed,
         image: uploadNewImages,
       },
       req.session,
@@ -168,6 +166,15 @@ const forceDeleteUser = asyncHandler(async (req, res) => {
 });
 
 const changeUserPassword = asyncHandler(async (req, res) => {
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+  if (!passwordRegex.test(req.body.newPassword))
+    throw createError(
+      STATUSCODE.BAD_REQUEST,
+      "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+    );
+
   if (!req.body.newPassword || !req.body.confirmPassword)
     throw createError(STATUSCODE.BAD_REQUEST, "Both passwords are required");
 
@@ -201,6 +208,15 @@ const sendUserEmailOTP = asyncHandler(async (req, res) => {
 });
 
 const resetUserEmailPassword = asyncHandler(async (req, res) => {
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+  if (!passwordRegex.test(req.body.newPassword))
+    throw createError(
+      STATUSCODE.BAD_REQUEST,
+      "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+    );
+
   if (
     !req.body.newPassword ||
     !req.body.confirmPassword ||
