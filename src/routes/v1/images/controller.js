@@ -113,11 +113,17 @@ const deleteImage = asyncHandler(async (req, res) => {
 });
 
 const removeDefaultImage = asyncHandler(async (req, res) => {
-  await serviceDesign.removeImage(req.params.id);
+  if (!req.body.contentId)
+    throw createError(
+      STATUSCODE.BAD_REQUEST,
+      "Image not related to any content",
+    );
+
+  await serviceDesign.removeDefaultImage(req.body.contentId, req.params.id);
 
   responseHandler(
     res,
-    [{ id: req.params.id }],
+    [{ content: req.body.contentId, image: req.params.id }],
     "Default Image removed successfully",
   );
 });

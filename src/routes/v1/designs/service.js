@@ -84,7 +84,7 @@ async function removeImage(imageId) {
 }
 
 async function removeDefaultImage(contentId, imageId) {
-  return await model.updateMany(
+  return await model.updateOne(
     { "content.contentId": contentId, "content.imageId": imageId },
     { $set: { "content.$[elem].imageId": null } },
     {
