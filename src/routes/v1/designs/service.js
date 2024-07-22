@@ -83,6 +83,17 @@ async function removeImage(imageId) {
   );
 }
 
+async function removeDefaultImage(contentId, imageId) {
+  return await model.updateMany(
+    { "content.contentId": contentId, "content.imageId": imageId },
+    { $set: { "content.$[elem].imageId": null } },
+    {
+      arrayFilters: [{ "elem.contentId": contentId, "elem.imageId": imageId }],
+      new: true,
+    },
+  );
+}
+
 export default {
   getAll,
   getById,
@@ -90,4 +101,5 @@ export default {
   add,
   deleteById,
   removeImage,
+  removeDefaultImage,
 };

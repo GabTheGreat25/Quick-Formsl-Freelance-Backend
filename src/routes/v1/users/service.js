@@ -1,5 +1,9 @@
 import model from "./model.js";
 import imageModel from "../images/model.js";
+import designModel from "../designs/model.js";
+import settingModel from "../settings/model.js";
+import contentModel from "../contents/model.js";
+import submissionModel from "../submissions/model.js";
 import formModel from "../forms/model.js";
 import {
   AdminDiscriminator,
@@ -48,24 +52,60 @@ async function update(_id, body, session) {
 }
 
 async function deleteById(_id, session) {
-  return Promise.all([
-    imageModel.updateMany({ user: _id }, { deleted: true }).session(session),
-    formModel.updateMany({ user: _id }, { deleted: true }).session(session),
-  ]).then(() => model.findByIdAndUpdate(_id, { deleted: true }, { session }));
+  return model.findByIdAndUpdate(_id, { deleted: true }, { session });
 }
 
 async function restoreById(_id, session) {
-  return Promise.all([
-    imageModel.updateMany({ user: _id }, { deleted: false }).session(session),
-    formModel.updateMany({ user: _id }, { deleted: false }).session(session),
-  ]).then(() => model.findByIdAndUpdate(_id, { deleted: false }, { session }));
+  return model.findByIdAndUpdate(_id, { deleted: false }, { session });
 }
 
 async function forceDelete(_id, session) {
-  return Promise.all([
-    imageModel.deleteMany({ user: _id }).session(session),
-    formModel.deleteMany({ user: _id }).session(session),
-  ]).then(() => model.findByIdAndDelete(_id, { session }));
+  return await (async () => {
+    const [forms, images, user] = await Promise.all([
+      formModel.find({ user: _id }),
+      imageModel.find({ user: _id }),
+      model.findById(_id),
+    ]);
+
+    await Promise.all([
+      (async () => {
+        await Promise.all(
+          forms.map(async (form) => {
+            await Promise.all(
+              form.form.map(async (item) => {
+                const contentId = item.content.toString();
+                const content = await contentModel.findById(contentId);
+                if (content) {
+                  await Promise.all([
+                    submissionModel.deleteMany({
+                      _id: { $in: content.submission },
+                    }),
+                    contentModel.findByIdAndDelete(contentId),
+                  ]);
+                }
+              }),
+            );
+            await Promise.all([
+              designModel.deleteMany({
+                _id: { $in: form.form.map((item) => item.design) },
+              }),
+              settingModel.deleteMany({
+                _id: { $in: form.form.map((item) => item.setting) },
+              }),
+              formModel.findByIdAndDelete(form._id),
+            ]);
+          }),
+        );
+      })(),
+      imageModel.deleteMany({ user: _id }).session(session),
+      model.findByIdAndDelete(_id, { session }),
+    ]);
+
+    return {
+      imagesDeleted: images,
+      userData: user,
+    };
+  })();
 }
 
 async function changePassword(_id, newPassword, session) {

@@ -33,14 +33,22 @@ const createNewContent = asyncHandler(async (req, res) => {
   const inputTypes = await serviceInputType.find();
   const validInputTypes = inputTypes.map((inputType) => inputType.type);
 
-  if (req.body.fields)
-    for (const field of req.body.fields) {
-      if (!validInputTypes.includes(field.inputType))
+  const validateFields = (fields) => {
+    for (const field of fields) {
+      const inputType = field.inputType;
+
+      if (!validInputTypes.includes(inputType))
         throw createError(
           STATUSCODE.BAD_REQUEST,
-          `Invalid input type: ${field.inputType}`,
+          `Invalid input type: ${inputType}`,
         );
+
+      if (inputType === "column" && field.columns)
+        validateFields(field.columns);
     }
+  };
+
+  if (req.body.fields) validateFields(req.body.fields);
 
   const contentData = await service.add(
     {

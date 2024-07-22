@@ -1,13 +1,8 @@
 import asyncHandler from "express-async-handler";
-import createError from "http-errors";
 import service from "./service.js";
 import serviceForm from "../forms/service.js";
 import { STATUSCODE } from "../../../constants/index.js";
-import {
-  upload,
-  responseHandler,
-  multipleImages,
-} from "../../../utils/index.js";
+import { responseHandler } from "../../../utils/index.js";
 import { extractToken, verifyToken } from "../../../middlewares/index.js";
 
 const getAllDesigns = asyncHandler(async (req, res) => {
@@ -67,11 +62,6 @@ const deleteDesign = asyncHandler(async (req, res) => {
   const message = !designData
     ? "No Design found"
     : "Design force deleted successfully";
-
-  await multipleImages(
-    [],
-    designData?.image ? designData.image.map((image) => image.public_id) : [],
-  );
 
   const token = extractToken(req.headers.authorization);
   const verifiedToken = verifyToken(token);

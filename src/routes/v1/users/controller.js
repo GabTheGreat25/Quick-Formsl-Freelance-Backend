@@ -157,10 +157,14 @@ const forceDeleteUser = asyncHandler(async (req, res) => {
 
   const message = !data ? "No User found" : "User force deleted successfully";
 
-  await multipleImages(
-    [],
-    data?.image ? data.image.map((image) => image.public_id) : [],
-  );
+  const imagePublicIds = [
+    ...(data.userData?.image).map((image) => image.public_id),
+    ...data.imagesDeleted.flatMap((imgRecord) =>
+      imgRecord.image.map((image) => image.public_id),
+    ),
+  ];
+
+  if (imagePublicIds.length) await multipleImages([], imagePublicIds);
 
   responseHandler(res, [data], message);
 });

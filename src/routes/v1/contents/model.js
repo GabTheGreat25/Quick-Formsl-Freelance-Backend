@@ -17,6 +17,18 @@ const schema = new mongoose.Schema(
           type: String,
           required: false,
         },
+        columns: [
+          {
+            inputType: {
+              type: String,
+              required: false,
+            },
+            fieldName: {
+              type: String,
+              required: false,
+            },
+          },
+        ],
       },
     ],
     submission: [

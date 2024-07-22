@@ -8,15 +8,15 @@ const router = Router();
 const userRoutes = [
   {
     method: METHOD.GET,
-    roles: [ROLE.ADMIN],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN],
+    // middleware: [verifyJWT],
     handler: userController.getAllUsers,
   },
   {
     method: METHOD.GET,
     path: PATH.DELETED,
-    roles: [ROLE.ADMIN],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN],
+    // middleware: [verifyJWT],
     handler: userController.getAllUsersDeleted,
   },
   {
@@ -32,8 +32,8 @@ const userRoutes = [
   {
     method: METHOD.GET,
     path: PATH.ID,
-    roles: [ROLE.ADMIN],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN],
+    // middleware: [verifyJWT],
     handler: userController.getSingleUser,
   },
   {
@@ -43,29 +43,29 @@ const userRoutes = [
   {
     method: METHOD.PATCH,
     path: PATH.EDIT,
-    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
     handler: userController.updateUser,
   },
   {
     method: METHOD.DELETE,
     path: PATH.DELETE,
-    roles: [ROLE.ADMIN],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN],
+    // middleware: [verifyJWT],
     handler: userController.deleteUser,
   },
   {
     method: METHOD.PUT,
     path: PATH.RESTORE,
-    roles: [ROLE.ADMIN],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN],
+    // middleware: [verifyJWT],
     handler: userController.restoreUser,
   },
   {
     method: METHOD.DELETE,
     path: PATH.FORCE_DELETE,
-    roles: [ROLE.ADMIN],
-    middleware: [verifyJWT],
+    // roles: [ROLE.ADMIN],
+    // middleware: [verifyJWT],
     handler: userController.forceDeleteUser,
   },
   {

@@ -32,31 +32,39 @@ const createNewSubmission = asyncHandler(async (req, res) => {
 
   if (!content) throw createError(STATUSCODE.NOT_FOUND, "Create a form first");
 
-  const fieldIdMap = content.fields.reduce((map, field) => {
-    map[field._id.toString()] = field.fieldName;
-    return map;
-  }, {});
+  const flattenFields = (fields) => {
+    const flatMap = {};
+
+    const processField = (field) => {
+      field.inputType === "column"
+        ? field.columns.forEach(processField)
+        : (flatMap[field._id.toString()] = field.fieldName);
+    };
+
+    fields.forEach(processField);
+    return flatMap;
+  };
+
+  const fieldIdMap = flattenFields(content.fields);
 
   const values = {};
   const errors = [];
 
-  for (const [fieldIdStr, value] of Object.entries(req.body)) {
+  Object.entries(req.body).forEach(([fieldIdStr, value]) => {
     const fieldName = fieldIdMap[fieldIdStr];
 
     values[fieldIdStr] = Array.isArray(value)
       ? value.filter((item) => typeof item === "string" && item.trim() !== "")
       : value.trim();
 
-    if (
-      (Array.isArray(value) && values[fieldIdStr].length === 0) ||
-      (!Array.isArray(value) && values[fieldIdStr] === "")
-    )
+    if (values[fieldIdStr].length === 0 || values[fieldIdStr] === "")
       errors.push(`Field '${fieldName}' must not be empty`);
-  }
+  });
 
-  for (const [fieldIdStr, fieldName] of Object.entries(fieldIdMap))
+  Object.entries(fieldIdMap).forEach(([fieldIdStr, fieldName]) => {
     if (!(fieldIdStr in req.body))
       errors.push(`Field '${fieldName}' is required`);
+  });
 
   if (errors.length > 0)
     throw createError(STATUSCODE.BAD_REQUEST, errors.join(", "));
