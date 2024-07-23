@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as publishController from "./controller.js";
+import * as linkController from "./controller.js";
 import { METHOD, PATH, ROLE } from "../../../constants/index.js";
 import { verifyJWT, authorizeRoles } from "../../../middlewares/index.js";
 
@@ -8,30 +8,25 @@ const router = Router();
 const linkRoutes = [
   {
     method: METHOD.GET,
-    handler: publishController.getAllLinks,
-  },
-  {
-    method: METHOD.GET,
-    path: PATH.ID,
-    roles: [ROLE.ADMIN],
-    middleware: [verifyJWT],
-    handler: publishController.getSingleLink,
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
+    handler: linkController.getAllLinks,
   },
   {
     method: METHOD.POST,
-    handler: publishController.createPublishLink,
+    handler: linkController.createLink,
   },
   {
-    method: METHOD.PATCH,
-    path: PATH.EDIT,
-    roles: [ROLE.ADMIN],
-    middleware: [verifyJWT],
-    handler: publishController.updatePublishLink,
+    method: METHOD.GET,
+    path: PATH.URL,
+    handler: linkController.redirectToDecryptedUrl,
   },
   {
     method: METHOD.DELETE,
     path: PATH.DELETE,
-    handler: publishController.deletedLink,
+    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    // middleware: [verifyJWT],
+    handler: linkController.deleteLink,
   },
 ];
 

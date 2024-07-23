@@ -10,6 +10,7 @@ const schema = new mongoose.Schema(
     values: {
       type: Map,
       of: mongoose.Schema.Types.Mixed,
+      default: {},
     },
   },
   schemaOptions,
