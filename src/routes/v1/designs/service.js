@@ -72,7 +72,7 @@ async function add(body, session) {
         { session },
       );
 }
-  
+
 async function deleteById(_id, session) {
   return await model.findByIdAndDelete(_id, { session });
 }
