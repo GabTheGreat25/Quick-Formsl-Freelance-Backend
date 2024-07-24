@@ -2,6 +2,7 @@ import model from "./model.js";
 import designModel from "../designs/model.js";
 import settingModel from "../settings/model.js";
 import submissionModel from "../submissions/model.js";
+import linkModel from "../links/model.js";
 import { RESOURCE } from "../../../constants/index.js";
 
 async function getAll() {
@@ -33,6 +34,7 @@ async function deleteById(_id, session) {
     Promise.all([
       designModel.deleteMany({ "content.contentId": _id }).session(session),
       settingModel.deleteMany({ contentId: _id }).session(session),
+      linkModel.deleteOne({ content: _id }).session(session),
     ]).then(() =>
       Promise.all(
         content.submission.map((sub) =>

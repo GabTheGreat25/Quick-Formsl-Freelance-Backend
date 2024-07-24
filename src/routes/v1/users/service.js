@@ -5,6 +5,7 @@ import settingModel from "../settings/model.js";
 import contentModel from "../contents/model.js";
 import submissionModel from "../submissions/model.js";
 import formModel from "../forms/model.js";
+import linkModel from "../links/model.js";
 import {
   AdminDiscriminator,
   CustomerDiscriminator,
@@ -81,6 +82,7 @@ async function forceDelete(_id, session) {
                       _id: { $in: content.submission },
                     }),
                     contentModel.findByIdAndDelete(contentId),
+                    linkModel.deleteOne({ content: contentId }),
                   ]);
                 }
               }),
@@ -97,7 +99,7 @@ async function forceDelete(_id, session) {
           }),
         );
       })(),
-      imageModel.deleteMany({ user: _id }).session(session),
+      imageModel.deleteMany({ user: _id })?.session(session),
       model.findByIdAndDelete(_id, { session }),
     ]);
 

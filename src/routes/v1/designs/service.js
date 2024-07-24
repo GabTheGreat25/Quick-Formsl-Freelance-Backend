@@ -50,7 +50,12 @@ async function add(body, session) {
     ? [
         await model.findOneAndUpdate(
           { "content.contentId": body.content.contentId },
-          { $set: { "content.$.imageId": body.content.imageId } },
+          {
+            $set: {
+              "content.$.imageId": body.content.imageId,
+              "content.$.position": body.content.position,
+            },
+          },
           { new: true, session },
         ),
       ]
@@ -67,7 +72,7 @@ async function add(body, session) {
         { session },
       );
 }
-
+  
 async function deleteById(_id, session) {
   return await model.findByIdAndDelete(_id, { session });
 }
