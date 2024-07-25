@@ -17,11 +17,6 @@ const linkRoutes = [
     handler: linkController.createLink,
   },
   {
-    method: METHOD.GET,
-    path: PATH.URL,
-    handler: linkController.redirectToDecryptedUrl,
-  },
-  {
     method: METHOD.DELETE,
     path: PATH.DELETE,
     // roles: [ROLE.ADMIN, ROLE.CUSTOMER],

@@ -7,7 +7,12 @@ const schemaOptions = {
 
 const schema = new mongoose.Schema(
   {
-    url: {
+    urlLink: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    encryptedUrl: {
       type: String,
       required: true,
     },

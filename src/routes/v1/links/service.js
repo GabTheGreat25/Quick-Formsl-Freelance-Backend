@@ -6,6 +6,26 @@ import model from "./model.js";
 const algorithm = ENV.ALGORITHM;
 const secretKey = Buffer.from(ENV.SECRET_KEY_HEX, "hex");
 
+function generateShortId(segmentLengths = [3, 4, 3]) {
+  const totalLength = segmentLengths.reduce((sum, len) => sum + len, 0);
+  const bytes = crypto.randomBytes(totalLength);
+  const segments = [];
+  let index = 0;
+
+  for (const length of segmentLengths) {
+    const segmentBytes = bytes.subarray(index, index + length);
+    const segment = Buffer.from(segmentBytes)
+      .toString("base64")
+      .replace(/\+/g, "0")
+      .replace(/\//g, "1")
+      .substring(0, length);
+    segments.push(segment);
+    index += length;
+  }
+
+  return segments.join("-");
+}
+
 async function encrypt(text) {
   return await new Promise((resolve) => {
     const iv = crypto.randomBytes(8);
@@ -20,21 +40,6 @@ async function encrypt(text) {
   });
 }
 
-async function decrypt(text) {
-  return await new Promise((resolve) => {
-    const [ivHex, encrypted] = text.split(":");
-    const iv = Buffer.from(ivHex, "hex");
-    const decipher = crypto.createDecipheriv(
-      algorithm,
-      secretKey,
-      Buffer.concat([iv, Buffer.alloc(8)]),
-    );
-    let decrypted = decipher.update(encrypted, "hex", "utf8");
-    decrypted += decipher.final("utf8");
-    resolve(decrypted);
-  });
-}
-
 async function getAll() {
   return await model.find().populate({
     path: RESOURCE.CONTENT,
@@ -46,6 +51,7 @@ async function getById(_id) {
     path: RESOURCE.CONTENT,
   });
 }
+
 async function find(query) {
   return await model.findOne(query);
 }
@@ -58,6 +64,10 @@ async function deleteById(_id, session) {
   return await model.findByIdAndDelete(_id, { session });
 }
 
+async function findByUrl(url) {
+  return await model.findOne({ urlLink: url });
+}
+
 export default {
   getAll,
   getById,
@@ -65,5 +75,6 @@ export default {
   add,
   deleteById,
   encrypt,
-  decrypt,
+  generateShortId,
+  findByUrl,
 };

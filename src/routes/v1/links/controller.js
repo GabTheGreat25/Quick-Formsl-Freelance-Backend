@@ -28,28 +28,19 @@ const createLink = asyncHandler(async (req, res) => {
       STATUSCODE.CONFLICT,
       "Link already exists for this content",
     );
+
+  const urlLink = `${ENV.BACKEND_URL}/?url=${service.generateShortId()}`;
+
   const encryptedUrl = await service.encrypt(
     `${ENV.BACKEND_URL}/submissions/${req.body.content}`,
   );
 
-  const urlLink = `${ENV.BACKEND_URL}/links/url?encryptedUrl=${encodeURIComponent(encryptedUrl)}`;
-
   const data = await service.add(
-    { url: urlLink, content: req.body.content },
+    { urlLink, encryptedUrl, content: req.body.content },
     req.session,
   );
 
   responseHandler(res, [data], "Link created successfully");
-});
-
-const redirectToDecryptedUrl = asyncHandler(async (req, res) => {
-  const decryptedUrl = await service.decrypt(req.query.encryptedUrl);
-
-  responseHandler(
-    res,
-    { decryptedUrl },
-    "Decrypted URL retrieved successfully",
-  );
 });
 
 const deleteLink = asyncHandler(async (req, res) => {
@@ -60,4 +51,4 @@ const deleteLink = asyncHandler(async (req, res) => {
   responseHandler(res, data, message);
 });
 
-export { getAllLinks, createLink, redirectToDecryptedUrl, deleteLink };
+export { getAllLinks, createLink, deleteLink };

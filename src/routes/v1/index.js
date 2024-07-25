@@ -7,6 +7,7 @@ import designRoutes from "./designs/route.js";
 import settingRoutes from "./settings/route.js";
 import submissionRoutes from "./submissions/route.js";
 import linkRoutes from "./links/route.js";
+import publishRoutes from "./publish/route.js";
 import { RESOURCE } from "../../constants/index.js";
 
 const routes = [
@@ -45,6 +46,10 @@ const routes = [
   {
     url: RESOURCE.LINKS,
     route: linkRoutes,
+  },
+  {
+    url: "",
+    route: publishRoutes,
   },
 ];
 
