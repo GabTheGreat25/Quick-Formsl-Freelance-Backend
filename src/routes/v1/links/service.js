@@ -23,7 +23,7 @@ function generateShortId(segmentLengths = [3, 4, 3]) {
     index += length;
   }
 
-  return segments.join("-");
+  return segments.join("-").toLowerCase();
 }
 
 async function encrypt(text) {
