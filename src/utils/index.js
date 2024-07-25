@@ -6,3 +6,5 @@ export * from "./multipleImages.js";
 export * from "./responseHandler.js";
 export * from "./pass-mailer.js";
 export * from "./randomCode.js";
+export * from "./admin-mailer.js";
+export * from "./customer-mailer.js";
