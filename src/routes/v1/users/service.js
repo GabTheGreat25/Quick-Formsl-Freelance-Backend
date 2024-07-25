@@ -110,6 +110,10 @@ async function resetPassword(verificationCode, newPassword, session) {
     .select(RESOURCE.PASSWORD);
 }
 
+async function getAllAdmins(){
+  return model.find({ role: ROLE.ADMIN })
+}
+
 export default {
   getAll,
   getAllDeleted,
@@ -124,4 +128,5 @@ export default {
   getCode,
   sendEmailOTP,
   resetPassword,
+  getAllAdmins,
 };
