@@ -6,24 +6,26 @@ import model from "./model.js";
 const algorithm = ENV.ALGORITHM;
 const secretKey = Buffer.from(ENV.SECRET_KEY_HEX, "hex");
 
-function generateShortId(segmentLengths = [3, 4, 3]) {
-  const totalLength = segmentLengths.reduce((sum, len) => sum + len, 0);
-  const bytes = crypto.randomBytes(totalLength);
-  const segments = [];
-  let index = 0;
+async function generateShortId(segmentLengths = [3, 4, 3]) {
+  return await new Promise((resolve) => {
+    const totalLength = segmentLengths.reduce((sum, len) => sum + len, 0);
+    const bytes = crypto.randomBytes(totalLength);
+    const segments = [];
+    let index = 0;
 
-  for (const length of segmentLengths) {
-    const segmentBytes = bytes.subarray(index, index + length);
-    const segment = Buffer.from(segmentBytes)
-      .toString("base64")
-      .replace(/\+/g, "0")
-      .replace(/\//g, "1")
-      .substring(0, length);
-    segments.push(segment);
-    index += length;
-  }
+    for (const length of segmentLengths) {
+      const segmentBytes = bytes.subarray(index, index + length);
+      const segment = Buffer.from(segmentBytes)
+        .toString("base64")
+        .replace(/\+/g, "0")
+        .replace(/\//g, "1")
+        .substring(0, length);
+      segments.push(segment);
+      index += length;
+    }
 
-  return segments.join("-").toLowerCase();
+    resolve(segments.join("-").toLowerCase());
+  });
 }
 
 async function encrypt(text) {
