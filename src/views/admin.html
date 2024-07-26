@@ -46,16 +46,20 @@
   <body>
     <main class="container">
       <div class="headers">
-        <h3 class="header-text">Go Virtual Participant Forms</h3>
+        <h3 class="header-text">Go Virtual Participant Form</h3>
       </div>
-      <p class="p-text">Dear Admin {{name}},</p>
+      <p class="p-text">Dear {{name}},</p>
       <p class="p-text">
         We are pleased to inform you that a new form has been successfully
-        filled up by user{{customer}}.
+        filled up by {{customerName}}.
+      </p>
+      <p class="p-text">
+        You have received a total of {{submissionCount}} submissions for this
+        form.
       </p>
       <p class="p-text">Thank you for your attention.</p>
       <p class="p-text">Best regards,</p>
-      <p class="p-text">[Go Virtual PH/Backend Team]</p>
+      <p class="p-text">Go Virtual Team</p>
     </main>
   </body>
 </html>

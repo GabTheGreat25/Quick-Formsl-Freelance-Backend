@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import handlebars from "handlebars";
+import { ENV } from "../config/index.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,10 +21,9 @@ export const sendEmail = (email, randomCode) => {
   const index = template(replacement);
 
   return transporter.sendMail({
-    from: process.env.EMAIL,
+    from: ENV.EMAIL,
     to: `${email}`,
     subject: "Resetting Account Password",
-    text: "Hi this is your reset password OTP Number",
     html: index,
   });
 };

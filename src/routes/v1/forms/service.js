@@ -53,6 +53,31 @@ async function getById(_id) {
     });
 }
 
+async function findByContentId(contentId) {
+  return await model
+    .findOne({
+      "form.content": contentId,
+    })
+    .populate({
+      path: RESOURCE.USER,
+    })
+    .populate({
+      path: "form.content",
+      populate: {
+        path: RESOURCE.SUBMISSION,
+      },
+    })
+    .populate({
+      path: "form.design",
+      populate: {
+        path: "content.imageId",
+      },
+    })
+    .populate({
+      path: "form.setting",
+    });
+}
+
 async function addContent(userId, contentId, session) {
   return await model
     .findOne({ user: userId })
@@ -204,13 +229,23 @@ async function removeDesign(userId, designId, session) {
   );
 }
 
+async function incrementSubmissionCount(formId, contentId, session) {
+  return await model.findOneAndUpdate(
+    { _id: formId, "form.content": contentId },
+    { $inc: { "form.$.submissionCount": 1 } },
+    { new: true, session },
+  );
+}
+
 export default {
   getAll,
   getById,
+  findByContentId,
   addContent,
   addDesign,
   addSetting,
   deleteById,
   removeContent,
   removeDesign,
+  incrementSubmissionCount,
 };
