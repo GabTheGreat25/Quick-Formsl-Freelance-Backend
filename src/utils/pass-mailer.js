@@ -23,7 +23,7 @@ export const sendEmail = (email, randomCode) => {
   return transporter.sendMail({
     from: ENV.EMAIL,
     to: `${email}`,
-    subject: "Resetting Account Password",
+    subject: "Reset Account Password",
     html: index,
   });
 };

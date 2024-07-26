@@ -6,60 +6,76 @@
     <title>Document</title>
     <style>
       body {
-        margin: 0;
         padding: 0;
+        margin: 0;
         font-family: Arial, sans-serif;
-        min-height: 100vh;
       }
-
       .container {
         margin: 70px;
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        border: black 1px solid;
-        border-radius: 4px;
-        max-width: 100%;
-      }
-      .headers {
-        display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
-        background-color: rgb(8, 191, 224);
-        height: 150px;
-        width: 95%;
       }
-
-      .header-text {
-        font-size: 50px;
-        color: white;
+      .wrapper {
+        max-width: 400px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #fff;
+        text-align: center;
+      }
+      .title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
       }
       .p-text {
-        font-size: 14px;
-        color: black;
-        text-align: left;
+        font-size: 1rem;
+        margin-bottom: 10px;
+        text-align: justify;
+      }
+      .start {
+        font-size: 1rem;
+        text-align: start;
+        margin-bottom: 10px;
+      }
+      .center {
+        font-size: 1rem;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      .message {
+        font-size: 1rem;
+        text-align: start;
+        margin-bottom: 5px;
+        margin-top: 20px;
+      }
+      .end {
+        font-size: 1rem;
+        text-align: start;
+        margin-bottom: 5px;
+        margin-top: 10px;
       }
     </style>
   </head>
   <body>
     <main class="container">
-      <div class="headers">
-        <h3 class="header-text">Go Virtual Participant Form</h3>
+      <div class="wrapper">
+        <h2 class="title">Go Virtual Form</h2>
+        <p class="p-text start">Dear {{name}},</p>
+        <p class="p-text">
+          We are pleased to inform you that a new form has been successfully
+          filled up by {{customerName}}.
+        </p>
+        <p class="p-text">
+          You have received a total of {{submissionCount}} submissions for this
+          form.
+        </p>
+        <p class="center">Thank you for using Quick Form.</p>
+        <p class="message">Best regards,</p>
+        <p class="end">Go Virtual Team</p>
       </div>
-      <p class="p-text">Dear {{name}},</p>
-      <p class="p-text">
-        We are pleased to inform you that a new form has been successfully
-        filled up by {{customerName}}.
-      </p>
-      <p class="p-text">
-        You have received a total of {{submissionCount}} submissions for this
-        form.
-      </p>
-      <p class="p-text">Thank you for your attention.</p>
-      <p class="p-text">Best regards,</p>
-      <p class="p-text">Go Virtual Team</p>
     </main>
   </body>
 </html>

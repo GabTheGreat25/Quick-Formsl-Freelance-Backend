@@ -12,13 +12,13 @@
         font-family: Arial, sans-serif;
         min-height: 100vh;
       }
-      .main-container {
+      .container {
         margin: 70px;
         display: flex;
         justify-content: center;
         align-items: center;
       }
-      .container {
+      .wrapper {
         max-width: 400px;
         padding: 20px;
         border: 1px solid #ccc;
@@ -35,8 +35,18 @@
         font-size: 1rem;
         margin-bottom: 20px;
       }
+      .start {
+        font-size: 1rem;
+        text-align: start;
+        margin-bottom: 20px;
+      }
+      .end {
+        font-size: 1rem;
+        text-align: justify;
+        margin-top: 20px;
+      }
       .reset-btn {
-        background-color: #4caf50;
+        background-color: rgb(16, 76, 153);
         color: white;
         border: none;
         border-radius: 4px;
@@ -44,27 +54,29 @@
         text-decoration: none;
         display: inline-block;
         font-size: 1rem;
-        border:  solid 1px #4caf50;
-        transition: background-color 1s, color 1s;
+        border: solid 1px rgb(16, 76, 153);
+        transition:
+          background-color 1s,
+          color 1s;
         cursor: pointer;
       }
       .reset-btn:hover {
         background-color: white;
-        color: #4caf50;
+        color: rgb(16, 76, 153);
       }
     </style>
   </head>
   <body>
-    <main class="main-container">
-      <div class="container">
+    <main class="container">
+      <div class="wrapper">
         <h2 class="title">Reset Password OTP</h2>
-        <p class="message">Dear User,</p>
+        <p class="start">Dear User,</p>
         <p class="message">
           You have requested to reset your account password. Please use the OTP
           below to proceed:
         </p>
         <button class="reset-btn">{{randomCode}}</button>
-        <p class="message">
+        <p class="end">
           If you did not initiate this request, please ignore this email.
         </p>
       </div>
