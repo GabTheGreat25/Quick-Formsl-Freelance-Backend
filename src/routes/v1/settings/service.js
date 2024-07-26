@@ -13,6 +13,10 @@ async function getById(_id) {
   });
 }
 
+async function getByContentId(_id){
+  return await model.findOne({ contentId: _id });
+}
+
 async function add(body, session) {
   return await model.create([body], { session });
 }
@@ -30,4 +34,5 @@ export default {
   getById,
   add,
   update,
+  getByContentId,
 };

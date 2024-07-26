@@ -2,8 +2,12 @@ import asyncHandler from "express-async-handler";
 import createError from "http-errors";
 import service from "./service.js";
 import serviceContent from "../contents/service.js";
+import serviceSetting from "../settings/service.js";
+import userService from "../users/service.js";
 import { STATUSCODE } from "../../../constants/index.js";
 import { responseHandler } from "../../../utils/index.js";
+import { sendAdminEmail, sendCustomerEmail } from "../../../utils/index.js";
+import { extractToken, verifyToken } from "../../../middlewares/index.js";
 
 const getAllSubmissions = asyncHandler(async (req, res) => {
   const data = await service.getAll();
@@ -76,6 +80,26 @@ const createNewSubmission = asyncHandler(async (req, res) => {
     submissionData[0]._id,
     req.session,
   );
+
+  const token = extractToken(req.headers.authorization);
+  const verifiedToken = verifyToken(token);
+
+  const setting = await serviceSetting.getByContentId(content?._id);
+
+  if (setting?.isEmailParticipant) {
+    const { email, name } = await userService.getById(verifiedToken.id);
+    await sendCustomerEmail(email, name);
+  }
+
+  if (setting?.isEmailAdmin) {
+    const { name: customerName } = await userService.getById(verifiedToken.id);
+    const admins = await userService.getAllAdmins();
+    await Promise.all(
+      admins.map((admin) =>
+        sendAdminEmail(admin.email, admin.name, customerName),
+      ),
+    );
+  }
 
   responseHandler(
     res,

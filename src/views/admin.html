@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        min-height: 100vh;
+      }
+
+      .container {
+        margin: 70px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        border: black 1px solid;
+        border-radius: 4px;
+        max-width: 100%;
+      }
+      .headers {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(8, 191, 224);
+        height: 150px;
+        width: 95%;
+      }
+
+      .header-text {
+        font-size: 50px;
+        color: white;
+      }
+      .p-text {
+        font-size: 14px;
+        color: black;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <div class="headers">
+        <h3 class="header-text">Go Virtual Participant Forms</h3>
+      </div>
+      <p class="p-text">Dear Admin {{name}},</p>
+      <p class="p-text">
+        We are pleased to inform you that a new form has been successfully
+        filled up by user{{customer}}.
+      </p>
+      <p class="p-text">Thank you for your attention.</p>
+      <p class="p-text">Best regards,</p>
+      <p class="p-text">[Go Virtual PH/Backend Team]</p>
+    </main>
+  </body>
+</html>
