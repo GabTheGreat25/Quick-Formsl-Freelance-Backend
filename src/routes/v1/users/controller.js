@@ -198,6 +198,8 @@ const sendUserEmailOTP = asyncHandler(async (req, res) => {
   const email = await service.getEmail(req.body.email);
 
   if (new Date() - new Date(email.verificationCode.createdAt) < 5 * 60 * 1000) {
+    email.verificationCode = null;
+    await email.save();
     throw new createError(
       "Please wait 5 minutes before requesting a new verification code",
     );
