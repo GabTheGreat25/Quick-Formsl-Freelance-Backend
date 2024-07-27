@@ -13,11 +13,12 @@ const content = fs.readFileSync(mail, "utf8");
 
 const template = handlebars.compile(content);
 
-export const sendCustomerEmail = (email, customerName) => {
+export const sendCustomerEmail = (email, customerName, result) => {
   const replacement = {
     customerName: customerName,
+    result,
   };
-
+  
   const index = template(replacement);
 
   return transporter.sendMail({
