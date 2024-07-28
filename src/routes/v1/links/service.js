@@ -6,7 +6,7 @@ import model from "./model.js";
 const algorithm = ENV.ALGORITHM;
 const secretKey = Buffer.from(ENV.SECRET_KEY_HEX, "hex");
 
-async function generateShortId(segmentLengths = [3, 4, 3]) {
+async function generateLink(segmentLengths = [3, 4, 3]) {
   return await new Promise((resolve) => {
     const totalLength = segmentLengths.reduce((sum, len) => sum + len, 0);
     const bytes = crypto.randomBytes(totalLength);
@@ -45,12 +45,9 @@ async function encrypt(text) {
 async function getAll() {
   return await model.find().populate({
     path: RESOURCE.CONTENT,
-  });
-}
-
-async function getById(_id) {
-  return await model.findOne({ _id }).populate({
-    path: RESOURCE.CONTENT,
+    populate: {
+      path: RESOURCE.SUBMISSION,
+    },
   });
 }
 
@@ -72,11 +69,10 @@ async function findByUrl(url) {
 
 export default {
   getAll,
-  getById,
   find,
   add,
   deleteById,
   encrypt,
-  generateShortId,
+  generateLink,
   findByUrl,
 };

@@ -43,8 +43,8 @@ const userRoutes = [
   {
     method: METHOD.PATCH,
     path: PATH.EDIT,
-    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    // middleware: [verifyJWT],
+    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    middleware: [verifyJWT],
     handler: userController.updateUser,
   },
   {

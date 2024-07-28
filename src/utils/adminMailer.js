@@ -13,10 +13,10 @@ const content = fs.readFileSync(mail, "utf8");
 
 const template = handlebars.compile(content);
 
-export const sendAdminEmail = (email, name, customerName, submissionCount) => {
+export const sendAdminEmail = (email, name, result, submissionCount) => {
   const replacement = {
     name: name,
-    customerName: customerName,
+    result: result,
     submissionCount: submissionCount,
   };
 
@@ -25,7 +25,7 @@ export const sendAdminEmail = (email, name, customerName, submissionCount) => {
   return transporter.sendMail({
     from: ENV.EMAIL,
     to: `${email}`,
-    subject: "New Form Submission Notification",
+    subject: "New Quick Form Submission Notification",
     html: index,
   });
 };

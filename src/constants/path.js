@@ -10,8 +10,6 @@ export const PATH = {
   FORCE_DELETE: "/forceDelete/:id",
   EMAIL_OTP: "/emailOTP",
   RESTORE_PASSWORD: "/resetPassword",
-  CREATE_ID: "/create/:id",
   DEFAULT_DESIGN: "/createDefault",
   REMOVE_DEFAULT: "/removeDefault/:id",
-  URL: "/url",
 };

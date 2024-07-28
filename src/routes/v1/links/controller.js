@@ -29,7 +29,7 @@ const createLink = asyncHandler(async (req, res) => {
       "Link already exists for this content",
     );
 
-  const urlLink = `${ENV.BACKEND_URL}/?url=${await service.generateShortId()}`;
+  const urlLink = `${ENV.BACKEND_URL}/?url=${await service.generateLink()}`;
 
   const encryptedUrl = await service.encrypt(
     `${ENV.BACKEND_URL}/submissions/${req.body.content}`,

@@ -69,12 +69,12 @@ const createNewSubmission = asyncHandler(async (req, res) => {
 
   const submissionData = await service.add({ values }, req.session);
   const contentData = await serviceContent.addSubmissionById(
-    content?._id,
+    content._id,
     submissionData[0]._id,
     req.session,
   );
 
-  const form = await formService.findByContentId(content?._id);
+  const form = await formService.findByContentId(content._id);
   const formData = await formService.incrementSubmissionCount(
     form._id,
     content._id,
@@ -88,46 +88,44 @@ const createNewSubmission = asyncHandler(async (req, res) => {
 
   const getDynamicFieldValue = (keyword) => {
     for (const [fieldIdStr, value] of Object.entries(values)) {
-      const fieldName = fieldIdMap[fieldIdStr]?.toLowerCase();
-      if (fieldName?.includes(keyword)) return value;
+      const fieldName = fieldIdMap[fieldIdStr].toLowerCase();
+      if (fieldName.includes(keyword)) return value;
     }
     return null;
   };
 
   const getAllDynamicFieldValues = () => {
     const dynamicFieldValues = {};
-  
+
     for (const [fieldIdStr, value] of Object.entries(values)) {
-      const fieldName = fieldIdMap[fieldIdStr]?.toLowerCase();
-      if (fieldName) {
-        dynamicFieldValues[fieldName] = value;
-      }
+      const fieldName = fieldIdMap[fieldIdStr].toLowerCase();
+      if (fieldName) dynamicFieldValues[fieldName] = value;
     }
-  
+
     return dynamicFieldValues;
   };
 
   const nameFields = Object.values(fieldIdMap).filter((fieldName) =>
-    fieldName?.toLowerCase()?.includes("name"),
+    fieldName.toLowerCase().includes("name"),
   );
 
   const nameValues = nameFields
-    .map((keyword) => getDynamicFieldValue(keyword?.toLowerCase()))
+    .map((keyword) => getDynamicFieldValue(keyword.toLowerCase()))
     .filter(Boolean);
 
   const customerName =
     nameValues.length > 1 ? nameValues.join(" ") : nameValues[0] || "Customer";
 
   const email = getDynamicFieldValue("email");
-  const setting = await serviceSetting.getByContentId(content?._id);
+  const setting = await serviceSetting.getByContentId(content._id);
   const result = getAllDynamicFieldValues();
 
   if (setting.isEmailParticipant && email)
-    await sendCustomerEmail(email, customerName, result);
+    await sendCustomerEmail(email, customerName);
 
   if (setting.isEmailAdmin) {
     const { email, name } = await userService.getById(form.user);
-    await sendAdminEmail(email, name, customerName, submissionCount);
+    await sendAdminEmail(email, name, result, submissionCount);
   }
 
   responseHandler(
