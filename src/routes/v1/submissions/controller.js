@@ -3,11 +3,11 @@ import createError from "http-errors";
 import service from "./service.js";
 import serviceContent from "../contents/service.js";
 import serviceSetting from "../settings/service.js";
+import formService from "../forms/service.js";
 import userService from "../users/service.js";
 import { STATUSCODE } from "../../../constants/index.js";
 import { responseHandler } from "../../../utils/index.js";
 import { sendAdminEmail, sendCustomerEmail } from "../../../utils/index.js";
-import { extractToken, verifyToken } from "../../../middlewares/index.js";
 
 const getAllSubmissions = asyncHandler(async (req, res) => {
   const data = await service.getAll();
@@ -33,34 +33,28 @@ const getSingleSubmission = asyncHandler(async (req, res) => {
 
 const createNewSubmission = asyncHandler(async (req, res) => {
   const content = await serviceContent.getById(req.params.id);
-
   if (!content) throw createError(STATUSCODE.NOT_FOUND, "Create a form first");
 
   const flattenFields = (fields) => {
     const flatMap = {};
-
     const processField = (field) => {
       field.inputType === "column"
         ? field.columns.forEach(processField)
         : (flatMap[field._id.toString()] = field.fieldName);
     };
-
     fields.forEach(processField);
     return flatMap;
   };
 
   const fieldIdMap = flattenFields(content.fields);
-
   const values = {};
   const errors = [];
 
   Object.entries(req.body).forEach(([fieldIdStr, value]) => {
     const fieldName = fieldIdMap[fieldIdStr];
-
     values[fieldIdStr] = Array.isArray(value)
       ? value.filter((item) => typeof item === "string" && item.trim() !== "")
       : value.trim();
-
     if (values[fieldIdStr].length === 0 || values[fieldIdStr] === "")
       errors.push(`Field '${fieldName}' must not be empty`);
   });
@@ -74,31 +68,66 @@ const createNewSubmission = asyncHandler(async (req, res) => {
     throw createError(STATUSCODE.BAD_REQUEST, errors.join(", "));
 
   const submissionData = await service.add({ values }, req.session);
-
   const contentData = await serviceContent.addSubmissionById(
-    content._id,
+    content?._id,
     submissionData[0]._id,
     req.session,
   );
 
-  const token = extractToken(req.headers.authorization);
-  const verifiedToken = verifyToken(token);
+  const form = await formService.findByContentId(content?._id);
+  const formData = await formService.incrementSubmissionCount(
+    form._id,
+    content._id,
+    req.session,
+  );
 
+  const specificForm = formData.form.find(
+    (f) => f.content.toString() === content._id.toString(),
+  );
+  const submissionCount = specificForm ? specificForm.submissionCount : 0;
+
+  const getDynamicFieldValue = (keyword) => {
+    for (const [fieldIdStr, value] of Object.entries(values)) {
+      const fieldName = fieldIdMap[fieldIdStr]?.toLowerCase();
+      if (fieldName?.includes(keyword)) return value;
+    }
+    return null;
+  };
+
+  const getAllDynamicFieldValues = () => {
+    const dynamicFieldValues = {};
+  
+    for (const [fieldIdStr, value] of Object.entries(values)) {
+      const fieldName = fieldIdMap[fieldIdStr]?.toLowerCase();
+      if (fieldName) {
+        dynamicFieldValues[fieldName] = value;
+      }
+    }
+  
+    return dynamicFieldValues;
+  };
+
+  const nameFields = Object.values(fieldIdMap).filter((fieldName) =>
+    fieldName?.toLowerCase()?.includes("name"),
+  );
+
+  const nameValues = nameFields
+    .map((keyword) => getDynamicFieldValue(keyword?.toLowerCase()))
+    .filter(Boolean);
+
+  const customerName =
+    nameValues.length > 1 ? nameValues.join(" ") : nameValues[0] || "Customer";
+
+  const email = getDynamicFieldValue("email");
   const setting = await serviceSetting.getByContentId(content?._id);
+  const result = getAllDynamicFieldValues();
 
-  if (setting?.isEmailParticipant) {
-    const { email, name } = await userService.getById(verifiedToken.id);
-    await sendCustomerEmail(email, name);
-  }
+  if (setting.isEmailParticipant && email)
+    await sendCustomerEmail(email, customerName, result);
 
-  if (setting?.isEmailAdmin) {
-    const { name: customerName } = await userService.getById(verifiedToken.id);
-    const admins = await userService.getAllAdmins();
-    await Promise.all(
-      admins.map((admin) =>
-        sendAdminEmail(admin.email, admin.name, customerName),
-      ),
-    );
+  if (setting.isEmailAdmin) {
+    const { email, name } = await userService.getById(form.user);
+    await sendAdminEmail(email, name, customerName, submissionCount);
   }
 
   responseHandler(

@@ -25,6 +25,10 @@ const schema = new mongoose.Schema(
           type: mongoose.Schema.Types.ObjectId,
           ref: RESOURCE.SETTINGS,
         },
+        submissionCount: {
+          type: Number,
+          default: 0,
+        },
       },
     ],
   },
