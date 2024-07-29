@@ -13,6 +13,9 @@ function run() {
 
   connectDB(ENV.DATABASE_URI).then(() => {
     console.log(`Host Database connected to ${ENV.DATABASE_URI}`);
+    app.listen(ENV.PORT, () => {
+      console.log(`Server is running on port ${ENV.PORT}`);
+    });
   });
 }
 
