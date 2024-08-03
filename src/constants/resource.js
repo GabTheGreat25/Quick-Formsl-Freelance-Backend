@@ -5,7 +5,6 @@ export const RESOURCE = {
   DEVELOPMENT: "development",
   API: "/api/",
   V1: "v1/",
-  V2: "v2/",
   VALIDATION_ERROR: "ValidationError",
   NOT_FOUND: "Not Found",
   CLOUDINARY_FOLDER: "projectImages",

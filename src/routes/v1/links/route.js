@@ -8,8 +8,8 @@ const router = Router();
 const linkRoutes = [
   {
     method: METHOD.GET,
-    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    // middleware: [verifyJWT],
+    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    middleware: [verifyJWT],
     handler: linkController.getAllLinks,
   },
   {
@@ -19,8 +19,8 @@ const linkRoutes = [
   {
     method: METHOD.DELETE,
     path: PATH.DELETE,
-    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    // middleware: [verifyJWT],
+    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    middleware: [verifyJWT],
     handler: linkController.deleteLink,
   },
 ];

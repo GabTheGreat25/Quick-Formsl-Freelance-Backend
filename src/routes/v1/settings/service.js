@@ -13,7 +13,7 @@ async function getById(_id) {
   });
 }
 
-async function getByContentId(_id){
+async function getByContentId(_id) {
   return await model.findOne({ contentId: _id });
 }
 

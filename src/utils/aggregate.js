@@ -6,6 +6,6 @@ export const lookup = (from, localField, as, nestedLookup = []) => ({
     localField,
     foreignField: RESOURCE.ID,
     as,
-    pipeline: Array.isArray(nestedLookup) ? nestedLookup : [],
+    pipeline: nestedLookup,
   },
 });

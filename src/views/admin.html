@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Email Notification</title>
+    <title>Admin Email Notification</title>
     <style>
       body {
         padding: 0;
@@ -17,7 +17,7 @@
         align-items: center;
       }
       .wrapper {
-        max-width: 400px;
+        max-width: 600px;
         padding: 20px;
         border: 1px solid #ccc;
         border-radius: 6px;
@@ -57,6 +57,21 @@
         margin-bottom: 5px;
         margin-top: 10px;
       }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+      th {
+        background-color: #f4f4f4;
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
@@ -66,8 +81,25 @@
         <p class="p-text start">Dear {{name}},</p>
         <p class="p-text">
           We are pleased to inform you that a new form has been successfully
-          filled up by {{customerName}}.
+          filled up.
         </p>
+        <p class="center">Here are the submission details</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each result}}
+            <tr>
+              <td>{{@key}}</td>
+              <td>{{this}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
         <p class="p-text">
           You have received a total of {{submissionCount}} submissions for this
           form.

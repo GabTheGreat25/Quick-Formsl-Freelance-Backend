@@ -13,18 +13,17 @@ const content = fs.readFileSync(mail, "utf8");
 
 const template = handlebars.compile(content);
 
-export const sendCustomerEmail = (email, customerName, result) => {
+export const sendCustomerEmail = (email, customerName) => {
   const replacement = {
     customerName: customerName,
-    result,
   };
-  
+
   const index = template(replacement);
 
   return transporter.sendMail({
     from: ENV.EMAIL,
     to: `${email}`,
-    subject: "Quick Form Copy Notification",
+    subject: "Quick Form Notification",
     html: index,
   });
 };

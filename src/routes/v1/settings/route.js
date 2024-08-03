@@ -8,28 +8,28 @@ const router = Router();
 const settingRoutes = [
   {
     method: METHOD.GET,
-    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    // middleware: [verifyJWT],
+    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    middleware: [verifyJWT],
     handler: settingController.getAllSettings,
   },
   {
     method: METHOD.GET,
     path: PATH.ID,
-    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    // middleware: [verifyJWT],
+    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    middleware: [verifyJWT],
     handler: settingController.getSingleSetting,
   },
   {
     method: METHOD.POST,
-    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    // middleware: [verifyJWT],
+    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    middleware: [verifyJWT],
     handler: settingController.createNewSetting,
   },
   {
     method: METHOD.PATCH,
     path: PATH.EDIT,
-    // roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    // middleware: [verifyJWT],
+    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    middleware: [verifyJWT],
     handler: settingController.updateSetting,
   },
 ];
