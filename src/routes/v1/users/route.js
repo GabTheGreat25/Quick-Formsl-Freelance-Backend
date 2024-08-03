@@ -1,7 +1,7 @@
 import { Router } from "express";
 import * as userController from "./controller.js";
 import { METHOD, PATH, ROLE } from "../../../constants/index.js";
-import { verifyJWT, authorizeRoles } from "../../../middlewares/index.js";
+import { verifyJWT, authorizeRoles, middlewares } from "../../../middlewares/index.js";
 
 const router = Router();
 
@@ -85,6 +85,13 @@ const userRoutes = [
     path: PATH.RESTORE_PASSWORD,
     handler: userController.resetUserEmailPassword,
   },
+  {
+    method: METHOD.GET,
+    path: PATH.USER_PROFILE,
+    middleware: [verifyJWT],
+    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    handler: userController.userProfile,
+  }
 ];
 
 userRoutes.forEach((route) => {
