@@ -14,6 +14,8 @@ import {
   getToken,
   blacklistToken,
   generateAccess,
+  extractToken,
+  verifyToken,
 } from "../../../middlewares/index.js";
 import { sendEmail, generateRandomCode } from "../../../utils/index.js";
 
@@ -254,6 +256,14 @@ const resetUserEmailPassword = asyncHandler(async (req, res) => {
   responseHandler(res, [data], "Password Successfully Reset");
 });
 
+const userProfile = asyncHandler(async (req, res) => {
+  const token = extractToken(req.headers.authorization);
+  const verifiedToken = verifyToken(token);
+
+  const data = await service.getById(verifiedToken?.id);
+  responseHandler(res, [data], "User data retrieved successfully");
+});
+
 export {
   getAllUsers,
   getAllUsersDeleted,
@@ -268,4 +278,5 @@ export {
   changeUserPassword,
   sendUserEmailOTP,
   resetUserEmailPassword,
+  userProfile,
 };
