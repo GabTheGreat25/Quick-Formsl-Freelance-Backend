@@ -12,6 +12,14 @@ const schema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    name:{
+      type: String,
+      required: true,
+    },
+    category:{
+      type: String,
+      enum: ["General", "Advance"],
+    }
   },
   schemaOptions,
 );
