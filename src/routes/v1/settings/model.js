@@ -27,6 +27,14 @@ const schema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    subject: {
+      type: String,
+      required: true,
+    },
+    message: {
+      type: String,
+      required: true,
+    },
   },
   schemaOptions,
 );
