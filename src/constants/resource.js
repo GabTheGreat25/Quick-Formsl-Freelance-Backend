@@ -10,7 +10,6 @@ export const RESOURCE = {
   CLOUDINARY_FOLDER: "projectImages",
   IMAGES: "images",
   IMAGE: "image",
-  SUBMISSIONS: "submissions",
   FINISH: "finish",
   ID: "_id",
   ROLE: "role",

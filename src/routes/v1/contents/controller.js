@@ -75,24 +75,41 @@ const createNewContent = asyncHandler(async (req, res) => {
 
 const updateContent = asyncHandler(async (req, res) => {
   const inputTypes = await serviceInputType.find();
-  const validInputTypes = inputTypes.map((inputType) => inputType.type);
-
-  for (const field of req.body.fields) {
-    if (!validInputTypes.includes(field.inputType))
-      throw createError(
-        STATUSCODE.BAD_REQUEST,
-        `Invalid input type: ${field.inputType}`,
-      );
-  }
-
-  const data = await service.update(
-    req.params.id,
-    {
-      ...req.body,
-    },
-    req.session,
+  const validInputTypes = new Set(
+    inputTypes.map((inputType) => inputType.type),
   );
 
+  const errors = [];
+
+  req.body.fields.forEach((field) => {
+    !validInputTypes.has(field.inputType) &&
+      errors.push(`Invalid input type: ${field.inputType}`);
+
+    field.isRequiredField &&
+      (!field.fieldName || !field.requiredFieldText) &&
+      errors.push(
+        field.requiredFieldText ||
+          `Field ${field.fieldName || field.inputType.charAt(0).toUpperCase() + field.inputType.slice(1)} is required but no specific error message is provided`,
+      );
+
+    field.inputType === "column" &&
+      field.columns?.forEach((column) => {
+        !validInputTypes.has(column.inputType) &&
+          errors.push(`Invalid input type in column: ${column.inputType}`);
+
+        column.isRequiredField &&
+          (!column.fieldName || !column.requiredFieldText) &&
+          errors.push(
+            column.requiredFieldText ||
+              `Column field ${column.fieldName || column.inputType.charAt(0).toUpperCase() + column.inputType.slice(1)} is required but no specific error message is provided`,
+          );
+      });
+  });
+
+  if (errors.length)
+    throw createError(STATUSCODE.BAD_REQUEST, errors.join(", "));
+
+  const data = await service.update(req.params.id, req.body, req.session);
   responseHandler(res, [data], "Content updated successfully");
 });
 
