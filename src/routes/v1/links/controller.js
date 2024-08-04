@@ -48,7 +48,7 @@ const deleteLink = asyncHandler(async (req, res) => {
 
   const message = !data ? "No Link found" : "Link deleted successfully";
 
-  responseHandler(res, data, message);
+  responseHandler(res, [data], message);
 });
 
 export { getAllLinks, createLink, deleteLink };

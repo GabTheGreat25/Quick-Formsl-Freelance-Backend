@@ -30,7 +30,7 @@ const deleteForm = asyncHandler(async (req, res) => {
 
   const message = !data ? "No Form found" : "Form deleted successfully";
 
-  responseHandler(res, data, message);
+  responseHandler(res, [data], message);
 });
 
 export { getAllForms, getSingleForm, deleteForm };

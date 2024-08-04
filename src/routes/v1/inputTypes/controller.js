@@ -55,7 +55,7 @@ const deleteInputType = asyncHandler(async (req, res) => {
     ? "No InputType found"
     : "InputType deleted successfully";
 
-  responseHandler(res, data, message);
+  responseHandler(res, [data], message);
 });
 
 export {

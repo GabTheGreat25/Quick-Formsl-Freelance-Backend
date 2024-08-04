@@ -17,7 +17,7 @@ const redirectToDecryptedUrl = asyncHandler(async (req, res) => {
 
   responseHandler(
     res,
-    { decryptedUrl },
+    [{ decryptedUrl }],
     "Decrypted URL retrieved successfully",
   );
 });

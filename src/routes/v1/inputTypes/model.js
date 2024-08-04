@@ -10,16 +10,17 @@ const schema = new mongoose.Schema(
     type: {
       type: String,
       required: true,
-      unique: true,
     },
-    name:{
+    fieldName: {
       type: String,
       required: true,
+      unique: true,
     },
-    category:{
+    category: {
       type: String,
-      enum: ["General", "Advance"],
-    }
+      enum: ["General", "Advanced"],
+      required: true,
+    },
   },
   schemaOptions,
 );
