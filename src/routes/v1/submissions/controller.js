@@ -7,7 +7,13 @@ import formService from "../forms/service.js";
 import userService from "../users/service.js";
 import { STATUSCODE } from "../../../constants/index.js";
 import { responseHandler } from "../../../utils/index.js";
-import { sendAdminEmail, sendCustomerEmail } from "../../../utils/index.js";
+import {
+  sendAdminEmail,
+  sendCustomerEmail,
+  personalizeMessage,
+  getFormattedDate,
+  getFormattedTime,
+} from "../../../utils/index.js";
 
 const getAllSubmissions = asyncHandler(async (req, res) => {
   const data = await service.getAll();
@@ -100,7 +106,10 @@ const createNewSubmission = asyncHandler(async (req, res) => {
     for (const [fieldIdStr, value] of Object.entries(values)) {
       const fieldName = fieldIdMap[fieldIdStr].toLowerCase();
       if (fieldName) dynamicFieldValues[fieldName] = value;
-    }
+    };
+
+    dynamicFieldValues['date'] = getFormattedDate();
+    dynamicFieldValues['time'] = getFormattedTime();
 
     return dynamicFieldValues;
   };
@@ -117,11 +126,15 @@ const createNewSubmission = asyncHandler(async (req, res) => {
     nameValues.length > 1 ? nameValues.join(" ") : nameValues[0] || "Customer";
 
   const email = getDynamicFieldValue("email");
+
   const setting = await serviceSetting.getByContentId(content._id);
   const result = getAllDynamicFieldValues();
 
-  if (setting.isEmailParticipant && email)
-    await sendCustomerEmail(email, customerName);
+  const subject = setting?.subject;
+  const msg = personalizeMessage(setting?.message, result);
+
+  if (setting.isEmailParticipant && email);
+  await sendCustomerEmail(email, subject, msg);
 
   if (setting.isEmailAdmin) {
     const { email, name } = await userService.getById(form.user);
