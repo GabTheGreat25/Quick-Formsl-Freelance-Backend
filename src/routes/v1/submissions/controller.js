@@ -106,24 +106,13 @@ const createNewSubmission = asyncHandler(async (req, res) => {
     for (const [fieldIdStr, value] of Object.entries(values)) {
       const fieldName = fieldIdMap[fieldIdStr].toLowerCase();
       if (fieldName) dynamicFieldValues[fieldName] = value;
-    };
+    }
 
-    dynamicFieldValues['date'] = getFormattedDate();
-    dynamicFieldValues['time'] = getFormattedTime();
+    dynamicFieldValues["date"] = getFormattedDate();
+    dynamicFieldValues["time"] = getFormattedTime();
 
     return dynamicFieldValues;
   };
-
-  const nameFields = Object.values(fieldIdMap).filter((fieldName) =>
-    fieldName.toLowerCase().includes("name"),
-  );
-
-  const nameValues = nameFields
-    .map((keyword) => getDynamicFieldValue(keyword.toLowerCase()))
-    .filter(Boolean);
-
-  const customerName =
-    nameValues.length > 1 ? nameValues.join(" ") : nameValues[0] || "Customer";
 
   const email = getDynamicFieldValue("email");
 
@@ -133,8 +122,8 @@ const createNewSubmission = asyncHandler(async (req, res) => {
   const subject = setting?.subject;
   const msg = personalizeMessage(setting?.message, result);
 
-  if (setting.isEmailParticipant && email);
-  await sendCustomerEmail(email, subject, msg);
+  if (setting.isEmailParticipant && email)
+    await sendCustomerEmail(email, subject, msg);
 
   if (setting.isEmailAdmin) {
     const { email, name } = await userService.getById(form.user);

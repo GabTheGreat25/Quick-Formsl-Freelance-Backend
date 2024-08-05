@@ -23,7 +23,7 @@ export const sendCustomerEmail = (email, subject, msg) => {
   return transporter.sendMail({
     from: ENV.EMAIL,
     to: `${email}`,
-    subject: `${subject}`,  
+    subject: `${subject}`,
     html: index,
   });
 };

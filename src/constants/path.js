@@ -13,4 +13,5 @@ export const PATH = {
   DEFAULT_DESIGN: "/createDefault",
   REMOVE_DEFAULT: "/removeDefault/:id",
   USER_PROFILE: "/view/userProfile",
+  EDIT_ALL_FIELDS: "/editAllFields/:id",
 };

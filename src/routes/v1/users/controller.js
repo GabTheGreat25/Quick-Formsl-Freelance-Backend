@@ -65,18 +65,23 @@ const loginUser = asyncHandler(async (req, res) => {
     id: data._id,
     role: data[RESOURCE.ROLE],
   });
-
-  setToken(accessToken.access);
+  setToken(accessToken.access, res);
 
   responseHandler(res, data, "User Login successfully", accessToken);
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
-  const savedToken = getToken();
-
-  if (savedToken) blacklistToken();
-
-  responseHandler(res, [], "User Logout successfully");
+  req.cookies?.accessToken && getToken()
+    ? (blacklistToken(),
+      res.clearCookie("accessToken", {
+        httpOnly: true,
+        secure: ENV.NODE_ENV === RESOURCE.PRODUCTION,
+        sameSite: RESOURCE.NONE,
+      }),
+      responseHandler(res, [], "User Logout successfully"))
+    : (() => {
+        throw createError(STATUSCODE.UNAUTHORIZED, "You are not logged in");
+      })();
 });
 
 const createNewUser = [

@@ -92,17 +92,21 @@ const updateContent = asyncHandler(async (req, res) => {
           `Field ${field.fieldName || field.inputType.charAt(0).toUpperCase() + field.inputType.slice(1)} is required but no specific error message is provided`,
       );
 
-    field.inputType === "column" &&
+    if (!field.isRequiredField) field.requiredFieldText = undefined;
+
+    if (field.inputType === "column")
       field.columns?.forEach((column) => {
         !validInputTypes.has(column.inputType) &&
-          errors.push(`Invalid input type in column: ${column.inputType}`);
+          errors.push(`Invalid input type: ${column.inputType}`);
 
         column.isRequiredField &&
           (!column.fieldName || !column.requiredFieldText) &&
           errors.push(
             column.requiredFieldText ||
-              `Column field ${column.fieldName || column.inputType.charAt(0).toUpperCase() + column.inputType.slice(1)} is required but no specific error message is provided`,
+              `Field ${column.fieldName || column.inputType.charAt(0).toUpperCase() + column.inputType.slice(1)} is required but no specific error message is provided`,
           );
+
+        if (!column.isRequiredField) column.requiredFieldText = undefined;
       });
   });
 
@@ -111,6 +115,64 @@ const updateContent = asyncHandler(async (req, res) => {
 
   const data = await service.update(req.params.id, req.body, req.session);
   responseHandler(res, [data], "Content updated successfully");
+});
+
+const updateAllFields = asyncHandler(async (req, res) => {
+  const content = await service.getById(req.params.id);
+
+  const inputTypes = await serviceInputType.find();
+  const validInputTypes = new Set(inputTypes.map((type) => type.type));
+  const errors = [];
+
+  const processField = (field) => {
+    field.placeholderText = req.body.placeholderText;
+    field.isRequiredField = req.body.isRequiredField;
+    field.requiredFieldColor = req.body.requiredFieldColor;
+    field.requiredFieldText = req.body.requiredFieldText;
+    field.style = { ...field.style, ...req.body.style };
+
+    !validInputTypes.has(field.inputType) &&
+      errors.push(`Invalid input type: ${field.inputType}`);
+
+    field.isRequiredField &&
+      !field.requiredFieldText &&
+      errors.push(
+        `Field ${field.fieldName || field.inputType.charAt(0).toUpperCase() + field.inputType.slice(1)} is required but no specific error message is provided`,
+      );
+
+    !field.isRequiredField && (field.requiredFieldText = undefined);
+  };
+
+  const processColumn = (column) => {
+    column.placeholderText = req.body.placeholderText;
+    column.isRequiredField = req.body.isRequiredField;
+    column.requiredFieldColor = req.body.requiredFieldColor;
+    column.requiredFieldText = req.body.requiredFieldText;
+    column.style = { ...column.style, ...req.body.style };
+
+    !validInputTypes.has(column.inputType) &&
+      errors.push(`Invalid input type: ${column.inputType}`);
+
+    column.isRequiredField &&
+      !column.requiredFieldText &&
+      errors.push(
+        `Field ${column.fieldName || column.inputType.charAt(0).toUpperCase() + column.inputType.slice(1)} is required but no specific error message is provided`,
+      );
+
+    !column.isRequiredField && (column.requiredFieldText = undefined);
+  };
+
+  content.fields.forEach((field) =>
+    field.inputType === "column" && field.columns
+      ? field.columns.forEach((column) => processColumn(column))
+      : processField(field),
+  );
+
+  if (errors.length)
+    throw createError(STATUSCODE.BAD_REQUEST, errors.join(", "));
+
+  const data = await content.save();
+  responseHandler(res, [data], "All fields updated successfully");
 });
 
 const deleteContent = asyncHandler(async (req, res) => {
@@ -137,5 +199,6 @@ export {
   getSingleContent,
   createNewContent,
   updateContent,
+  updateAllFields,
   deleteContent,
 };
