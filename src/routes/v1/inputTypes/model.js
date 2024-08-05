@@ -21,6 +21,10 @@ const schema = new mongoose.Schema(
       enum: ["General", "Advanced"],
       required: true,
     },
+    icon: {
+      type: String,
+      required: true,
+    },
   },
   schemaOptions,
 );

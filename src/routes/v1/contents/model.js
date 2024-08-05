@@ -35,36 +35,6 @@ const schema = new mongoose.Schema(
           type: String,
           required: false,
         },
-        columns: [
-          {
-            inputType: {
-              type: String,
-              required: false,
-            },
-            fieldName: {
-              type: String,
-              required: false,
-            },
-            placeholderText: {
-              type: String,
-              required: false,
-            },
-            isRequiredField: {
-              type: Boolean,
-              required: false,
-              default: false,
-            },
-            requiredFieldColor: {
-              type: String,
-              required: false,
-              default: "#FF0000",
-            },
-            requiredFieldText: {
-              type: String,
-              required: false,
-            },
-          },
-        ],
         style: {
           labelColor: {
             type: String,
@@ -107,6 +77,78 @@ const schema = new mongoose.Schema(
             default: "#000000",
           },
         },
+        columns: [
+          {
+            inputType: {
+              type: String,
+              required: false,
+            },
+            fieldName: {
+              type: String,
+              required: false,
+            },
+            placeholderText: {
+              type: String,
+              required: false,
+            },
+            isRequiredField: {
+              type: Boolean,
+              required: false,
+              default: false,
+            },
+            requiredFieldColor: {
+              type: String,
+              required: false,
+              default: "#FF0000",
+            },
+            requiredFieldText: {
+              type: String,
+              required: false,
+            },
+            style: {
+              labelColor: {
+                type: String,
+                required: false,
+                default: "#000000",
+              },
+              borderColor: {
+                type: String,
+                required: false,
+                default: "#000000",
+              },
+              placeholderColor: {
+                type: String,
+                required: false,
+                default: "#000000",
+              },
+              fontFamily: {
+                type: String,
+                required: false,
+                default: "Helvetica Neue",
+              },
+              fontStyle: {
+                type: String,
+                required: false,
+                default: "Normal",
+              },
+              fontWeight: {
+                type: String,
+                required: false,
+                default: "Regular",
+              },
+              textAlignment: {
+                type: String,
+                required: false,
+                default: "Start",
+              },
+              fontColor: {
+                type: String,
+                required: false,
+                default: "#000000",
+              },
+            },
+          },
+        ],
       },
     ],
     submission: [

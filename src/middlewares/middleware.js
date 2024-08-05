@@ -2,6 +2,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import logger from "morgan";
 import compression from "compression";
+import cookieParser from "cookie-parser"; // Import cookie-parser
 import { corsOptions } from "../config/index.js";
 import { RESOURCE } from "../constants/index.js";
 import { transaction } from "./transaction.js";
@@ -12,6 +13,7 @@ export const middlewares = [
   cors(corsOptions),
   logger(RESOURCE.DEV),
   compression(),
+  cookieParser(),
   transaction,
 ];
 
