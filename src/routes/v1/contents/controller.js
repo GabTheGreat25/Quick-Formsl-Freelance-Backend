@@ -82,31 +82,21 @@ const updateContent = asyncHandler(async (req, res) => {
   const errors = [];
 
   req.body.fields.forEach((field) => {
+    field.requiredFieldText = field.isRequiredField
+      ? field.requiredFieldText || "This field is required"
+      : undefined;
+
     !validInputTypes.has(field.inputType) &&
       errors.push(`Invalid input type: ${field.inputType}`);
 
-    field.isRequiredField &&
-      (!field.fieldName || !field.requiredFieldText) &&
-      errors.push(
-        field.requiredFieldText ||
-          `Field ${field.fieldName || field.inputType.charAt(0).toUpperCase() + field.inputType.slice(1)} is required but no specific error message is provided`,
-      );
-
-    if (!field.isRequiredField) field.requiredFieldText = undefined;
-
     if (field.inputType === "column")
       field.columns?.forEach((column) => {
+        column.requiredFieldText = column.isRequiredField
+          ? column.requiredFieldText || "This field is required"
+          : undefined;
+
         !validInputTypes.has(column.inputType) &&
           errors.push(`Invalid input type: ${column.inputType}`);
-
-        column.isRequiredField &&
-          (!column.fieldName || !column.requiredFieldText) &&
-          errors.push(
-            column.requiredFieldText ||
-              `Field ${column.fieldName || column.inputType.charAt(0).toUpperCase() + column.inputType.slice(1)} is required but no specific error message is provided`,
-          );
-
-        if (!column.isRequiredField) column.requiredFieldText = undefined;
       });
   });
 
