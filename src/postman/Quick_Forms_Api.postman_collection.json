@@ -4312,7 +4312,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "66af6bd1fa440e73ce2861ce"
+											"value": "66b195be4d0daa552a322eb1"
 										}
 									]
 								},
@@ -4400,7 +4400,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"title\": \"Lorem Ipsum\",\r\n  \"fields\": [\r\n    {\r\n      \"inputType\": \"text\",\r\n      \"fieldName\": \"fname\",\r\n      \"placeholderText\": \"John\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",\r\n      \"requiredFieldText\": \"Fname is required\",\r\n      \"style\": {\r\n        \"placeholderColor\": \"#100000\"\r\n      }\r\n    },\r\n    {\r\n      \"inputType\": \"text\",\r\n      \"fieldName\": \"lname\",\r\n      \"placeholderText\": \"Doe\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",      \r\n      \"requiredFieldText\": \"Lname is required\",\r\n      \"style\": {\r\n        \"placeholderColor\": \"#100000\"\r\n      }\r\n    },\r\n    {\r\n      \"inputType\": \"email\",\r\n      \"fieldName\": \"email\",\r\n      \"placeholderText\": \"johndoe@gmail.com\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",      \r\n      \"requiredFieldText\": \"Email is required\",\r\n      \"style\": {\r\n        \"placeholderColor\": \"#100000\"\r\n      }\r\n    },\r\n    {\r\n      \"inputType\": \"column\",\r\n      \"columns\": [\r\n        { \"inputType\": \"text\",\r\n          \"fieldName\": \"phone\",\r\n          \"placeholderText\": \"+63123456789\",\r\n          \"isRequiredField\": true,\r\n          \"requiredFieldColor\": \"#FF0000\",\r\n          \"requiredFieldText\": \"Phone is required\",\r\n      \"style\": {\r\n          \"placeholderColor\": \"#100000\"\r\n         }\r\n        },\r\n        { \"inputType\": \"radio\",\r\n          \"fieldName\": \"gender\",\r\n          \"placeholderText\": \"Male\",\r\n          \"isRequiredField\": true,\r\n          \"requiredFieldColor\": \"#FF0000\",\r\n          \"requiredFieldText\": \"Gender is required\",\r\n      \"style\": {\r\n          \"placeholderColor\": \"#100000\"\r\n         }\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
+									"raw": "{\r\n  \"title\": \"Lorem Ipsum\",\r\n  \"fields\": [\r\n    {\r\n      \"inputType\": \"text\",\r\n      \"fieldName\": \"fname\",\r\n      \"placeholderText\": \"John\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",\r\n      \"requiredFieldText\": \"Fname is required\"\r\n    },\r\n    {\r\n      \"inputType\": \"text\",\r\n      \"fieldName\": \"lname\",\r\n      \"placeholderText\": \"Doe\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",      \r\n      \"requiredFieldText\": \"Lname is required\"\r\n    },\r\n    {\r\n      \"inputType\": \"email\",\r\n      \"fieldName\": \"email\",\r\n      \"placeholderText\": \"johndoe@gmail.com\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",      \r\n      \"requiredFieldText\": \"Email is required\"\r\n    },\r\n    {\r\n      \"inputType\": \"column\",\r\n      \"columns\": [\r\n        { \"inputType\": \"text\",\r\n          \"fieldName\": \"phone\",\r\n          \"placeholderText\": \"+63123456789\",\r\n          \"isRequiredField\": true,\r\n          \"requiredFieldColor\": \"#FF0000\",\r\n          \"requiredFieldText\": \"Phone is required\"\r\n        },\r\n        { \"inputType\": \"radio\",\r\n          \"fieldName\": \"gender\",\r\n          \"placeholderText\": \"Male\",\r\n          \"isRequiredField\": true,\r\n          \"requiredFieldColor\": \"#FF0000\",\r\n          \"requiredFieldText\": \"Gender is required\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4424,7 +4424,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "66b02e5cdb382ac927ca236c"
+											"value": "66b1996a6a4b43a120344dda"
 										}
 									]
 								},
@@ -4460,7 +4460,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"placeholderText\": \"New Placeholder Text\",\r\n  \"isRequiredField\": true,\r\n  \"requiredFieldColor\": \"#00FF00\",\r\n  \"requiredFieldText\": \"New RequiredField Text\",\r\n  \"style\": {\r\n        \"placeholderColor\": \"#200000\"\r\n    }\r\n}\r\n",
+									"raw": "{\r\n  \"globalStyle\": {\r\n        \"placeholderColor\": \"#200000\"\r\n    }\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4484,7 +4484,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "66af6bd1fa440e73ce2861ce"
+											"value": "66b1996a6a4b43a120344dda"
 										}
 									]
 								},
@@ -6082,7 +6082,7 @@
 	"variable": [
 		{
 			"key": "Bearer",
-			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YWYxZDBkMDFiZDlmMjNjNGM4OGFhYSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcyMjgyMzg3MCwiZXhwIjoxNzIyOTEwMjcwfQ.uohcDP16nhkX0dqqJs4Wf4pUwN83gOdKUd9A-WMSF5E"
+			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YWYxZDBkMDFiZDlmMjNjNGM4OGFhYSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcyMjkxMjY4NSwiZXhwIjoxNzIyOTk5MDg1fQ.Wq55y_LbzkTrPtqiAxIfYIu78yMr72lt6jgDmIskIGQ"
 		}
 	]
 }

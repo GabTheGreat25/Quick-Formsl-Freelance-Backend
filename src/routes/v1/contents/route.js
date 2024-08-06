@@ -33,6 +33,13 @@ const contentRoutes = [
     handler: contentController.updateContent,
   },
   {
+    method: METHOD.PATCH,
+    path: PATH.EDIT_ALL_FIELDS,
+    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    middleware: [verifyJWT],
+    handler: contentController.updateAllFields,
+  },
+  {
     method: METHOD.DELETE,
     path: PATH.DELETE,
     roles: [ROLE.ADMIN, ROLE.CUSTOMER],

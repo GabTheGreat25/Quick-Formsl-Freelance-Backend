@@ -35,48 +35,48 @@ const schema = new mongoose.Schema(
           type: String,
           required: false,
         },
-        style: {
-          labelColor: {
-            type: String,
-            required: false,
-            default: "#000000",
-          },
-          borderColor: {
-            type: String,
-            required: false,
-            default: "#000000",
-          },
-          placeholderColor: {
-            type: String,
-            required: false,
-            default: "#000000",
-          },
-          fontFamily: {
-            type: String,
-            required: false,
-            default: "Helvetica Neue",
-          },
-          fontStyle: {
-            type: String,
-            required: false,
-            default: "Normal",
-          },
-          fontWeight: {
-            type: String,
-            required: false,
-            default: "Regular",
-          },
-          textAlignment: {
-            type: String,
-            required: false,
-            default: "Start",
-          },
-          fontColor: {
-            type: String,
-            required: false,
-            default: "#000000",
-          },
-        },
+        // style: {
+        //   labelColor: {
+        //     type: String,
+        //     required: false,
+        //     default: "#000000",
+        //   },
+        //   borderColor: {
+        //     type: String,
+        //     required: false,
+        //     default: "#000000",
+        //   },
+        //   placeholderColor: {
+        //     type: String,
+        //     required: false,
+        //     default: "#000000",
+        //   },
+        //   fontFamily: {
+        //     type: String,
+        //     required: false,
+        //     default: "Helvetica Neue",
+        //   },
+        //   fontStyle: {
+        //     type: String,
+        //     required: false,
+        //     default: "Normal",
+        //   },
+        //   fontWeight: {
+        //     type: String,
+        //     required: false,
+        //     default: "Regular",
+        //   },
+        //   textAlignment: {
+        //     type: String,
+        //     required: false,
+        //     default: "Start",
+        //   },
+        //   fontColor: {
+        //     type: String,
+        //     required: false,
+        //     default: "#000000",
+        //   },
+        // },
         columns: [
           {
             inputType: {
@@ -105,52 +105,99 @@ const schema = new mongoose.Schema(
               type: String,
               required: false,
             },
-            style: {
-              labelColor: {
-                type: String,
-                required: false,
-                default: "#000000",
-              },
-              borderColor: {
-                type: String,
-                required: false,
-                default: "#000000",
-              },
-              placeholderColor: {
-                type: String,
-                required: false,
-                default: "#000000",
-              },
-              fontFamily: {
-                type: String,
-                required: false,
-                default: "Helvetica Neue",
-              },
-              fontStyle: {
-                type: String,
-                required: false,
-                default: "Normal",
-              },
-              fontWeight: {
-                type: String,
-                required: false,
-                default: "Regular",
-              },
-              textAlignment: {
-                type: String,
-                required: false,
-                default: "Start",
-              },
-              fontColor: {
-                type: String,
-                required: false,
-                default: "#000000",
-              },
-            },
+            // style: {
+            //   labelColor: {
+            //     type: String,
+            //     required: false,
+            //     default: "#000000",
+            //   },
+            //   borderColor: {
+            //     type: String,
+            //     required: false,
+            //     default: "#000000",
+            //   },
+            //   placeholderColor: {
+            //     type: String,
+            //     required: false,
+            //     default: "#000000",
+            //   },
+            //   fontFamily: {
+            //     type: String,
+            //     required: false,
+            //     default: "Helvetica Neue",
+            //   },
+            //   fontStyle: {
+            //     type: String,
+            //     required: false,
+            //     default: "Normal",
+            //   },
+            //   fontWeight: {
+            //     type: String,
+            //     required: false,
+            //     default: "Regular",
+            //   },
+            //   textAlignment: {
+            //     type: String,
+            //     required: false,
+            //     default: "Start",
+            //   },
+            //   fontColor: {
+            //     type: String,
+            //     required: false,
+            //     default: "#000000",
+            //   },
+            // },
           },
         ],
       },
     ],
+    globalStyle: {
+      labelColor: {
+        type: String,
+        required: false,
+        default: "#000000",
+      },
+      borderColor: {
+        type: String,
+        required: false,
+        default: "#000000",
+      },
+      placeholderColor: {
+        type: String,
+        required: false,
+        default: "#000000",
+      },
+      fontFamily: {
+        type: String,
+        required: false,
+        default: "Helvetica Neue",
+      },
+      fontStyle: {
+        type: String,
+        required: false,
+        default: "Normal",
+      },
+      fontWeight: {
+        type: String,
+        required: false,
+        default: "Regular",
+      },
+      textAlignment: {
+        type: String,
+        required: false,
+        default: "Start",
+      },
+      fontColor: {
+        type: String,
+        required: false,
+        default: "#000000",
+      },
+    },
+    isGlobal: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
     submission: [
       {
         type: mongoose.Schema.Types.ObjectId,
