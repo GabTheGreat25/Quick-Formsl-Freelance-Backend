@@ -86,18 +86,22 @@ const updateContent = asyncHandler(async (req, res) => {
       ? field.requiredFieldText || "This field is required"
       : undefined;
 
-    !validInputTypes.has(field.inputType) &&
-      errors.push(`Invalid input type: ${field.inputType}`);
+    if (field.inputType)
+      !validInputTypes.has(field.inputType) &&
+        errors.push(`Invalid input type: ${field.inputType}`);
 
-    if (field.inputType === "column")
-      field.columns?.forEach((column) => {
-        column.requiredFieldText = column.isRequiredField
-          ? column.requiredFieldText || "This field is required"
-          : undefined;
+    if (field.inputType === "column" && Array.isArray(field.columns)) {
+      field.columns = field.columns.map((column) =>
+        Object.keys(column).length > 0 ? column : null,
+      );
 
-        !validInputTypes.has(column.inputType) &&
-          errors.push(`Invalid input type: ${column.inputType}`);
+      field.columns.forEach((column) => {
+        column && column.inputType
+          ? !validInputTypes.has(column.inputType) &&
+            errors.push(`Invalid input type: ${column.inputType}`)
+          : null;
       });
+    }
   });
 
   if (errors.length)
