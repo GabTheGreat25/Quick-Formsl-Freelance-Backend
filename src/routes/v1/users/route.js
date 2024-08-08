@@ -2,6 +2,10 @@ import { Router } from "express";
 import * as userController from "./controller.js";
 import { METHOD, PATH, ROLE } from "../../../constants/index.js";
 import { verifyJWT, authorizeRoles } from "../../../middlewares/index.js";
+import {
+  isAuthenticatedUser,
+  // authorizeRoles,
+} from "../../../middlewares/auth.js";
 
 const router = Router();
 
@@ -9,14 +13,15 @@ const userRoutes = [
   {
     method: METHOD.GET,
     roles: [ROLE.ADMIN],
-    middleware: [verifyJWT],
+    middleware: [isAuthenticatedUser],
     handler: userController.getAllUsers,
   },
   {
     method: METHOD.GET,
     path: PATH.DELETED,
     roles: [ROLE.ADMIN],
-    middleware: [verifyJWT],
+    middleware: [isAuthenticatedUser],
+
     handler: userController.getAllUsersDeleted,
   },
   {
@@ -25,7 +30,7 @@ const userRoutes = [
     handler: userController.loginUser,
   },
   {
-    method: METHOD.POST,
+    method: METHOD.GET,
     path: PATH.LOGOUT,
     handler: userController.logoutUser,
   },
@@ -33,7 +38,7 @@ const userRoutes = [
     method: METHOD.GET,
     path: PATH.ID,
     roles: [ROLE.ADMIN],
-    middleware: [verifyJWT],
+    middleware: [isAuthenticatedUser],
     handler: userController.getSingleUser,
   },
   {
@@ -44,34 +49,39 @@ const userRoutes = [
     method: METHOD.PATCH,
     path: PATH.EDIT,
     roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    middleware: [verifyJWT],
+    middleware: [isAuthenticatedUser],
+
     handler: userController.updateUser,
   },
   {
     method: METHOD.DELETE,
     path: PATH.DELETE,
     roles: [ROLE.ADMIN],
-    middleware: [verifyJWT],
+    middleware: [isAuthenticatedUser],
+
     handler: userController.deleteUser,
   },
   {
     method: METHOD.PUT,
     path: PATH.RESTORE,
     roles: [ROLE.ADMIN],
-    middleware: [verifyJWT],
+    middleware: [isAuthenticatedUser],
+
     handler: userController.restoreUser,
   },
   {
     method: METHOD.DELETE,
     path: PATH.FORCE_DELETE,
     roles: [ROLE.ADMIN],
-    middleware: [verifyJWT],
+    middleware: [isAuthenticatedUser],
+
     handler: userController.forceDeleteUser,
   },
   {
     method: METHOD.PATCH,
     path: PATH.CHANGE_PASSWORD,
-    middleware: [verifyJWT],
+    middleware: [isAuthenticatedUser],
+
     roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     handler: userController.changeUserPassword,
   },
@@ -88,9 +98,9 @@ const userRoutes = [
   {
     method: METHOD.GET,
     path: PATH.USER_PROFILE,
-    middleware: [verifyJWT],
+    middleware: [isAuthenticatedUser],
     roles: [ROLE.ADMIN, ROLE.CUSTOMER],
-    handler: userController.userProfile,
+    handler: userController.getUserProfile,
   },
 ];
 

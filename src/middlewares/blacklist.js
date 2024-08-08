@@ -7,7 +7,7 @@ let blacklistedToken = "";
 export function setToken(token, res) {
   jwtToken = token;
 
-  res.cookie("accessToken", token, {
+  res.cookie("token", token, {
     httpOnly: true,
     secure: ENV.NODE_ENV === RESOURCE.PRODUCTION,
     sameSite: RESOURCE.NONE,

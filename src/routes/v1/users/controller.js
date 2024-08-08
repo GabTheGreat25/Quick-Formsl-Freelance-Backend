@@ -17,7 +17,10 @@ import {
   extractToken,
   verifyToken,
 } from "../../../middlewares/index.js";
+import User from "./model.js";
 import { sendEmail, generateRandomCode } from "../../../utils/index.js";
+import sendToken from "../../../utils/jwtToken.js";
+import ErrorHandler from "../../../utils/handlerError.js";
 
 const getAllUsers = asyncHandler(async (req, res) => {
   const data = await service.getAll();
@@ -53,36 +56,36 @@ const getSingleUser = asyncHandler(async (req, res) => {
   );
 });
 
-const loginUser = asyncHandler(async (req, res) => {
-  const data = await service.getEmail(req.body.email);
+const loginUser = async (req, res, next) => {
+  const { email, password } = req.body;
 
-  if (!data) throw createError(STATUSCODE.NOT_FOUND, "No User found");
+  if (!email || !password) {
+    return next(new ErrorHandler("Please enter email & password", 400));
+  }
+  const user = await User.findOne({ email }).select("+password");
 
-  if (!(await bcrypt.compare(req.body.password, data.password)))
-    throw createError(STATUSCODE.UNAUTHORIZED, "Password does not match");
+  if (!user) {
+    return next(new ErrorHandler("Invalid Email or Password", 401));
+  }
+  const isPasswordMatched = await user.comparePassword(password);
 
-  const accessToken = generateAccess({
-    id: data._id,
-    role: data[RESOURCE.ROLE],
+  if (!isPasswordMatched) {
+    return next(new ErrorHandler("Invalid Email or Password", 401));
+  }
+  sendToken(user, 200, res);
+};
+
+const logoutUser = async (req, res, next) => {
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
   });
-  setToken(accessToken.access, res);
 
-  responseHandler(res, data, "User Login successfully", accessToken);
-});
-
-const logoutUser = asyncHandler(async (req, res) => {
-  req.cookies?.accessToken && getToken()
-    ? (blacklistToken(),
-      res.clearCookie("accessToken", {
-        httpOnly: true,
-        secure: ENV.NODE_ENV === RESOURCE.PRODUCTION,
-        sameSite: RESOURCE.NONE,
-      }),
-      responseHandler(res, [], "User Logout successfully"))
-    : (() => {
-        throw createError(STATUSCODE.UNAUTHORIZED, "You are not logged in");
-      })();
-});
+  res.status(200).json({
+    success: true,
+    message: "Logged out",
+  });
+};
 
 const createNewUser = [
   upload.array("image"),
@@ -261,14 +264,21 @@ const resetUserEmailPassword = asyncHandler(async (req, res) => {
   responseHandler(res, [data], "Password Successfully Reset");
 });
 
-const userProfile = asyncHandler(async (req, res) => {
-  const token = extractToken(req.headers.authorization);
-  const verifiedToken = verifyToken(token);
-
-  const data = await service.getById(verifiedToken?.id);
-  responseHandler(res, [data], "User data retrieved successfully");
-});
-
+const getUserProfile = async (req, res, next) => {
+  console.log("User ID:", req.user.id); 
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return next(new ErrorHandler("User not found", 404));
+    }
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 export {
   getAllUsers,
   getAllUsersDeleted,
@@ -283,5 +293,5 @@ export {
   changeUserPassword,
   sendUserEmailOTP,
   resetUserEmailPassword,
-  userProfile,
+  getUserProfile,
 };

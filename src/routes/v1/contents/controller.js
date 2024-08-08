@@ -37,18 +37,22 @@ const createNewContent = asyncHandler(async (req, res) => {
     for (const field of fields) {
       const inputType = field.inputType;
 
-      if (!validInputTypes.includes(inputType))
+      if (!validInputTypes.includes(inputType)) {
         throw createError(
           STATUSCODE.BAD_REQUEST,
           `Invalid input type: ${inputType}`,
         );
+      }
 
-      if (inputType === "column" && field.columns)
+      if (inputType === "column" && field.columns) {
         validateFields(field.columns);
+      }
     }
   };
 
-  if (req.body.fields) validateFields(req.body.fields);
+  if (req.body.fields) {
+    validateFields(req.body.fields);
+  }
 
   const contentData = await service.add(
     {
@@ -57,11 +61,8 @@ const createNewContent = asyncHandler(async (req, res) => {
     req.session,
   );
 
-  const token = extractToken(req.headers.authorization);
-  const verifiedToken = verifyToken(token);
-
   const formData = await serviceForm.addContent(
-    verifiedToken.id,
+    req.user.id,
     contentData[0]._id,
     req.session,
   );
@@ -130,18 +131,14 @@ const deleteContent = asyncHandler(async (req, res) => {
     ? "No Content found"
     : "Content deleted successfully";
 
-  const token = extractToken(req.headers.authorization);
-  const verifiedToken = verifyToken(token);
-
   const formData = await serviceForm.removeContent(
-    verifiedToken.id,
+    req.user.id,
     req.params.id,
     req.session,
   );
 
   responseHandler(res, [{ content: contentData, form: formData }], message);
 });
-
 export {
   getAllContents,
   getSingleContent,

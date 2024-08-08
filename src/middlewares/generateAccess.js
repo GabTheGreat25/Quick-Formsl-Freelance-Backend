@@ -1,8 +1,8 @@
 import { generateToken } from "../middlewares/index.js";
 
 export function generateAccess(payload = {}) {
-  const accessToken = generateToken(payload, "1d");
+  const token = generateToken(payload, "1d");
   return {
-    access: accessToken,
+    access: token,
   };
 }

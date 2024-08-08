@@ -12,6 +12,6 @@ export const PATH = {
   RESTORE_PASSWORD: "/resetPassword",
   DEFAULT_DESIGN: "/createDefault",
   REMOVE_DEFAULT: "/removeDefault/:id",
-  USER_PROFILE: "/view/userProfile",
+  USER_PROFILE: "/userProfile/me",
   EDIT_ALL_FIELDS: "/editAllFields/:id",
 };
