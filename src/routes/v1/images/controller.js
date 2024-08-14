@@ -128,6 +128,16 @@ const removeDefaultImage = asyncHandler(async (req, res) => {
   );
 });
 
+const getUserLoginImage = asyncHandler(async (req, res) => {
+  const token = extractToken(req.headers.authorization);
+  const verifiedToken = verifyToken(token);
+
+  const data = await service.getByUserId(verifiedToken?._id);
+  console.log(data)
+
+  responseHandler(res, [data], "User image successfully retrieved");
+});
+
 export {
   getAllImages,
   getSingleImage,
@@ -136,4 +146,5 @@ export {
   updateImage,
   deleteImage,
   removeDefaultImage,
+  getUserLoginImage,
 };
