@@ -29,10 +29,15 @@ async function deleteById(_id, session) {
   return await model.findByIdAndDelete(_id, { session });
 }
 
+async function getByUserId(userId) {
+  return await model.findOne({ "user._id" : userId });
+}
+
 export default {
   getAll,
   getById,
   add,
   update,
   deleteById,
+  getByUserId,
 };
