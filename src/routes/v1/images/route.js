@@ -53,6 +53,13 @@ const imageRoutes = [
     middleware: [verifyJWT],
     handler: imageController.removeDefaultImage,
   },
+  {
+    method: METHOD.GET,
+    path: PATH.USER_IMAGE,
+    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    middleware:[verifyJWT],
+    handler: imageController.getUserLoginImage,
+  }
 ];
 
 imageRoutes.forEach((route) => {
