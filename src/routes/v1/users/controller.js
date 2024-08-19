@@ -266,6 +266,7 @@ const userProfile = asyncHandler(async (req, res) => {
   const verifiedToken = verifyToken(token);
 
   const data = await service.getById(verifiedToken?.id);
+
   responseHandler(res, [data], "User data retrieved successfully");
 });
 

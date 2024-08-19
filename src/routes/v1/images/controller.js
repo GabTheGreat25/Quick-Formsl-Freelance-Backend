@@ -132,10 +132,13 @@ const getUserLoginImage = asyncHandler(async (req, res) => {
   const token = extractToken(req.headers.authorization);
   const verifiedToken = verifyToken(token);
 
-  const data = await service.getByUserId(verifiedToken?._id);
-  console.log(data)
+  const data = await service.getByUserId(verifiedToken.id);
 
-  responseHandler(res, [data], "User image successfully retrieved");
+  responseHandler(
+    res,
+    [data],
+    !data ? "User has no image" : "User image successfully retrieved",
+  );
 });
 
 export {
