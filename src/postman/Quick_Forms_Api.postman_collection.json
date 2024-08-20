@@ -1575,6 +1575,51 @@
 							"response": []
 						},
 						{
+							"name": "Get All User Images",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{Bearer}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://quickforms-backend.onrender.com/api/v1/images/view/userImage",
+									"protocol": "https",
+									"host": [
+										"quickforms-backend",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"images",
+										"view",
+										"userImage"
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
 							"name": "Get Single Image",
 							"event": [
 								{
@@ -2734,6 +2779,61 @@
 				{
 					"name": "SUBMISSIONS",
 					"item": [
+						{
+							"name": "Fetch Form Data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "https://quickforms-backend.onrender.com/api/v1/submissions/validate?link=https://quick-form-tester.onrender.com/submissions/66b029beffed46d391174eae",
+									"protocol": "https",
+									"host": [
+										"quickforms-backend",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"",
+										"api",
+										"v1",
+										"submissions",
+										"validate"
+									],
+									"query": [
+										{
+											"key": "link",
+											"value": "https://quick-form-tester.onrender.com/submissions/66b029beffed46d391174eae"
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
 						{
 							"name": "Get All Submissions",
 							"event": [
@@ -4400,7 +4500,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"title\": \"Lorem Ipsum\",\r\n  \"fields\": [\r\n    {\r\n      \"inputType\": \"text\",\r\n      \"fieldName\": \"fname\",\r\n      \"placeholderText\": \"John\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",\r\n      \"requiredFieldText\": \"Fname is required\"\r\n    },\r\n    {\r\n      \"inputType\": \"text\",\r\n      \"fieldName\": \"lname\",\r\n      \"placeholderText\": \"Doe\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",      \r\n      \"requiredFieldText\": \"Lname is required\"\r\n    },\r\n    {\r\n      \"inputType\": \"email\",\r\n      \"fieldName\": \"email\",\r\n      \"placeholderText\": \"johndoe@gmail.com\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",      \r\n      \"requiredFieldText\": \"Email is required\"\r\n    },\r\n    {\r\n      \"inputType\": \"column\",\r\n      \"columns\": [\r\n        { \"inputType\": \"text\",\r\n          \"fieldName\": \"phone\",\r\n          \"placeholderText\": \"+63123456789\",\r\n          \"isRequiredField\": true,\r\n          \"requiredFieldColor\": \"#FF0000\",\r\n          \"requiredFieldText\": \"Phone is required\"\r\n        },\r\n        { \"inputType\": \"radio\",\r\n          \"fieldName\": \"gender\",\r\n          \"placeholderText\": \"Male\",\r\n          \"isRequiredField\": true,\r\n          \"requiredFieldColor\": \"#FF0000\",\r\n          \"requiredFieldText\": \"Gender is required\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
+									"raw": "{\r\n  \"title\": \"Lorem Ipsum\",\r\n  \"fields\": [\r\n    {\r\n      \"inputType\": \"text\",\r\n      \"fieldName\": \"fname\",\r\n      \"placeholderText\": \"John\",\r\n      \"isRequiredField\": false,\r\n      \"requiredFieldColor\": \"#FF0000\"\r\n    },\r\n    {\r\n      \"inputType\": \"text\",\r\n      \"fieldName\": \"lname\",\r\n      \"placeholderText\": \"Doe\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",      \r\n      \"requiredFieldText\": \"Lname is required\"\r\n    },\r\n    {\r\n      \"inputType\": \"email\",\r\n      \"fieldName\": \"email\",\r\n      \"placeholderText\": \"johndoe@gmail.com\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",      \r\n      \"requiredFieldText\": \"Email is required\"\r\n    },\r\n    {\r\n      \"inputType\": \"column\",\r\n      \"columns\": [\r\n        {\r\n          \"inputType\": \"text\",\r\n          \"fieldName\": \"phone\",\r\n          \"placeholderText\": \"+63123456789\",\r\n          \"isRequiredField\": true,\r\n          \"requiredFieldColor\": \"#FF0000\",\r\n          \"requiredFieldText\": \"Phone is required\"\r\n        },\r\n        { \r\n          \"inputType\": \"radio\",\r\n          \"fieldName\": \"gender\",\r\n          \"placeholderText\": \"Male\",\r\n          \"isRequiredField\": true,\r\n          \"requiredFieldColor\": \"#FF0000\",\r\n          \"requiredFieldText\": \"Gender is required\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4424,7 +4524,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "66b1996a6a4b43a120344dda"
+											"value": "66b22ac874610c1aabacff22"
 										}
 									]
 								},
@@ -4593,6 +4693,50 @@
 										"api",
 										"v1",
 										"images"
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "Get All User Images",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{Bearer}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:4000/api/v1/images/view/userImage",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"images",
+										"view",
+										"userImage"
 									]
 								},
 								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -5595,7 +5739,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"content\": \"66b02e5cdb382ac927ca236c\"\r\n}",
+									"raw": "{\r\n    \"content\": \"66b029beffed46d391174eae\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -5671,7 +5815,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "66a1e6ba785a8d4829b28b01"
+											"value": "66c46f6cc2ec34494ce83a4c"
 										}
 									]
 								},
@@ -5711,7 +5855,7 @@
 									"urlencoded": []
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/?url=lvv-rjqj-r9a",
+									"raw": "http://localhost:4000/api/v1/?url=hte-l2hr-yoa",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -5725,7 +5869,7 @@
 									"query": [
 										{
 											"key": "url",
-											"value": "lvv-rjqj-r9a"
+											"value": "hte-l2hr-yoa"
 										}
 									]
 								},
@@ -5738,6 +5882,59 @@
 				{
 					"name": "SUBMISSIONS",
 					"item": [
+						{
+							"name": "Fetch Form Data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:4000/api/v1/submissions/validate?link=https://quick-form-tester.onrender.com/submissions/66b029beffed46d391174eae",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"submissions",
+										"validate"
+									],
+									"query": [
+										{
+											"key": "link",
+											"value": "https://quick-form-tester.onrender.com/submissions/66b029beffed46d391174eae"
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
 						{
 							"name": "Get All Submissions",
 							"event": [
@@ -5821,7 +6018,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "669fadd3140db02183dd3577"
+											"value": "66b02b27ffed46d391174f06"
 										}
 									]
 								},
@@ -6082,7 +6279,7 @@
 	"variable": [
 		{
 			"key": "Bearer",
-			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YWYxZDBkMDFiZDlmMjNjNGM4OGFhYSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcyMjkxMjY4NSwiZXhwIjoxNzIyOTk5MDg1fQ.Wq55y_LbzkTrPtqiAxIfYIu78yMr72lt6jgDmIskIGQ"
+			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YWYxZDBkMDFiZDlmMjNjNGM4OGFhYSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcyNDE1ODU1NSwiZXhwIjoxNzI0MjQ0OTU1fQ.LCRex617AvglZIg3_FldTTkIjtNbKnD4SqxTeATJlZw"
 		}
 	]
 }

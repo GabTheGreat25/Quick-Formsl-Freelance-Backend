@@ -6,7 +6,7 @@ import serviceSetting from "../settings/service.js";
 import formService from "../forms/service.js";
 import userService from "../users/service.js";
 import { STATUSCODE } from "../../../constants/index.js";
-import { responseHandler } from "../../../utils/index.js";
+import { responseHandler, urlExtract } from "../../../utils/index.js";
 import {
   sendAdminEmail,
   sendCustomerEmail,
@@ -35,6 +35,24 @@ const getSingleSubmission = asyncHandler(async (req, res) => {
     data,
     !data ? "No Submission found" : "Submission retrieved successfully",
   );
+});
+
+const fetchFormContent = asyncHandler(async (req, res) => {
+  const contentId = urlExtract(req.query.link);
+
+  const form = await formService.findByContentId(contentId);
+
+  const filteredForm = form.form.find(
+    (entry) => entry.content._id.toString() === contentId,
+  );
+
+  if (!filteredForm)
+    throw createError(
+      STATUSCODE.NOT_FOUND,
+      "No form content found for this link",
+    );
+
+  responseHandler(res, filteredForm, "Form content retrieved successfully");
 });
 
 const createNewSubmission = asyncHandler(async (req, res) => {
@@ -162,6 +180,7 @@ const deleteSubmission = asyncHandler(async (req, res) => {
 export {
   getAllSubmissions,
   getSingleSubmission,
+  fetchFormContent,
   createNewSubmission,
   deleteSubmission,
 };

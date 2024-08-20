@@ -32,7 +32,7 @@ const createLink = asyncHandler(async (req, res) => {
   const urlLink = `${ENV.BACKEND_URL}/?url=${await service.generateLink()}`;
 
   const encryptedUrl = await service.encrypt(
-    `${ENV.BACKEND_URL}/submissions/${req.body.content}`,
+    `${ENV.FRONTEND_URL}/submissions/${req.body.content}`,
   );
 
   const data = await service.add(

@@ -15,4 +15,5 @@ export const PATH = {
   USER_PROFILE: "/view/userProfile",
   EDIT_ALL_FIELDS: "/editAllFields/:id",
   USER_IMAGE: "/view/userImage",
+  VALIDATE: "/validate",
 };

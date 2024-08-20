@@ -8,6 +8,11 @@ const router = Router();
 const submissionRoutes = [
   {
     method: METHOD.GET,
+    path: PATH.VALIDATE,
+    handler: submissionController.fetchFormContent,
+  },
+  {
+    method: METHOD.GET,
     roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     middleware: [verifyJWT],
     handler: submissionController.getAllSubmissions,

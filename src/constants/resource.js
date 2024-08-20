@@ -11,7 +11,6 @@ export const RESOURCE = {
   IMAGES: "images",
   IMAGE: "image",
   FINISH: "finish",
-  NONE: "None",
   ID: "_id",
   ROLE: "role",
   PASSWORD: "+password",

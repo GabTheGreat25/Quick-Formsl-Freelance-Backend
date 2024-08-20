@@ -1,18 +1,8 @@
-import { RESOURCE } from "../constants/index.js";
-import { ENV } from "../config/index.js";
-
 let jwtToken = "";
 let blacklistedToken = "";
 
 export function setToken(token, res) {
   jwtToken = token;
-
-  res.cookie("accessToken", token, {
-    httpOnly: true,
-    secure: ENV.NODE_ENV === RESOURCE.PRODUCTION,
-    sameSite: RESOURCE.NONE,
-    maxAge: 24 * 60 * 60 * 1000,
-  });
 }
 
 export function getToken() {

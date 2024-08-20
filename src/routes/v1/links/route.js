@@ -14,6 +14,8 @@ const linkRoutes = [
   },
   {
     method: METHOD.POST,
+    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    middleware: [verifyJWT],
     handler: linkController.createLink,
   },
   {

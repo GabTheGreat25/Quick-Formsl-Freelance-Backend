@@ -11,3 +11,4 @@ export * from "./customerMailer.js";
 export * from "./personalizeMessage.js";
 export * from "./formattedDate.js";
 export * from "./formattedTime.js";
+export * from "./urlExtract.js";

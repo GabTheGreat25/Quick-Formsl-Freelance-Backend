@@ -16,6 +16,7 @@ import {
   generateAccess,
   extractToken,
   verifyToken,
+  isTokenBlacklisted,
 } from "../../../middlewares/index.js";
 import { sendEmail, generateRandomCode } from "../../../utils/index.js";
 
@@ -70,18 +71,12 @@ const loginUser = asyncHandler(async (req, res) => {
   responseHandler(res, data, "User Login successfully", accessToken);
 });
 
-const logoutUser = asyncHandler(async (req, res) => {
-  req.cookies?.accessToken && getToken()
-    ? (blacklistToken(),
-      res.clearCookie("accessToken", {
-        httpOnly: true,
-        secure: ENV.NODE_ENV === RESOURCE.PRODUCTION,
-        sameSite: RESOURCE.NONE,
-      }),
-      responseHandler(res, [], "User Logout successfully"))
-    : (() => {
-        throw createError(STATUSCODE.UNAUTHORIZED, "You are not logged in");
-      })();
+const logoutUser = asyncHandler(async (req, res, next) => {
+  const savedToken = getToken();
+
+  !savedToken || isTokenBlacklisted()
+    ? next(createError(STATUSCODE.UNAUTHORIZED, "You are not logged in"))
+    : (blacklistToken(), responseHandler(res, [], "User Logout successfully"));
 });
 
 const createNewUser = [
@@ -99,9 +94,9 @@ const createNewUser = [
     const hashed = await bcrypt.hash(req.body.password, ENV.SALT_NUMBER);
 
     const uploadedImages = await multipleImages(req.files, []);
-    if (uploadedImages.length === STATUSCODE.ZERO) {
+
+    if (uploadedImages.length === STATUSCODE.ZERO)
       throw createError(STATUSCODE.BAD_REQUEST, "Image is required");
-    }
 
     const data = await service.add(
       {
@@ -235,7 +230,7 @@ const resetUserEmailPassword = asyncHandler(async (req, res) => {
   )
     throw createError(
       STATUSCODE.BAD_REQUEST,
-      "Passwords are required and must match",
+      "Both passwords are required and must match",
     );
 
   const code = await service.getCode(req.body.verificationCode);
@@ -265,7 +260,7 @@ const userProfile = asyncHandler(async (req, res) => {
   const token = extractToken(req.headers.authorization);
   const verifiedToken = verifyToken(token);
 
-  const data = await service.getById(verifiedToken?.id);
+  const data = await service.getById(verifiedToken.id);
 
   responseHandler(res, [data], "User data retrieved successfully");
 });
