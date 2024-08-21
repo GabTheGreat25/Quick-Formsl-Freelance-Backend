@@ -16,7 +16,7 @@ const schema = new mongoose.Schema(
         },
         imageId: {
           type: mongoose.Schema.Types.ObjectId,
-          required: true,
+          required: false,
           ref: RESOURCE.IMAGES,
         },
         position: {
