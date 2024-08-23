@@ -7,8 +7,9 @@ import { ENV } from "../../../config/environment.js";
 
 const redirectToDecryptedUrl = asyncHandler(async (req, res) => {
   const link = await linkService.findByUrl(
-    `${ENV.BACKEND_URL}/?url=${req.query.url}`,
+    `${ENV.BACKEND_URL}/${req.params.link}`,
   );
+
   if (!link) throw createError(STATUSCODE.NOT_FOUND, "Link not found");
 
   const decryptedUrl = await service.decrypt(link.encryptedUrl);

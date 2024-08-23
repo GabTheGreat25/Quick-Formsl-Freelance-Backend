@@ -1,11 +1,11 @@
 {
 	"info": {
-		"_postman_id": "bb0e46c8-4f3e-4ffd-bed4-5684c7202490",
+		"_postman_id": "7055c0b3-e141-4f2a-b027-08f2252bd1e9",
 		"name": "BACKEND-API",
 		"description": "# 🚀 Get started here\n\nThis collection guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this collection**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these request types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT and PATCH requests.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a variable called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Tests\" tab**\n\nTests help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/b5f280a7-4b09-48ec-857f-0a7ed99d7ef8/U2NyZWVuc2hvdCAyMDIzLTAzLTI3IGF0IDkuNDcuMjggUE0ucG5n\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n- Add more scripts in \"Tests\" to verify if the API works as expected and execute flows.\n    \n\n## ℹ️ Resources\n\n[Building requests](https://learning.postman.com/docs/sending-requests/requests/)  \n[Authorizing requests](https://learning.postman.com/docs/sending-requests/authorization/)  \n[Using variables](https://learning.postman.com/docs/sending-requests/variables/)  \n[Managing environments](https://learning.postman.com/docs/sending-requests/managing-environments/)  \n[Writing scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "36341525",
-		"_collection_link": "https://freelance-7629.postman.co/workspace/Quick-Forms-Backend-Api~2aa91dca-7a9b-4ebe-9ffa-354049d66143/collection/36341525-bb0e46c8-4f3e-4ffd-bed4-5684c7202490?action=share&source=collection_link&creator=36341525"
+		"_collection_link": "https://freelance-7629.postman.co/workspace/Quick-Forms-Backend-Api~2aa91dca-7a9b-4ebe-9ffa-354049d66143/collection/36341525-7055c0b3-e141-4f2a-b027-08f2252bd1e9?action=share&source=collection_link&creator=36341525"
 	},
 	"item": [
 		{
@@ -47,7 +47,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/users/login",
+									"raw": "https://quickforms-backend.onrender.com/users/login",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -55,8 +55,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"login"
 									]
@@ -97,7 +95,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/users/login",
+									"raw": "https://quickforms-backend.onrender.com/users/login",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -105,8 +103,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"login"
 									]
@@ -147,7 +143,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/users/logout",
+									"raw": "https://quickforms-backend.onrender.com/users/logout",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -155,8 +151,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"logout"
 									]
@@ -190,7 +184,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/users",
+									"raw": "https://quickforms-backend.onrender.com/users",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -198,8 +192,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"users"
 									]
 								},
@@ -276,7 +268,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/users/:id",
+									"raw": "https://quickforms-backend.onrender.com/users/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -284,8 +276,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"users",
 										":id"
 									],
@@ -351,7 +341,7 @@
 									]
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/users",
+									"raw": "https://quickforms-backend.onrender.com/users",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -359,8 +349,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"users"
 									]
 								},
@@ -419,7 +407,7 @@
 									]
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/users",
+									"raw": "https://quickforms-backend.onrender.com/users",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -427,8 +415,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"users"
 									]
 								},
@@ -487,7 +473,7 @@
 									]
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/users",
+									"raw": "https://quickforms-backend.onrender.com/users",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -495,8 +481,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"users"
 									]
 								},
@@ -556,7 +540,7 @@
 									]
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/users/edit/:id",
+									"raw": "https://quickforms-backend.onrender.com/users/edit/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -564,8 +548,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"edit",
 										":id"
@@ -617,7 +599,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/users/changePassword/:id",
+									"raw": "https://quickforms-backend.onrender.com/users/changePassword/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -625,8 +607,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"changePassword",
 										":id"
@@ -678,7 +658,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/users/delete/:id",
+									"raw": "https://quickforms-backend.onrender.com/users/delete/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -686,8 +666,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"delete",
 										":id"
@@ -739,7 +717,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/users/restore/:id",
+									"raw": "https://quickforms-backend.onrender.com/users/restore/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -747,8 +725,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"restore",
 										":id"
@@ -800,7 +776,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/users/forceDelete/:id",
+									"raw": "https://quickforms-backend.onrender.com/users/forceDelete/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -808,8 +784,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"forceDelete",
 										":id"
@@ -855,7 +829,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/users/emailOTP",
+									"raw": "https://quickforms-backend.onrender.com/users/emailOTP",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -863,8 +837,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"emailOTP"
 									]
@@ -902,7 +874,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/users/resetPassword",
+									"raw": "https://quickforms-backend.onrender.com/users/resetPassword",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -910,8 +882,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"resetPassword"
 									]
@@ -950,7 +920,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/inputTypes",
+									"raw": "https://quickforms-backend.onrender.com/inputTypes",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -958,8 +928,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"inputTypes"
 									]
 								},
@@ -993,7 +961,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/inputTypes/:id",
+									"raw": "https://quickforms-backend.onrender.com/inputTypes/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1001,8 +969,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"inputTypes",
 										":id"
 									],
@@ -1053,7 +1019,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/inputTypes",
+									"raw": "https://quickforms-backend.onrender.com/inputTypes",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1061,8 +1027,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"inputTypes"
 									]
 								},
@@ -1106,7 +1070,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/inputTypes/edit/:id",
+									"raw": "https://quickforms-backend.onrender.com/inputTypes/edit/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1114,8 +1078,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"inputTypes",
 										"edit",
 										":id"
@@ -1167,7 +1129,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/inputTypes/delete/:id",
+									"raw": "https://quickforms-backend.onrender.com/inputTypes/delete/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1175,8 +1137,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"inputTypes",
 										"delete",
 										":id"
@@ -1223,7 +1183,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/contents",
+									"raw": "https://quickforms-backend.onrender.com/contents",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1231,8 +1191,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"contents"
 									]
 								},
@@ -1266,7 +1224,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/contents/:id",
+									"raw": "https://quickforms-backend.onrender.com/contents/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1274,8 +1232,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"contents",
 										":id"
 									],
@@ -1326,7 +1282,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/contents",
+									"raw": "https://quickforms-backend.onrender.com/contents",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1334,8 +1290,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"contents"
 									]
 								},
@@ -1379,7 +1333,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/contents/edit/:id",
+									"raw": "https://quickforms-backend.onrender.com/contents/edit/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1387,8 +1341,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"contents",
 										"edit",
 										":id"
@@ -1440,7 +1392,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/contents/editAllFields/:id",
+									"raw": "https://quickforms-backend.onrender.com/contents/editAllFields/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1448,8 +1400,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"contents",
 										"editAllFields",
 										":id"
@@ -1501,7 +1451,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/contents/delete/:id",
+									"raw": "https://quickforms-backend.onrender.com/contents/delete/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1509,8 +1459,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"contents",
 										"delete",
 										":id"
@@ -1557,7 +1505,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/images",
+									"raw": "https://quickforms-backend.onrender.com/images",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1565,8 +1513,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"images"
 									]
 								},
@@ -1600,7 +1546,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/images/view/userImage",
+									"raw": "https://quickforms-backend.onrender.com/images/view/userImage",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1608,8 +1554,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"images",
 										"view",
 										"userImage"
@@ -1645,7 +1589,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/images/:id",
+									"raw": "https://quickforms-backend.onrender.com/images/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1653,8 +1597,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"images",
 										":id"
 									],
@@ -1706,7 +1648,7 @@
 									]
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/images",
+									"raw": "https://quickforms-backend.onrender.com/images",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1714,8 +1656,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"images"
 									]
 								},
@@ -1760,7 +1700,7 @@
 									]
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/images/createDefault",
+									"raw": "https://quickforms-backend.onrender.com/images/createDefault",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1768,8 +1708,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"images",
 										"createDefault"
 									]
@@ -1815,7 +1753,7 @@
 									]
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/images/edit/:id",
+									"raw": "https://quickforms-backend.onrender.com/images/edit/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1823,8 +1761,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"images",
 										"edit",
 										":id"
@@ -1876,7 +1812,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/images/delete/:id",
+									"raw": "https://quickforms-backend.onrender.com/images/delete/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1884,8 +1820,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"images",
 										"delete",
 										":id"
@@ -1937,7 +1871,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/images/removeDefault/:id",
+									"raw": "https://quickforms-backend.onrender.com/images/removeDefault/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -1945,8 +1879,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"images",
 										"removeDefault",
 										":id"
@@ -1993,7 +1925,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/designs",
+									"raw": "https://quickforms-backend.onrender.com/designs",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2001,8 +1933,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"designs"
 									]
 								},
@@ -2036,7 +1966,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/designs/:id",
+									"raw": "https://quickforms-backend.onrender.com/designs/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2044,8 +1974,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"designs",
 										":id"
 									],
@@ -2096,7 +2024,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/designs",
+									"raw": "https://quickforms-backend.onrender.com/designs",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2104,8 +2032,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"designs"
 									]
 								},
@@ -2149,7 +2075,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/designs/delete/:id",
+									"raw": "https://quickforms-backend.onrender.com/designs/delete/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2157,8 +2083,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"designs",
 										"delete",
 										":id"
@@ -2217,7 +2141,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/settings",
+									"raw": "https://quickforms-backend.onrender.com/settings",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2225,8 +2149,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"settings"
 									]
 								},
@@ -2260,7 +2182,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/settings/:id",
+									"raw": "https://quickforms-backend.onrender.com/settings/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2268,8 +2190,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"settings",
 										":id"
 									],
@@ -2320,7 +2240,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/settings",
+									"raw": "https://quickforms-backend.onrender.com/settings",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2328,8 +2248,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"settings"
 									]
 								},
@@ -2373,7 +2291,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/settings/edit/:id",
+									"raw": "https://quickforms-backend.onrender.com/settings/edit/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2381,8 +2299,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"settings",
 										"edit",
 										":id"
@@ -2429,7 +2345,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/forms",
+									"raw": "https://quickforms-backend.onrender.com/forms",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2437,8 +2353,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"forms"
 									]
 								},
@@ -2472,7 +2386,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/forms/:id",
+									"raw": "https://quickforms-backend.onrender.com/forms/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2480,8 +2394,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"forms",
 										":id"
 									],
@@ -2532,7 +2444,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/forms/delete/:id",
+									"raw": "https://quickforms-backend.onrender.com/forms/delete/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2540,8 +2452,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"forms",
 										"delete",
 										":id"
@@ -2588,7 +2498,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/links",
+									"raw": "https://quickforms-backend.onrender.com/links",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2596,8 +2506,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"links"
 									]
 								},
@@ -2641,7 +2549,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/links",
+									"raw": "https://quickforms-backend.onrender.com/links",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2649,8 +2557,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"links"
 									]
 								},
@@ -2694,7 +2600,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/links/delete/:id",
+									"raw": "https://quickforms-backend.onrender.com/links/delete/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2702,8 +2608,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"links",
 										"delete",
 										":id"
@@ -2751,7 +2655,7 @@
 									"urlencoded": []
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/?url=ice-1lbn-luc",
+									"raw": "https://quickforms-backend.onrender.com/wyeudi8e2f",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2759,15 +2663,7 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
-										""
-									],
-									"query": [
-										{
-											"key": "url",
-											"value": "ice-1lbn-luc"
-										}
+										"wyeudi8e2f"
 									]
 								},
 								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -2809,7 +2705,7 @@
 									"urlencoded": []
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/submissions/validate?link=https://quick-form-tester.onrender.com/submissions/66b029beffed46d391174eae",
+									"raw": "https://quickforms-backend.onrender.com/submissions/validate?link=https://quick-form-tester.onrender.com/submissions/66b029beffed46d391174eae",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2817,9 +2713,6 @@
 										"com"
 									],
 									"path": [
-										"",
-										"api",
-										"v1",
 										"submissions",
 										"validate"
 									],
@@ -2860,7 +2753,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/submissions",
+									"raw": "https://quickforms-backend.onrender.com/submissions",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2868,8 +2761,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"submissions"
 									]
 								},
@@ -2903,7 +2794,7 @@
 									}
 								],
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/submissions/:id",
+									"raw": "https://quickforms-backend.onrender.com/submissions/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2911,8 +2802,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"submissions",
 										":id"
 									],
@@ -2963,7 +2852,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/submissions/:id",
+									"raw": "https://quickforms-backend.onrender.com/submissions/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -2971,8 +2860,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"submissions",
 										":id"
 									],
@@ -3131,7 +3018,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://quickforms-backend.onrender.com/api/v1/submissions/delete/:id",
+									"raw": "https://quickforms-backend.onrender.com/submissions/delete/:id",
 									"protocol": "https",
 									"host": [
 										"quickforms-backend",
@@ -3139,8 +3026,6 @@
 										"com"
 									],
 									"path": [
-										"api",
-										"v1",
 										"submissions",
 										"delete",
 										":id"
@@ -3199,15 +3084,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/users/login",
+									"raw": "http://localhost:4000/users/login",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"login"
 									]
@@ -3248,15 +3131,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/users/login",
+									"raw": "http://localhost:4000/users/login",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"login"
 									]
@@ -3297,15 +3178,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/users/logout",
+									"raw": "http://localhost:4000/users/logout",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"logout"
 									]
@@ -3339,15 +3218,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/users",
+									"raw": "http://localhost:4000/users",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"users"
 									]
 								},
@@ -3381,15 +3258,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/users/deleted",
+									"raw": "http://localhost:4000/users/deleted",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"deleted"
 									]
@@ -3424,15 +3299,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/users/:id",
+									"raw": "http://localhost:4000/users/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"users",
 										":id"
 									],
@@ -3498,15 +3371,13 @@
 									]
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/users",
+									"raw": "http://localhost:4000/users",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"users"
 									]
 								},
@@ -3565,15 +3436,13 @@
 									]
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/users",
+									"raw": "http://localhost:4000/users",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"users"
 									]
 								},
@@ -3632,15 +3501,13 @@
 									]
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/users",
+									"raw": "http://localhost:4000/users",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"users"
 									]
 								},
@@ -3700,15 +3567,13 @@
 									]
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/users/edit/:id",
+									"raw": "http://localhost:4000/users/edit/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"edit",
 										":id"
@@ -3760,15 +3625,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/users/changePassword/:id",
+									"raw": "http://localhost:4000/users/changePassword/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"changePassword",
 										":id"
@@ -3820,15 +3683,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/users/delete/:id",
+									"raw": "http://localhost:4000/users/delete/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"delete",
 										":id"
@@ -3880,15 +3741,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/users/restore/:id",
+									"raw": "http://localhost:4000/users/restore/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"restore",
 										":id"
@@ -3940,15 +3799,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/users/forceDelete/:id",
+									"raw": "http://localhost:4000/users/forceDelete/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"forceDelete",
 										":id"
@@ -3994,15 +3851,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/users/emailOTP",
+									"raw": "http://localhost:4000/users/emailOTP",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"emailOTP"
 									]
@@ -4040,15 +3895,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/users/resetPassword",
+									"raw": "http://localhost:4000/users/resetPassword",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"users",
 										"resetPassword"
 									]
@@ -4087,15 +3940,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/inputTypes",
+									"raw": "http://localhost:4000/inputTypes",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"inputTypes"
 									]
 								},
@@ -4129,15 +3980,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/inputTypes/:id",
+									"raw": "http://localhost:4000/inputTypes/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"inputTypes",
 										":id"
 									],
@@ -4188,15 +4037,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/inputTypes",
+									"raw": "http://localhost:4000/inputTypes",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"inputTypes"
 									]
 								},
@@ -4240,15 +4087,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/inputTypes/edit/:id",
+									"raw": "http://localhost:4000/inputTypes/edit/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"inputTypes",
 										"edit",
 										":id"
@@ -4300,15 +4145,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/inputTypes/delete/:id",
+									"raw": "http://localhost:4000/inputTypes/delete/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"inputTypes",
 										"delete",
 										":id"
@@ -4355,15 +4198,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/contents",
+									"raw": "http://localhost:4000/contents",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"contents"
 									]
 								},
@@ -4397,15 +4238,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/contents/:id",
+									"raw": "http://localhost:4000/contents/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"contents",
 										":id"
 									],
@@ -4456,15 +4295,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/contents",
+									"raw": "http://localhost:4000/contents",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"contents"
 									]
 								},
@@ -4508,15 +4345,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/contents/edit/:id",
+									"raw": "http://localhost:4000/contents/edit/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"contents",
 										"edit",
 										":id"
@@ -4568,15 +4403,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/contents/editAllFields/:id",
+									"raw": "http://localhost:4000/contents/editAllFields/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"contents",
 										"editAllFields",
 										":id"
@@ -4628,15 +4461,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/contents/delete/:id",
+									"raw": "http://localhost:4000/contents/delete/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"contents",
 										"delete",
 										":id"
@@ -4683,15 +4514,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/images",
+									"raw": "http://localhost:4000/images",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"images"
 									]
 								},
@@ -4725,15 +4554,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/images/view/userImage",
+									"raw": "http://localhost:4000/images/view/userImage",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"images",
 										"view",
 										"userImage"
@@ -4769,15 +4596,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/images/:id",
+									"raw": "http://localhost:4000/images/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"images",
 										":id"
 									],
@@ -4829,15 +4654,13 @@
 									]
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/images",
+									"raw": "http://localhost:4000/images",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"images"
 									]
 								},
@@ -4882,15 +4705,13 @@
 									]
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/images/createDefault",
+									"raw": "http://localhost:4000/images/createDefault",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"images",
 										"createDefault"
 									]
@@ -4936,15 +4757,13 @@
 									]
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/images/edit/:id",
+									"raw": "http://localhost:4000/images/edit/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"images",
 										"edit",
 										":id"
@@ -4996,15 +4815,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/images/delete/:id",
+									"raw": "http://localhost:4000/images/delete/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"images",
 										"delete",
 										":id"
@@ -5056,15 +4873,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/images/removeDefault/:id",
+									"raw": "http://localhost:4000/images/removeDefault/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"images",
 										"removeDefault",
 										":id"
@@ -5111,15 +4926,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/designs",
+									"raw": "http://localhost:4000/designs",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"designs"
 									]
 								},
@@ -5153,15 +4966,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/designs/:id",
+									"raw": "http://localhost:4000/designs/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"designs",
 										":id"
 									],
@@ -5212,15 +5023,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/designs",
+									"raw": "http://localhost:4000/designs",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"designs"
 									]
 								},
@@ -5264,15 +5073,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/designs/delete/:id",
+									"raw": "http://localhost:4000/designs/delete/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"designs",
 										"delete",
 										":id"
@@ -5331,15 +5138,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/settings",
+									"raw": "http://localhost:4000/settings",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"settings"
 									]
 								},
@@ -5373,15 +5178,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/settings/:id",
+									"raw": "http://localhost:4000/settings/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"settings",
 										":id"
 									],
@@ -5432,15 +5235,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/settings",
+									"raw": "http://localhost:4000/settings",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"settings"
 									]
 								},
@@ -5484,15 +5285,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/settings/edit/:id",
+									"raw": "http://localhost:4000/settings/edit/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"settings",
 										"edit",
 										":id"
@@ -5539,15 +5338,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/forms",
+									"raw": "http://localhost:4000/forms",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"forms"
 									]
 								},
@@ -5581,15 +5378,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/forms/:id",
+									"raw": "http://localhost:4000/forms/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"forms",
 										":id"
 									],
@@ -5640,15 +5435,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/forms/delete/:id",
+									"raw": "http://localhost:4000/forms/delete/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"forms",
 										"delete",
 										":id"
@@ -5695,15 +5488,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/links",
+									"raw": "http://localhost:4000/links",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"links"
 									]
 								},
@@ -5747,15 +5538,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/links",
+									"raw": "http://localhost:4000/links",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"links"
 									]
 								},
@@ -5799,15 +5588,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/links/delete/:id",
+									"raw": "http://localhost:4000/links/delete/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"links",
 										"delete",
 										":id"
@@ -5815,7 +5602,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "66c46f6cc2ec34494ce83a4c"
+											"value": "66c86a8f19ffd6a5661242b4"
 										}
 									]
 								},
@@ -5855,22 +5642,14 @@
 									"urlencoded": []
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/?url=hte-l2hr-yoa",
+									"raw": "http://localhost:4000/wyeudi8e2f",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
-										""
-									],
-									"query": [
-										{
-											"key": "url",
-											"value": "hte-l2hr-yoa"
-										}
+										"wyeudi8e2f"
 									]
 								},
 								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -5912,15 +5691,13 @@
 									"urlencoded": []
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/submissions/validate?link=https://quick-form-tester.onrender.com/submissions/66b029beffed46d391174eae",
+									"raw": "http://localhost:4000/submissions/validate?link=https://quick-form-tester.onrender.com/submissions/66b029beffed46d391174eae",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"submissions",
 										"validate"
 									],
@@ -5961,15 +5738,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/submissions",
+									"raw": "http://localhost:4000/submissions",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"submissions"
 									]
 								},
@@ -6003,15 +5778,13 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:4000/api/v1/submissions/:id",
+									"raw": "http://localhost:4000/submissions/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"submissions",
 										":id"
 									],
@@ -6062,15 +5835,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/submissions/:id",
+									"raw": "http://localhost:4000/submissions/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"submissions",
 										":id"
 									],
@@ -6227,15 +5998,13 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4000/api/v1/submissions/delete/:id",
+									"raw": "http://localhost:4000/submissions/delete/:id",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"api",
-										"v1",
 										"submissions",
 										"delete",
 										":id"

@@ -1,12 +1,13 @@
 import { Router } from "express";
 import * as publishController from "./controller.js";
-import { METHOD } from "../../../constants/index.js";
+import { METHOD, PATH } from "../../../constants/index.js";
 
 const router = Router();
 
 const publishRoutes = [
   {
     method: METHOD.GET,
+    path: PATH.LINK,
     handler: publishController.redirectToDecryptedUrl,
   },
 ];

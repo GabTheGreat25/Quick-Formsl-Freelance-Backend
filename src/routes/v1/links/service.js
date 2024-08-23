@@ -24,7 +24,7 @@ async function generateLink(segmentLengths = [3, 4, 3]) {
       index += length;
     }
 
-    resolve(segments.join("-").toLowerCase());
+    resolve(segments.join("").toLowerCase());
   });
 }
 

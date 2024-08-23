@@ -8,7 +8,7 @@ dotenv.config({
 export const ENV = {
   NODE_ENV: process.env.NODE_ENV || RESOURCE.DEVELOPMENT,
   PORT: process.env.PORT || 4000,
-  BACKEND_URL: process.env.BACKEND_URL || "http://localhost:4000/api/v1",
+  BACKEND_URL: process.env.BACKEND_URL || "http://localhost:4000",
   FRONTEND_URL: process.env.FRONTEND_URL || "http://localhost:3000",
   DATABASE_URI:
     process.env.DATABASE_URI ||

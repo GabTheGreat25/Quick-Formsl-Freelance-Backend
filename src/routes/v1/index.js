@@ -54,6 +54,6 @@ const routes = [
 ];
 
 export const V1 = routes.map((route) => ({
-  url: `${RESOURCE.V1}${route.url}`,
+  url: `/${route.url}`,
   route: route.route,
 }));
