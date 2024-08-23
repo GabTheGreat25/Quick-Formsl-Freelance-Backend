@@ -137,7 +137,9 @@ const getUserLoginImage = asyncHandler(async (req, res) => {
   responseHandler(
     res,
     [data],
-    !data ? "User has no image" : "User image successfully retrieved",
+    data.length === 0
+      ? "User has no image"
+      : "User image successfully retrieved",
   );
 });
 

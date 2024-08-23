@@ -30,7 +30,7 @@ async function deleteById(_id, session) {
 }
 
 async function getByUserId(_id) {
-  return await model.findOne({ user: _id });
+  return await model.find({ user: _id });
 }
 
 export default {
