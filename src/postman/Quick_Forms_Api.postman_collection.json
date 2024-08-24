@@ -1325,7 +1325,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"title\": \"Lorem Ipsum\",\r\n  \"fields\": [\r\n    {\r\n      \"inputType\": \"text\",\r\n      \"fieldName\": \"fname\",\r\n      \"placeholderText\": \"John\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",\r\n      \"requiredFieldText\": \"Fname is required\",\r\n      \"style\": {\r\n        \"placeholderColor\": \"#100000\"\r\n      }\r\n    },\r\n    {\r\n      \"inputType\": \"text\",\r\n      \"fieldName\": \"lname\",\r\n      \"placeholderText\": \"Doe\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",      \r\n      \"requiredFieldText\": \"Lname is required\",\r\n      \"style\": {\r\n        \"placeholderColor\": \"#100000\"\r\n      }\r\n    },\r\n    {\r\n      \"inputType\": \"email\",\r\n      \"fieldName\": \"email\",\r\n      \"placeholderText\": \"johndoe@gmail.com\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",      \r\n      \"requiredFieldText\": \"Email is required\",\r\n      \"style\": {\r\n        \"placeholderColor\": \"#100000\"\r\n      }\r\n    },\r\n    {\r\n      \"inputType\": \"column\",\r\n      \"columns\": [\r\n        { \"inputType\": \"text\",\r\n          \"fieldName\": \"phone\",\r\n          \"placeholderText\": \"+63123456789\",\r\n          \"isRequiredField\": true,\r\n          \"requiredFieldColor\": \"#FF0000\",\r\n          \"requiredFieldText\": \"Phone is required\",\r\n      \"style\": {\r\n          \"placeholderColor\": \"#100000\"\r\n         }\r\n        },\r\n        { \"inputType\": \"radio\",\r\n          \"fieldName\": \"gender\",\r\n          \"placeholderText\": \"Male\",\r\n          \"isRequiredField\": true,\r\n          \"requiredFieldColor\": \"#FF0000\",\r\n          \"requiredFieldText\": \"Gender is required\",\r\n      \"style\": {\r\n          \"placeholderColor\": \"#100000\"\r\n         }\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
+									"raw": "{\r\n  \"title\": \"Lorem Ipsum\",\r\n  \"fields\": [\r\n    {\r\n      \"inputType\": \"text\",\r\n      \"fieldName\": \"fname\",\r\n      \"placeholderText\": \"John\",\r\n      \"isRequiredField\": false,\r\n      \"requiredFieldColor\": \"#FF0000\"\r\n    },\r\n    {\r\n      \"inputType\": \"text\",\r\n      \"fieldName\": \"lname\",\r\n      \"placeholderText\": \"Doe\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",      \r\n      \"requiredFieldText\": \"Lname is required\"\r\n    },\r\n    {\r\n      \"inputType\": \"email\",\r\n      \"fieldName\": \"email\",\r\n      \"placeholderText\": \"johndoe@gmail.com\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",      \r\n      \"requiredFieldText\": \"Email is required\"\r\n    },\r\n    {\r\n      \"inputType\": \"dropdown\",\r\n      \"fieldName\": \"dropdown\",\r\n      \"value\": [\"test\",\"wasd\",\"123\"],\r\n      \"defaultValue\": \"test\",\r\n      \"placeholderText\": \"\",\r\n      \"isRequiredField\": false\r\n    },\r\n    {\r\n      \"inputType\": \"checkbox\",\r\n      \"fieldName\": \"checkbox\",\r\n      \"defaultValue\": \"true\",\r\n      \"placeholderText\": \"\",\r\n      \"isRequiredField\": false\r\n    },\r\n    {\r\n      \"inputType\": \"column\",\r\n      \"columns\": [\r\n        {\r\n          \"inputType\": \"text\",\r\n          \"fieldName\": \"phone\",\r\n          \"placeholderText\": \"+63123456789\",\r\n          \"isRequiredField\": true,\r\n          \"requiredFieldColor\": \"#FF0000\",\r\n          \"requiredFieldText\": \"Phone is required\"\r\n        },\r\n        { \r\n          \"inputType\": \"radio\",\r\n          \"fieldName\": \"gender\",\r\n          \"placeholderText\": \"\",\r\n          \"value\": [\"test\",\"wasd\",\"123\"],\r\n          \"defaultValue\": \"123\",\r\n          \"isRequiredField\": false\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2283,7 +2283,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"isEmailParticipant\": true,\r\n    \"isEmailAdmin\": true,\r\n    \"isRecord\": true,\r\n    \"isSuccess\": true,\r\n    \"subject\": \"test email\",\r\n    \"message\" : \"Hi there [fname] [lname] on [date] at [time] your email [email]\"\r\n}",
+									"raw": "{\r\n    \"isEmailParticipant\": true,\r\n    \"isEmailAdmin\": true,\r\n    \"isRecord\": true,\r\n    \"isSuccess\": true,\r\n    \"isSuccessBody\": \"I am a body\",\r\n    \"isSuccessTitle\": \"I am a title\",\r\n    \"subject\": \"test email\",\r\n    \"message\" : \"Hi there [fname] [lname] on [date] at [time] your email [email]\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4029,7 +4029,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"type\": \"email\",\r\n    \"fieldName\": \"email\",\r\n    \"category\": \"General\",\r\n    \"icon\": \"icon\"\r\n}",
+									"raw": "{\r\n    \"type\": \"checkbox\",\r\n    \"fieldName\": \"checkbox\",\r\n    \"category\": \"General\",\r\n    \"icon\": \"icon\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4079,7 +4079,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"type\": \"text\",\r\n    \"fieldName\": \"firstName\",\r\n    \"category\": \"General\",\r\n    \"icon\": \"icon\"\r\n}",
+									"raw": "{\r\n    \"type\": \"dropdown\",\r\n    \"fieldName\": \"dropdown\",\r\n    \"category\": \"General\",\r\n    \"icon\": \"icon\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4101,7 +4101,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "6688f837c9535f5865a3bece"
+											"value": "66c9acf5b02ceed75f52fbc7"
 										}
 									]
 								},
@@ -4337,7 +4337,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"title\": \"Lorem Ipsum\",\r\n  \"fields\": [\r\n    {\r\n      \"inputType\": \"text\",\r\n      \"fieldName\": \"fname\",\r\n      \"placeholderText\": \"John\",\r\n      \"isRequiredField\": false,\r\n      \"requiredFieldColor\": \"#FF0000\"\r\n    },\r\n    {\r\n      \"inputType\": \"text\",\r\n      \"fieldName\": \"lname\",\r\n      \"placeholderText\": \"Doe\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",      \r\n      \"requiredFieldText\": \"Lname is required\"\r\n    },\r\n    {\r\n      \"inputType\": \"email\",\r\n      \"fieldName\": \"email\",\r\n      \"placeholderText\": \"johndoe@gmail.com\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",      \r\n      \"requiredFieldText\": \"Email is required\"\r\n    },\r\n    {\r\n      \"inputType\": \"column\",\r\n      \"columns\": [\r\n        {\r\n          \"inputType\": \"text\",\r\n          \"fieldName\": \"phone\",\r\n          \"placeholderText\": \"+63123456789\",\r\n          \"isRequiredField\": true,\r\n          \"requiredFieldColor\": \"#FF0000\",\r\n          \"requiredFieldText\": \"Phone is required\"\r\n        },\r\n        { \r\n          \"inputType\": \"radio\",\r\n          \"fieldName\": \"gender\",\r\n          \"placeholderText\": \"Male\",\r\n          \"isRequiredField\": true,\r\n          \"requiredFieldColor\": \"#FF0000\",\r\n          \"requiredFieldText\": \"Gender is required\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
+									"raw": "{\r\n  \"title\": \"Lorem Ipsum\",\r\n  \"fields\": [\r\n    {\r\n      \"inputType\": \"text\",\r\n      \"fieldName\": \"fname\",\r\n      \"placeholderText\": \"John\",\r\n      \"isRequiredField\": false,\r\n      \"requiredFieldColor\": \"#FF0000\"\r\n    },\r\n    {\r\n      \"inputType\": \"text\",\r\n      \"fieldName\": \"lname\",\r\n      \"placeholderText\": \"Doe\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",      \r\n      \"requiredFieldText\": \"Lname is required\"\r\n    },\r\n    {\r\n      \"inputType\": \"email\",\r\n      \"fieldName\": \"email\",\r\n      \"placeholderText\": \"johndoe@gmail.com\",\r\n      \"isRequiredField\": true,\r\n      \"requiredFieldColor\": \"#FF0000\",      \r\n      \"requiredFieldText\": \"Email is required\"\r\n    },\r\n    {\r\n      \"inputType\": \"dropdown\",\r\n      \"fieldName\": \"dropdown\",\r\n      \"value\": [\"test\",\"wasd\",\"123\"],\r\n      \"defaultValue\": \"test\",\r\n      \"placeholderText\": \"\",\r\n      \"isRequiredField\": false\r\n    },\r\n    {\r\n      \"inputType\": \"checkbox\",\r\n      \"fieldName\": \"checkbox\",\r\n      \"defaultValue\": \"true\",\r\n      \"placeholderText\": \"\",\r\n      \"isRequiredField\": false\r\n    },\r\n    {\r\n      \"inputType\": \"column\",\r\n      \"columns\": [\r\n        {\r\n          \"inputType\": \"text\",\r\n          \"fieldName\": \"phone\",\r\n          \"placeholderText\": \"+63123456789\",\r\n          \"isRequiredField\": true,\r\n          \"requiredFieldColor\": \"#FF0000\",\r\n          \"requiredFieldText\": \"Phone is required\"\r\n        },\r\n        { \r\n          \"inputType\": \"radio\",\r\n          \"fieldName\": \"gender\",\r\n          \"placeholderText\": \"\",\r\n          \"value\": [\"test\",\"wasd\",\"123\"],\r\n          \"defaultValue\": \"123\",\r\n          \"isRequiredField\": false\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4359,7 +4359,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "66b22ac874610c1aabacff22"
+											"value": "66c9acadc6812f648c378ede"
 										}
 									]
 								},
@@ -5227,7 +5227,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"contentId\": \"66b02e5cdb382ac927ca236c\",\r\n    \"isEmailParticipant\": true,\r\n    \"isEmailAdmin\": true,\r\n    \"isRecord\": true,\r\n    \"isSuccess\": false,\r\n    \"subject\": \"test email\",\r\n    \"message\" : \"Hi there [fname] [lname] on [date] at [time] your email [email]\"\r\n}",
+									"raw": "{\r\n    \"contentId\": \"66b029beffed46d391174eae\",\r\n    \"isEmailParticipant\": true,\r\n    \"isEmailAdmin\": true,\r\n    \"isRecord\": true,\r\n    \"isSuccess\": false,\r\n    \"subject\": \"test email\",\r\n    \"message\" : \"Hi there [fname] [lname] on [date] at [time] your email [email]\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -5277,7 +5277,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"isEmailParticipant\": true,\r\n    \"isEmailAdmin\": true,\r\n    \"isRecord\": true,\r\n    \"isSuccess\": false,\r\n    \"subject\": \"test email\",\r\n    \"message\" : \"Hi there [fname] [lname] on [date] at [time] your email [email]\"\r\n}",
+									"raw": "{\r\n    \"isEmailParticipant\": true,\r\n    \"isEmailAdmin\": true,\r\n    \"isRecord\": true,\r\n    \"isSuccess\": true,\r\n    \"isSuccessBody\": \"I am a body\",\r\n    \"isSuccessTitle\": \"I am a title\",\r\n    \"subject\": \"test email\",\r\n    \"message\" : \"Hi there [fname] [lname] on [date] at [time] your email [email]\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -5602,7 +5602,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "66c86a8f19ffd6a5661242b4"
+											"value": "66c86bb8188919036584f3bf"
 										}
 									]
 								},
@@ -5642,14 +5642,14 @@
 									"urlencoded": []
 								},
 								"url": {
-									"raw": "http://localhost:4000/wyeudi8e2f",
+									"raw": "http://localhost:4000/sooa3eqzkt",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "4000",
 									"path": [
-										"wyeudi8e2f"
+										"sooa3eqzkt"
 									]
 								},
 								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -6048,7 +6048,7 @@
 	"variable": [
 		{
 			"key": "Bearer",
-			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YWYxZDBkMDFiZDlmMjNjNGM4OGFhYSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcyNDE1ODU1NSwiZXhwIjoxNzI0MjQ0OTU1fQ.LCRex617AvglZIg3_FldTTkIjtNbKnD4SqxTeATJlZw"
+			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YWYxZDBkMDFiZDlmMjNjNGM4OGFhYSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcyNDQ5MTIxNywiZXhwIjoxNzI0NTc3NjE3fQ.7JniD5Burs71MSbPykVM3cL2WIYPDVktaH3pSWa2DP0"
 		}
 	]
 }

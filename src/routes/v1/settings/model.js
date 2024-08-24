@@ -27,6 +27,14 @@ const schema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isSuccessTitle: {
+      type: String,
+      required: false,
+    },
+    isSuccessBody: {
+      type: String,
+      required: false,
+    },
     subject: {
       type: String,
       required: true,

@@ -1,5 +1,4 @@
 import model from "./model.js";
-import { RESOURCE } from "../../../constants/resource.js";
 
 async function getAll() {
   return await model.find().populate({

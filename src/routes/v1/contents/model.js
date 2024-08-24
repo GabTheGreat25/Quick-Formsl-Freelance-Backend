@@ -17,6 +17,16 @@ const schema = new mongoose.Schema(
           type: String,
           required: false,
         },
+        value: [
+          {
+            type: String,
+            required: false,
+          },
+        ],
+        defaultValue: {
+          type: String,
+          required: false,
+        },
         placeholderText: {
           type: String,
           required: false,
@@ -84,6 +94,16 @@ const schema = new mongoose.Schema(
               required: false,
             },
             fieldName: {
+              type: String,
+              required: false,
+            },
+            value: [
+              {
+                type: String,
+                required: false,
+              },
+            ],
+            defaultValue: {
               type: String,
               required: false,
             },

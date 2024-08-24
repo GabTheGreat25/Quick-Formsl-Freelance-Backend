@@ -86,9 +86,8 @@ const updateContent = asyncHandler(async (req, res) => {
       ? field.requiredFieldText || "This field is required"
       : undefined;
 
-    if (field.inputType)
-      !validInputTypes.has(field.inputType) &&
-        errors.push(`Invalid input type: ${field.inputType}`);
+    !validInputTypes.has(field.inputType) &&
+      errors.push(`Invalid input type: ${field.inputType}`);
 
     if (field.inputType === "column" && Array.isArray(field.columns)) {
       field.columns = field.columns.map((column) =>
@@ -96,18 +95,65 @@ const updateContent = asyncHandler(async (req, res) => {
       );
 
       field.columns.forEach((column) => {
-        column && column.inputType
-          ? !validInputTypes.has(column.inputType) &&
-            errors.push(`Invalid input type: ${column.inputType}`)
+        column &&
+          column.inputType &&
+          !validInputTypes.has(column.inputType) &&
+          errors.push(`Invalid input type: ${column.inputType}`);
+
+        const isDropdownOrRadio = ["dropdown", "radio"].includes(
+          column.inputType,
+        );
+        column &&
+        isDropdownOrRadio &&
+        (!column.value || !Array.isArray(column.value))
+          ? errors.push(
+              `${column.fieldName} must have a value for ${column.inputType} type.`,
+            )
+          : isDropdownOrRadio &&
+            column.defaultValue &&
+            !column.value.includes(column.defaultValue) &&
+            errors.push(
+              `Default value for ${column.fieldName} must be one of the existing values.`,
+            );
+
+        column &&
+        column.inputType === "checkbox" &&
+        !["true", "false"].includes(column.defaultValue)
+          ? errors.push(
+              `Default value for ${column.fieldName} must be "true" or "false".`,
+            )
           : null;
       });
     }
+
+    const isFieldDropdownOrRadio = ["dropdown", "radio"].includes(
+      field.inputType,
+    );
+    isFieldDropdownOrRadio && (!field.value || !Array.isArray(field.value))
+      ? errors.push(
+          `Field ${field.fieldName} must have a value for ${field.inputType} type.`,
+        )
+      : isFieldDropdownOrRadio &&
+        field.defaultValue &&
+        !field.value.includes(field.defaultValue) &&
+        errors.push(
+          `Default value for ${field.fieldName} must be one of the existing values.`,
+        );
+
+    field &&
+    field.inputType === "checkbox" &&
+    !["true", "false"].includes(field.defaultValue)
+      ? errors.push(
+          `Default value for ${field.fieldName} must be "true" or "false".`,
+        )
+      : null;
   });
 
   if (errors.length)
     throw createError(STATUSCODE.BAD_REQUEST, errors.join(", "));
 
   const data = await service.update(req.params.id, req.body, req.session);
+
   responseHandler(res, [data], "Content updated successfully");
 });
 

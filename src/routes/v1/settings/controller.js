@@ -53,14 +53,15 @@ const createNewSetting = asyncHandler(async (req, res) => {
 });
 
 const updateSetting = asyncHandler(async (req, res) => {
-  const data = await service.update(
-    req.params.id,
-    {
-      ...req.body,
-    },
-    req.session,
-  );
+  const updateData = {
+    ...req.body,
+    ...(req.body.isSuccess === false && {
+      isSuccessTitle: "",
+      isSuccessBody: "",
+    }),
+  };
 
+  const data = await service.update(req.params.id, updateData, req.session);
   responseHandler(res, [data], "Setting updated successfully");
 });
 
