@@ -37,11 +37,11 @@ const schema = new mongoose.Schema(
     },
     subject: {
       type: String,
-      required: true,
+      required: false,
     },
     message: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   schemaOptions,

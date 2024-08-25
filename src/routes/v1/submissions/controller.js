@@ -83,11 +83,6 @@ const createNewSubmission = asyncHandler(async (req, res) => {
       errors.push(`Field '${fieldName}' must not be empty`);
   });
 
-  Object.entries(fieldIdMap).forEach(([fieldIdStr, fieldName]) => {
-    if (!(fieldIdStr in req.body))
-      errors.push(`Field '${fieldName}' is required`);
-  });
-
   if (errors.length > 0)
     throw createError(STATUSCODE.BAD_REQUEST, errors.join(", "));
 

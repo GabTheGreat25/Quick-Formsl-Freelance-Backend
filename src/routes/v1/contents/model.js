@@ -27,6 +27,10 @@ const schema = new mongoose.Schema(
           type: String,
           required: false,
         },
+        cols: {
+          type: Number,
+          required: false,
+        },
         placeholderText: {
           type: String,
           required: false,
@@ -105,6 +109,10 @@ const schema = new mongoose.Schema(
             ],
             defaultValue: {
               type: String,
+              required: false,
+            },
+            cols: {
+              type: Number,
               required: false,
             },
             placeholderText: {
