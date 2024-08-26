@@ -89,6 +89,11 @@ const updateContent = asyncHandler(async (req, res) => {
     !validInputTypes.has(field.inputType) &&
       errors.push(`Invalid input type: ${field.inputType}`);
 
+    if (field.value && Array.isArray(field.value))
+      field.value.forEach((_, index) => {
+        field.valueIndex = index;
+      });
+
     if (field.inputType === "column" && Array.isArray(field.columns)) {
       field.columns = field.columns.map((column) =>
         Object.keys(column).length > 0 ? column : null,
@@ -99,6 +104,11 @@ const updateContent = asyncHandler(async (req, res) => {
           column.inputType &&
           !validInputTypes.has(column.inputType) &&
           errors.push(`Invalid input type: ${column.inputType}`);
+
+        if (column.value && Array.isArray(column.value))
+          column.value.forEach((_, index) => {
+            column.valueIndex = index;
+          });
 
         const isDropdownOrRadio = ["dropdown", "radio"].includes(
           column.inputType,

@@ -23,12 +23,20 @@ const schema = new mongoose.Schema(
             required: false,
           },
         ],
+        valueIndex: {
+          type: Number,
+          required: false,
+        },
         defaultValue: {
           type: String,
           required: false,
         },
         cols: {
           type: Number,
+          required: false,
+        },
+        title: {
+          type: String,
           required: false,
         },
         placeholderText: {
@@ -107,12 +115,20 @@ const schema = new mongoose.Schema(
                 required: false,
               },
             ],
+            valueIndex: {
+              type: Number,
+              required: false,
+            },
             defaultValue: {
               type: String,
               required: false,
             },
             cols: {
               type: Number,
+              required: false,
+            },
+            title: {
+              type: String,
               required: false,
             },
             placeholderText: {
