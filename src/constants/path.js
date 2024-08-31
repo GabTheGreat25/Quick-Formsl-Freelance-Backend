@@ -17,4 +17,5 @@ export const PATH = {
   USER_IMAGE: "/view/userImage",
   VALIDATE: "/validate",
   LINK: "/:link",
+  CONTENT_DESIGN: "/contentDesign/:id",
 };

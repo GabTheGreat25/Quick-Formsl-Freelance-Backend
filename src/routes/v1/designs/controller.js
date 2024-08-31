@@ -27,6 +27,18 @@ const getSingleDesign = asyncHandler(async (req, res) => {
   );
 });
 
+const getDesignByContentId = asyncHandler(async (req, res) => {
+  const data = await service.getByContentId(req.params.id);
+
+  responseHandler(
+    res,
+    data,
+    !data
+      ? "No Design found for the provided content ID"
+      : "Design retrieved successfully",
+  );
+});
+
 const createNewDesign = asyncHandler(async (req, res) => {
   const token = extractToken(req.headers.authorization);
   const verifiedToken = verifyToken(token);
@@ -75,4 +87,10 @@ const deleteDesign = asyncHandler(async (req, res) => {
   responseHandler(res, [{ design: designData, form: formData }], message);
 });
 
-export { getAllDesigns, getSingleDesign, createNewDesign, deleteDesign };
+export {
+  getAllDesigns,
+  getSingleDesign,
+  getDesignByContentId,
+  createNewDesign,
+  deleteDesign,
+};

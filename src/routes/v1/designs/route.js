@@ -20,6 +20,13 @@ const designRoutes = [
     handler: designController.getSingleDesign,
   },
   {
+    method: METHOD.GET,
+    path: PATH.CONTENT_DESIGN,
+    roles: [ROLE.ADMIN, ROLE.CUSTOMER],
+    middleware: [verifyJWT],
+    handler: designController.getDesignByContentId,
+  },
+  {
     method: METHOD.POST,
     roles: [ROLE.ADMIN, ROLE.CUSTOMER],
     middleware: [verifyJWT],

@@ -1941,6 +1941,66 @@
 							"response": []
 						},
 						{
+							"name": "Get Design In Content",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{Bearer}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/designs/contentDesign/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"designs",
+										"contentDesign",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "66b02e5cdb382ac927ca236c"
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
 							"name": "Get Single Design",
 							"event": [
 								{
@@ -4941,6 +5001,67 @@
 							"response": []
 						},
 						{
+							"name": "Get Design In Content",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{Bearer}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://quickforms-backend.onrender.com/designs/contentDesign/:id",
+									"protocol": "https",
+									"host": [
+										"quickforms-backend",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"designs",
+										"contentDesign",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "66b02e5cdb382ac927ca236c"
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
 							"name": "Get Single Design",
 							"event": [
 								{
@@ -6048,7 +6169,7 @@
 	"variable": [
 		{
 			"key": "Bearer",
-			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YWYxZDBkMDFiZDlmMjNjNGM4OGFhYSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcyNDU5OTY4MywiZXhwIjoxNzI0Njg2MDgzfQ.JKLQXQrSKa9tU7FzNn_elauXapZR1FolTHyu5H85T30"
+			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YWYxZDBkMDFiZDlmMjNjNGM4OGFhYSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcyNTA4MjQ4NywiZXhwIjoxNzI1MTY4ODg3fQ.snBEEAuQmqmlG9hCGY6nNkEBrzCmmbYXcC-XBYDwHK4"
 		}
 	]
 }

@@ -29,6 +29,20 @@ async function getById(_id) {
     });
 }
 
+async function getByContentId(_id) {
+  return await model
+    .findOne({ "content.contentId": _id })
+    .populate({
+      path: "content.imageId",
+    })
+    .populate({
+      path: "content.contentId",
+      populate: {
+        path: RESOURCE.SUBMISSION,
+      },
+    });
+}
+
 async function getDefaultById(_id) {
   return await model
     .findOne({ _id, user: null })
@@ -102,6 +116,7 @@ async function removeDefaultImage(contentId, imageId) {
 export default {
   getAll,
   getById,
+  getByContentId,
   getDefaultById,
   add,
   deleteById,
